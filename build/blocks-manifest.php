@@ -60,7 +60,7 @@ return array(
 		'apiVersion' => 3,
 		'name' => 'custom-text-block/card-modal',
 		'version' => '0.1.0',
-		'title' => 'card-modal',
+		'title' => 'Fastum block',
 		'category' => 'design',
 		'attributes' => array(
 			'numberOfCards' => array(

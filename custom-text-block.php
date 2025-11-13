@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name:       Custom Text Block
+ * Plugin Name:       Fastum Block
  * Plugin URI:        https://github.com/BjorksundDesign/wp-blocks-fastum
- * Description:       Example block scaffolded with Create Block tool.
- * Version:           0.2
+ * Description:       Block for Fastum public web.
+ * Version:           1.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            Thomas Björksund
- * Author URI:       http://www.bjorksund.design
+ * Author URI:      	http://www.thomasbjorksund.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       custom-text-block
