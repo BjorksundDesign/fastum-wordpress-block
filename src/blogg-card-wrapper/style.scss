@@ -1,0 +1,111 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+p, h2, input, article, section, textarea{
+	all: unset;
+	display: block;
+}
+
+.image-text-modal-container{
+	width: 100%;
+	display: grid;
+}
+
+.column{
+	max-width: 100%;
+	padding: 12px;
+}
+
+.two-columns{
+	grid-template-columns: 1fr 1fr;
+}
+
+.invertOrder{
+	order: 2;
+
+}
+
+.oneColumn{
+	grid-template-columns: 1fr;
+
+}
+
+textarea{
+	field-sizing: content;
+}
+
+.heading {
+	font-size: clamp(1.502rem, 1.502rem + ((1vw - 0.2rem) * 1.248), 2.5rem);
+}
+
+.heading > input, .heading > textarea, .bodyText > input{
+	font-size: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	background-color: orange;
+	width: 100%;
+	word-break: break-word;
+	hyphens: auto;
+}
+
+.image-container{
+	width: 100%;
+}
+
+.image{
+	width: 100%;
+	object-fit: contain;
+	height: auto;
+	max-height: 50%;
+}
+
+input{
+	width: 100%;
+	white-space: pre-wrap;
+}
+
+.cardWrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; /* Space between cards */
+}
+
+.card {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+	width: auto;
+	max-height: 300px;
+	height: auto;
+	overflow: hidden;
+	display: grid;
+	grid-template-rows: auto auto auto auto;
+}
+
+.image-2 {
+    width: 100%; /* Makes the image responsive */
+    height: auto; /* Maintains aspect ratio */
+    max-height: 300px; /* Optional: Limit the height */
+    object-fit: cover; /* Optional: Crop the image to fit */
+}
+
+.linkTextControl, .linkLinkControl {
+	width: 100%;
+}
+
+.panelRow > div > div > div > div {
+	margin: unset;
+	min-width: unset;
+}
+
+
+.panelRow > div {
+	width: 100%;
+	min-width: unset;
+}

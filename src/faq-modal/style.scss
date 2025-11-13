@@ -1,0 +1,92 @@
+@font-face {
+	font-family: fontAwesome;
+	src: url("./attributes/fa-solid-900.woff2") format('woff2');
+}
+
+:root{
+    --faIconClosed: "\2b";
+    --faIconOpen: "\f068";
+	interpolate-size: allow-keywords;
+}
+
+
+.faq-modal-article{
+	display: grid;
+	justify-items: center;
+	padding: 80px 60px;
+	box-sizing: border-box;
+}
+
+
+
+.accordion-card > .accordion-card__summary > .text-modal-section{
+	display: grid;
+    grid-template-columns: 1fr auto;
+    margin-block: unset;
+    padding: 12px 0;
+	align-items: center;
+	&:after{
+	content: var(--faIconClosed);
+	color: #F26722;
+	font-weight: 500;
+	font-family: fontAwesome;
+	vertical-align: middle;
+	font-size: 20px;
+	order: 2;
+	}
+}
+
+
+.accordion-card::details-content{
+	block-size: 0;
+	transition: block-size 0.3s, content-visibility 0.3s; 
+	transition-behavior: allow-discrete;
+}
+
+.accordion-card[open]{
+	&::details-content{
+		block-size: auto;
+	}
+	.accordion-card__summary{
+		.text-modal-section:after{
+			content: var(--faIconOpen);
+		}
+	}
+}
+
+.accordion-card__content > .text-modal-section{
+	padding:unset;
+	.button-wrapper{  
+	padding: unset;
+}}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+summary {
+    list-style: none; /* Remove default list style */
+    cursor: pointer;  /* Change cursor to pointer */
+    padding: 0;      /* Remove padding */
+}
+
+summary::-webkit-details-marker {
+    display: none; /* Hide marker in WebKit browsers */
+}
+
+/* Firefox specific */
+summary {
+    outline: transparent;  /* Remove focus outline */
+}
+
+/* Rotate chevron when open */
+.faq-article[open] .faq-summary__chevron { transform: rotate(180deg); }
+
+/* Optional: smooth open/close */
+.faq-content {
+  animation: faq-open 160ms ease-out both;
+}
+@keyframes faq-open {
+  from { opacity: .0; transform: translateY(-2px); }
+  to   { opacity: 1;  transform: translateY(0); }
+}

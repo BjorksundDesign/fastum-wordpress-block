@@ -1,0 +1,108 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "custom-text-block/card-modal",
+	"version": "0.1.0",
+	"title": "card-modal",
+	"category": "design",
+	"attributes": {
+		"numberOfCards": { "type": "number", "default": 1 },
+		"cards": { "type": "array", "default": [] },
+		"columnOrder": { "type": "boolean", "default": false },
+		"faIcon": { "type": "string", "default": "\"\\f00c\"" },
+		"faIconColor": { "type": "string", "default": "#E03131" },
+		"items": {
+			"type": "array",
+			"default": [
+			{ "id": "h1", "type": "heading", "text": "Rubrik", "size": "l", "headingType": "h2" },
+			{ "id": "p1", "type": "paragraph", "text": "Lägg till brödtext här…" }
+			]
+		},
+		"cardCount": {
+			"type": "number",
+			"default": 1
+		},
+		"modalBackground":{"type": "integer"},
+		 "style": {
+			"type": "object"
+		},
+		"contentOrientation": { "type": "boolean", "default": false },
+		"backgroundColor": {
+            "type": "string"
+        },
+		"image":{"type": "integer"},
+		"textColor": {
+            "type": "string",
+            "default": "#000010" 
+        },
+		"faIconStyle":{
+			"type": "array",
+			"default": []
+		},
+		"faIconRaw":{
+			"type": "string",
+			"default": "f00e"
+		},
+		"align": {
+            "type": "string",
+            "default": "none"
+        },
+		"cardBorder": {
+            "type": "string",
+            "default": "Show"
+        },
+        "imageWidth": {
+            "type": "string",
+            "default": "100%"
+        },
+        "imageSize": {
+            "type": "string",
+            "default": "cover"
+        },
+        "imageAspect": {
+            "type": "string",
+            "default": "3/2"
+        },
+		"bgImageStyle":{
+			"type": "string",
+            "default": "color"
+		},
+        "cardWidthOptions": {
+            "type": "string",
+            "default": ""
+        },
+		"modalType": {
+            "type": "string",
+            "default": "columns"
+        },
+		"topSectionFlags": 
+			{ "type": "array", "default": [] }
+
+	},
+	"description": "Card modal",
+	"example": {},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"gradients": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+            "textAlign": true
+        },
+		"border": true,
+		"style": true,
+		"align": true
+		
+	},
+	"textdomain": "custom-text-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

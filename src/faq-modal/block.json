@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "custom-text-block/faq-modal",
+	"version": "0.1.0",
+	"title": "FAQ Modal",
+	"category": "design",
+	"attributes": {
+		"items": {
+			"type": "array",
+			"default": []
+		},
+		"modalBackground":{"type": "integer"},
+		 "style": {
+			"type": "object"
+		},
+		"backgroundColor": {
+            "type": "string",
+            "default": "#ffffff" 
+        },
+		"image":{"type": "integer"},
+		"columnOrder":{"type": "boolean", "default":"false"},
+		"faIconStyle":{
+			"type": "array",
+			"default": []
+		},
+		"faIconColor":{
+			"type": "string",
+            "default": "#6f2t54" 
+		},
+		"faIconRaw":{
+			"type": "string",
+			"default": "f00e"
+		},
+		"cardBorder": {
+            "type": "string",
+            "default": "Show"
+        },
+		"faIcon": {
+			"type": "string",
+			"default": "\\f00e"
+			}
+	},
+	"description": "Text modal for all text needs",
+	"example": {},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"gradients": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": true,
+		"border": true,
+		"style": true,
+		"align": true
+		
+	},
+	"textdomain": "custom-text-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
