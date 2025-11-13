@@ -662,9 +662,12 @@ th + th, td + td{ text-align: center; }
   .paragraph{ font-size: 14px !important; }
 
   .hero-modal-section{ padding: 20px; }
-  .text-modal-section{
-    padding: 20px;
-    gap: 20px; /* håll 20px i tablet */
+  .cards-gird:not(.dropdown){
+
+    .text-modal-section{
+      padding: 20px;
+      gap: 20px; /* håll 20px i tablet */
+    }
   }
 
   .cards-grid{
