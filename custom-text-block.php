@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Fastum Block
- * Plugin URI:        https://github.com/BjorksundDesign/wp-blocks-fastum
+ * Plugin URI:        https://github.com/BjorksundDesign/fastum-wordpress-block
  * Description:       Block for Fastum public web.
  * Version:           1.0
  * Requires at least: 6.7
@@ -11,7 +11,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       custom-text-block
- * GitHub Plugin URI: https://github.com/BjorksundDesign/wp-blocks-fastum
+ * GitHub Plugin URI: https://github.com/BjorksundDesign/fastum-wordpress-block
  * Primary Branch:    main
  *
  * @package CustomTextBlock
