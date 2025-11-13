@@ -187,11 +187,11 @@ ul > .list{
 	background-position: center;
 }
 
-.is-layout-constrained > *{
-	float: unset !important;
-	margin-inline-start: unset !important;
-    margin-inline-end: unset !important;
-}
+// .is-layout-constrained > *{
+// 	float: unset !important;
+// 	margin-inline-start: unset !important;
+//     margin-inline-end: unset !important;
+// }
 
 .has-global-padding {
 	padding: unset !important;
