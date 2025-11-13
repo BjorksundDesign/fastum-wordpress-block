@@ -117,13 +117,16 @@ export default function save({ attributes }) {
                           );
                         case 'button':
                           return (
+                            <>
+                            {(attributes.modalType === 'cards' || attributes.modalType === 'dropdown') ? <hr /> : null}
                             <a
                               key={i}
                               href={item.url || '#'}
                               className={`btn ${item.isPrimary ? 'is-primary' : 'is-secondary'}`}
-                            >
+                              >
                               {item.text || 'Button'}
                             </a>
+                            </>
                           );
                         default:
                           return null;

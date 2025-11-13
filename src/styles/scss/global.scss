@@ -54,8 +54,7 @@ section.hero{ max-width: 900px; }
   flex-wrap: wrap;
   margin-top: 12px;
   justify-content: center;
-  padding: 0 var(--card-padding);
-
+  padding: 0;
   &.left{ align-content: left; }
   &.center,&.full{ align-content: center; }
   &.right{ align-content: right; }
@@ -96,8 +95,6 @@ section.hero{ max-width: 900px; }
         line-height: 14px;
       }
     }
-
-    .cards:nth-last-child(1){ padding-bottom: 12px; }
 
     .columns{
       display: flex;
@@ -681,14 +678,6 @@ th + th, td + td{ text-align: center; }
   }
 
   .article{ padding: 32px 12px; }
-
-  .button-wrapper:has(.cards),
-  .button-wrapper:has(.dropdown),
-  .button-wrapper:has(.columns){
-    padding: 0 var(--card-padding);
-
-    &.cards:nth-last-child(1){ padding-bottom: 8px; }
-  }
 
   .button-wrapper{
     gap: 4px;

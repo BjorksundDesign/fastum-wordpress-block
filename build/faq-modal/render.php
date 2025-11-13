@@ -57,9 +57,11 @@ function dcw_render_items($items, $args = []) {
     if (!is_array($items) || empty($items)) {
         return '';
     }
-    $button_class = isset($args['button_class']) ? sanitize_html_class($args['button_class']) : 'btn';
-    $content_orientation = !empty($args['content_orientation']); // ej direkt använt här, men hook för klass namn etc.
-    $extra_class = isset($args['class']) ? sanitize_html_class($args['class']) : '';
+
+    $button_class        = isset($args['button_class']) ? sanitize_html_class($args['button_class']) : 'btn';
+    $content_orientation = !empty($args['content_orientation']); // hook om du vill
+    $extra_class         = isset($args['class']) ? sanitize_html_class($args['class']) : '';
+    $modal_type          = isset($args['modal_type']) ? (string) $args['modal_type'] : '';
 
     ob_start();
     echo '<div class="text-wrapper ' . esc_attr($extra_class) . '">';
@@ -91,19 +93,22 @@ function dcw_render_items($items, $args = []) {
                 }
                 break;
             }
-            case 'button': {
+                case 'button': {
                 $url       = isset($item['url']) ? esc_url($item['url']) : '#';
                 $label     = isset($item['text']) ? wp_kses_post($item['text']) : esc_html__('Button', 'textdomain');
                 $isPrimary = !empty($item['isPrimary']);
                 $classes   = $button_class . ' ' . ($isPrimary ? 'is-primary' : 'is-secondary');
 
-                // Icon (om du vill: använd pseudo-element via CSS content). Här renderar vi en span som hook:
                 $iconRaw   = isset($item['icon']) ? (string) $item['icon'] : '';
                 $iconColor = isset($item['iconColor']) ? (string) $item['iconColor'] : '';
 
+                // *** Här speglar vi save.js: cards / dropdown => <hr />
+                if ($modal_type === 'cards' || $modal_type === 'dropdown') {
+                    echo '<hr />';
+                }
+
                 echo '<a class="' . esc_attr($classes) . '" href="' . $url . '" target="_blank" rel="noopener nofollow">';
                 if ($iconRaw !== '') {
-                    // Data-attribut för att kunna styla med ::before via JS/CSS om du vill:
                     echo '<span class="btn-icon" data-fa-content="' . esc_attr($iconRaw) . '" style="' . ($iconColor ? 'color:' . esc_attr($iconColor) . ';' : '') . '"></span>';
                 }
                 echo '<span class="btn-label">' . $label . '</span>';
@@ -149,7 +154,7 @@ function dcw_render_block($attributes, $content) {
     $contentOrient   = !empty($attributes['contentOrientation']);
     $align           = isset($attributes['align']) ? sanitize_html_class($attributes['align']) : '';
     $cardBorder      = isset($attributes['cardBorder']) ? sanitize_html_class($attributes['cardBorder']) : '';
-
+    $modal_type      = isset($attributes['modalType']) ? (string) $attributes['modalType'] : '';
     // Wrapper style (CSS custom props används i ditt SCSS)
     $wrapper_style_parts = [];
     if ($backgroundColor) { $wrapper_style_parts[] = 'background-color:' . esc_attr($backgroundColor); }
@@ -168,6 +173,7 @@ function dcw_render_block($attributes, $content) {
                 'button_class'        => 'btn',
                 'content_orientation' => $contentOrient,
                 'class'               => $align,
+                'modal_type'          => $modal_type,
             ]);
           ?>
         </section>
@@ -193,6 +199,7 @@ function dcw_render_block($attributes, $content) {
                       'button_class'        => 'card-button',
                       'content_orientation' => $contentOrient,
                       'class'               => $card_align,
+                      'modal_type'          => $modal_type,
                   ]);
                 ?>
               </div>

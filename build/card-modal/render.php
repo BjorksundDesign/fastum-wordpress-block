@@ -442,7 +442,7 @@
                                                 $url       = $get_url($btn['url'] ?? null);
                                                 $btn_text  = $btn['text'] ?? (isset($btn['count']) ? 'Button ' . (int)$btn['count'] : 'Button');
                                                 $btn_class = trim(($isPrimary ? 'button-primary' : 'button-secondary') . ' ' . $card_align . ' ' . $modalType);
-                                                if ($card_button_count > 1 && $modalType === 'cards') { echo '<hr />'; }
+                                                if ($modalType === 'cards' || $modalType === 'dropdown') { echo '<hr />'; }
                                                 printf(
                                                 '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener"><span class="wp-block-button__link">%3$s</span></a>',
                                                 esc_attr($btn_class),

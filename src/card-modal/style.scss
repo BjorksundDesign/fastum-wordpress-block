@@ -376,7 +376,6 @@ section{
 .button-wrapper:has(.cards), .button-wrapper:has(.dropdown), .button-wrapper:has(.columns){
 	flex-direction: column;
     align-items: flex-start;
-    padding: 0 20px;
 	box-sizing: border-box;
 	.cards > span, .dropdown > span{
 		background-color: unset;
@@ -408,9 +407,7 @@ section{
             line-height: 14px;
 		}
 	}
-	.cards:nth-last-child(1){
-		padding-bottom: 12px;
-	}
+
     .columns{
 		display: flex;
 		flex-direction: row;
@@ -1069,13 +1066,6 @@ article{
 
     .article {
     padding: 20px;
-    }
-
-      .button-wrapper:has(.cards), .button-wrapper:has(.dropdown), .button-wrapper:has(.columns){
-        padding: 0 12px;
-        &.cards:nth-last-child(1){
-		padding-bottom: 8px;
-	}
     }
 
     .button-wrapper{

@@ -164,7 +164,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
         style={{ order: '3', ...(color ? { color } : {}) }}
       >
         {buttons.map((btn, idx) => {
-          const multipleButtons = buttons.length > 1 && currentModalType === 'cards';
+          const multipleButtons = currentModalType === 'cards' || currentModalType === 'dropdown';
           const isPrimary = !!btn.isPrimary;
           const href = getUrl(btn.url);
           return (
