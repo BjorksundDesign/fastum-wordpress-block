@@ -8,6 +8,10 @@
   font-weight: 600 !important;
 }
 
+a{
+  cursor: pointer !important;
+}
+
 /* Typography & base */
 h1{ margin-block: 0; }
 h1,h2,h3,h4,h5,h6{ color: inherit !important; line-height: 1.2; }
@@ -476,6 +480,9 @@ section.hero{ max-width: 900px; }
   &.cards{
     & .image-container:not(.cover){
         border-radius: 12px;
+    }
+    & .card-modal-card{
+      padding-bottom: 12px;
     }
   }
   &.dropdown{
