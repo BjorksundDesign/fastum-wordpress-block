@@ -800,7 +800,7 @@ useEffect(() => {
                     return (
                       <details
                         key={card.id}
-                        className={`accordion-card ${attributes.cardBorder}`}
+                        className={`accordion-card ${attributes.cardBorder} ${card.topSectionFlags ?? ''}`}
                         style={{ backgroundColor: card.backgroundColor, color: textColor }}
                         // Viktigt: lämna bort "open" för att vara stängd som default
                         {...(open ? { open: true } : {})}

@@ -966,7 +966,7 @@ export function TextModalRender({
   // const classNames = additionalClasses.join(' ');
 
   return (
-    <div className={`text-modal-section ${cardAttributes?.topSectionFlags ?? attributes.topSectionFlags}`}>
+    <div className={`text-modal-section ${attributes.modalType !== 'dropdown' && (cardAttributes?.topSectionFlags ?? attributes.topSectionFlags)}`}>
       {items.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
         <div role="text-wrapper" className={`${className} ${(cardAttributes?.align)}`} 
         style={{

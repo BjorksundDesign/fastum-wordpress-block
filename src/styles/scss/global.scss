@@ -63,7 +63,6 @@ section.hero{ max-width: 900px; }
   &:has(.cards), &:has(.dropdown), &:has(.columns){
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 var(--card-padding);
     box-sizing: border-box;
 
     .cards > span, .dropdown > span{
@@ -124,6 +123,11 @@ section.hero{ max-width: 900px; }
         font-size: 14px;
       }
     }
+  }
+  &:has(.columns){
+    padding: 0 var(--card-padding);
+    flex-direction: row;
+ 
   }
 }
 
@@ -598,18 +602,12 @@ section.hero{ max-width: 900px; }
   &:not(.contain) {
     &.cards,
     &.columns {
-      border: 2px red solid !important;
       & .contains-image {
         padding: 0;
-        border: 2px green solid !important;
-
         &.contains-text {
           padding-bottom: var(--card-padding);
-          border: 2px yellow solid !important;
-
           &.contains-button {
             padding-bottom: 0;
-            border: 2px blue solid !important;
           }
         }
       }
@@ -632,6 +630,10 @@ section.hero{ max-width: 900px; }
   & .contains-text {
     padding: var(--card-padding);
   }
+}
+
+.accordion-card{
+  padding: 12px 20px;
 }
 
 .dropdown{

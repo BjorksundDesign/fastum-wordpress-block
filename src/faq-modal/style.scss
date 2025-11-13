@@ -23,7 +23,6 @@
 	display: grid;
     grid-template-columns: 1fr auto;
     margin-block: unset;
-    padding: 12px 0;
 	align-items: center;
 	&:after{
 	content: var(--faIconClosed);
@@ -52,6 +51,10 @@
 			content: var(--faIconOpen);
 		}
 	}
+}
+
+.accordion-card__content{
+	padding-top: 12px;
 }
 
 .accordion-card__content > .text-modal-section{
