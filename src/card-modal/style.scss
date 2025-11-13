@@ -187,7 +187,7 @@ ul > .list{
 	background-position: center;
 }
 
-.is-layout-constrained > *{
+.is-layout-constrained:has(.card-modal-article) > *{
 	float: unset !important;
 	margin-inline-start: unset !important;
     margin-inline-end: unset !important;
