@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "custom-text-block/hero-modal",
+  "version": "0.1.0",
+  "title": "Hero Modal",
+  "category": "design",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": []
+    },
+    "modalBackground": {
+      "type": "integer"
+    },
+    "style": {
+      "type": "object"
+    }
+  },
+  "description": "Hero modal that should be placed at the top of each page.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "typography": true,
+    "border": true,
+    "style": true,
+    "align": true
+  },
+  "textdomain": "custom-text-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

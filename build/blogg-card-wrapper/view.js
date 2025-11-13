@@ -1,0 +1,1 @@
+console.log("Hello World! (from custom-text-block-custom-text-block block)");

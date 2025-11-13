@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "custom/blogg-card-wrapper",
+  "version": "0.1.0",
+  "title": "Blogg Card Wrapper",
+  "category": "layout",
+  "icon": "grid-view",
+  "description": "A block that allows for a dynamic number of blogg cards.",
+  "attributes": {
+    "numberOfCards": {
+      "type": "number",
+      "default": 3
+    },
+    "cardContents": {
+      "type": "array",
+      "default": []
+    },
+    "image": {
+      "type": "integer"
+    },
+    "showHeading": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBody": {
+      "type": "boolean",
+      "default": true
+    },
+    "showImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "showButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Button text"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "textdomain": "blogg-card-wrapper",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}
