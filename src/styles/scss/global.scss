@@ -717,10 +717,6 @@ th + th, td + td{ text-align: center; }
 
   .hero-modal-section{ padding: 20px; }
   .article.hero{ padding: 12px; }
-  .text-modal-section{
-    padding: 12px;
-    gap: 20px; /* håll 20px i mobile */
-  }
 
   .cards-grid{
     &.columns{
