@@ -164,7 +164,7 @@ section.hero{ max-width: 900px; }
   font-size: 16px;
   font-weight: 600;
 }
-.fastum-button > .wp-block-button__link:hover{ background-color: #808080; }
+.fastum-button > .wp-block-button__link:hover{ background-color: #808080 !important; }
 
 /* Editor / inspector layout */
 .block-editor-block-inspector > *{ position: relative; z-index: 0; }
