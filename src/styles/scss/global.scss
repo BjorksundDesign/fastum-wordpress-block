@@ -415,10 +415,11 @@ section.hero{ max-width: 900px; }
 .block-editor-url-input{ min-width: unset; padding: 0; }
 .block-editor-link-control__field{ margin: 0; }
 
+/* removed float for fastum current page, might need a fix for button alignment*/
 /* Text alignment helpers */
-.has-text-align-left { float: left; margin-right: 20px; }
+.has-text-align-left {margin-right: 20px; }
 .has-text-align-center { display: block; margin-left: auto; margin-right: auto; }
-.has-text-align-right { float: right; margin-left: 20px; }
+.has-text-align-right {margin-left: 20px; }
 
 /* Text modal / content */
 .text-modal-section{
