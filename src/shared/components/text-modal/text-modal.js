@@ -17,7 +17,7 @@ import { IconColorPickerRow, ColorPickerRow } from '../color-icon-picker';
 import { ImageModalInspector, ImageModalRender } from '../image-modal';
 import { Image } from '@10up/block-components';
 import './text-modal.scss'
-import '../../../styles/scss/global.scss'
+// import '../../../styles/scss/global.scss'
 // import { useEffect, useRef  } from 'react';
 
 /* =========================
@@ -613,7 +613,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                               <>
                                   <span className='grid panel-body-span'>
-                                       {`${__('Heading')} ${item.count || index + 1}`} 
+                                       {`${__('Heading - ')} ${item.text ?? ''}`} 
                                       <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                       <div className="text-inspector-menu" 
@@ -670,7 +670,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                       <>
                           <span className='grid panel-body-span'>
-                                {`${__('Paragraph')} ${item.count || index + 1}`} 
+                                {`${__('Paragraph - ')} ${item.text ?? ''}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
@@ -713,7 +713,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                           <>
                             <span className='grid panel-body-span'>
-                                {`${__('List')} ${item.count || index + 1}`} 
+                                {`${__('List - ')} ${item.text ?? ''}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
@@ -784,7 +784,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                  title={
                           <>
                             <span className='grid panel-body-span panel-button'>
-                                {`${__('Button')} ${item.count || index + 1}`} 
+                                {`${__('Button - ')} ${item.text ?? ''}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
@@ -827,6 +827,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                                 label="Button URL"
                                                 value={item.url}
                                                 onChange={(newUrl) => setButtonURL(item.id, newUrl)}
+                                                showAdvancedSettings={ false }
                                             />
                                         </PanelRow>
                                         </>
@@ -997,7 +998,7 @@ export function TextModalRender({
                 data-type="core/heading" // Data attribute for block type
                 data-title="Heading" // Data attribute for title
                 contentEditable={true} // Ensure it's editable
-                value={item.text ?? ''}
+                value={item.text ?? 'Heading'}
                 data-wp-block-attribute-key="content"
                 placeholder={`Heading ${item.count || 1}`}
                 data-listener-added_95ef2b5b="true"
@@ -1010,7 +1011,7 @@ export function TextModalRender({
                 key={item.id}
                 tagName="p"
                 className={`paragraph`}
-                value={item.text ?? ''}
+                value={item.text ?? 'Paragraph'}
                 placeholder={`Paragraph ${item.count || 1}`}
                 onChange={(v) => setText(item.id, v)}
               />
@@ -1070,11 +1071,11 @@ export function TextModalRender({
                     case 'button':
                         return (
                           <>
-                          {(attributes.modalType === 'cards' || attributes.modalType === 'dropdown') ? <hr /> : null}
+                          {(attributes.modalType === 'cards' && context.scope === 'card' || attributes.modalType === 'dropdown' && context.scope === 'card' ) ? <hr /> : null}
                             <button 
                                 key={item.id}
-                                className={`wp-block-button fastum-button ${attributes.align} ${attributes.modalType}`}
-                                onClick={() => window.open(item.url, '_blank')} // Open URL in a new tab
+                                className={`wp-block-button fastum-button ${attributes.align} ${attributes.modalType} ${context.scope}`}
+                                onClick={() => window.location.href = item.url} // Open URL in a new tab
                                 disabled
                                 >                                
                                 <RichText

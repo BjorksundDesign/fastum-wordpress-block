@@ -105,6 +105,7 @@ export const splitItemsOnFirstHeading = (items = []) => {
 };
 
 
+
 export default function Edit(props) {
   const { attributes, setAttributes } = props;
   const {
@@ -119,7 +120,8 @@ export default function Edit(props) {
     topSectionFlags,
     modalType,
   } = attributes;
-
+  console.log("test", attributes);
+  
   const GLOBAL_TM_ID = 'global';
   const [openTextModals, setOpenTextModals] = useState({}); // { [id: string]: boolean }
   const [inspectorMenuItems, setInspectorMenuItems] = useState([]);
@@ -485,15 +487,15 @@ switch (attributes.modalType) {
 }
       
   const inspectorMenuItemsFilter = (type) => {    
-    if (type === 'hero'){return ['headingmenu', 'paragraphmenu', 'buttonmenu', 'colormenu']}
-    if(type ==='cards' || type ==='lime-form' ){return ['headingmenu', 'paragraphmenu', 'colormenu']}
+    if (type === 'hero'){return ['headingmenu', 'paragraphmenu', 'listmenu', 'buttonmenu', 'colormenu']}
+    if(type ==='cards' || type ==='lime-form' ){return ['headingmenu', 'paragraphmenu', 'listmenu', 'buttonmenu', 'colormenu']}
     else{
           return ['headingmenu', 'paragraphmenu', 'listmenu', 'buttonmenu', 'colormenu']
     }
   }
 
   const inspectorItemsFilter = (type) => {
-    if (type === 'hero'){return ['heading', 'paragraph', 'button']}
+    if (type === 'hero'){return ['heading', 'paragraph', 'list', 'button']}
     if  (type ==='cards' || type ==='lime-form' ){return ['heading', 'paragraph', 'list', 'button']}
     else{
       return ['heading', 'paragraph', 'list', 'button']
@@ -633,8 +635,8 @@ useEffect(() => {
                     
                   )}
                     {renderControl('Text color:', 'textColor', textColorOptions, attributes, setAttributes)}
-            <PanelRow className="grid grid-2-button inspector-row">
-                       Background color:
+            <PanelRow className="grid grid-3-button inspector-row">
+                       Bg färg:
                       {bgImageStyle.map(option => {
                         switch (option.label) {
                           case 'Shaded':
@@ -647,7 +649,7 @@ useEffect(() => {
                                   aria-label={`Background Image Style ${option.label}`}>
                                   {option.label}
                               </Button> 
-                            )                    
+                            )                 
                           case 'Color':
                             return(
                               // <Button 

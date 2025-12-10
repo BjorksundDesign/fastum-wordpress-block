@@ -177,8 +177,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
                   `${alignClasses || ''} ${currentModalType || ''} ${extraClass}`
                 }
                 href={href}
-                target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                  <RichText.Content
                   tagName="span"

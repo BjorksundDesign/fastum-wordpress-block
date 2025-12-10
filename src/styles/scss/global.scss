@@ -10,12 +10,13 @@
 
 a{
   cursor: pointer !important;
+  font-size: inherit !important;
 }
 
 /* Typography & base */
 h1{ margin-block: 0; }
 h1,h2,h3,h4,h5,h6{ color: inherit !important; line-height: 1.2; }
-hr{ width: 100%; margin-block: unset; }
+hr{ width: 100%; margin-block: unset; max-width: 900px;}
 p{ margin-block: unset; }
 section{ width: 100%; }
 div{ background-position: center; }
@@ -36,8 +37,12 @@ article{
     color: white;
     padding: 60px;
     gap: 12px;
-    min-height: 700px;
+    height: clamp(400px, 80vh, 700px);
   }
+}
+
+* + .heading{
+  margin-top: 8px;
 }
 
 /* Section modifiers */
@@ -47,8 +52,21 @@ section.hero{ max-width: 900px; }
 .article{
   display: grid;
   justify-items: center;
-  padding: 60px 80px;
+  padding: 30px 80px;
   box-sizing: border-box;
+}
+
+.paragraph{
+	font-size: 18px !important;
+	color: inherit;
+}
+
+.cards-grid{
+    & .cards > span, .dropdown > span{
+      background-color: unset;
+      font-weight: 500;
+    }
+
 }
 
 /* Buttons */
@@ -59,20 +77,12 @@ section.hero{ max-width: 900px; }
   margin-top: 12px;
   justify-content: center;
   padding: 0;
-  &.left{ align-content: left; }
-  &.center,&.full{ align-content: center; }
-  &.right{ align-content: right; }
-
+  
   &:has(.cards), &:has(.dropdown), &:has(.columns){
     flex-direction: column;
     align-items: flex-start;
     box-sizing: border-box;
-
-    .cards > span, .dropdown > span{
-      background-color: unset;
-      font-weight: 500;
-    }
-
+    
     .cards, .dropdown{
       display: flex;
       flex-direction: row;
@@ -80,7 +90,7 @@ section.hero{ max-width: 900px; }
       padding: unset;
       gap: 10px;
       grid-template-columns: auto auto;
-
+      
       span{
         display: flex;
         gap: 8px;
@@ -99,7 +109,7 @@ section.hero{ max-width: 900px; }
         line-height: 14px;
       }
     }
-
+    
     .columns{
       display: flex;
       flex-direction: row;
@@ -107,7 +117,7 @@ section.hero{ max-width: 900px; }
       padding: unset;
       gap: 10px;
       grid-template-columns: auto auto;
-
+      
       span{
         display: flex;
         gap: 8px;
@@ -125,6 +135,9 @@ section.hero{ max-width: 900px; }
       }
     }
   }
+  &.left{ align-content: left; align-items: flex-start; }
+  &.center,&.full{ align-content: center; align-items: center; }
+  &.right{ align-content: right; align-items: flex-end; }
   &:has(.columns){
     padding: 0 var(--card-padding);
     flex-direction: row;
@@ -138,11 +151,11 @@ section.hero{ max-width: 900px; }
   display: grid;
   align-items: center;
   justify-items: center;
-  color: inherit;
+  color: black;
   white-space: nowrap;
-
-  &.cards,
-  &.dropdown{
+  
+  &.cards.card,
+  &.dropdown.card{
     all: unset;
     display: grid;
     align-items: center;
@@ -198,6 +211,8 @@ section.hero{ max-width: 900px; }
     padding: 0;
     justify-content: flex-start;
     padding-left: 8px;
+    background-color: transparent!important;
+    font-size: 15px!important;
   }
   & input{
     border: unset !important;
@@ -256,6 +271,7 @@ section.hero{ max-width: 900px; }
 
 .panel-body{ 
     padding: 0 12px 12px 12px; 
+    font-size: 15px!important;
 }
 .panel-body > *:not(.components-panel__body-title){ pointer-events: all; }
 .components-panel__body-title:hover{ background: unset; }
@@ -272,7 +288,10 @@ section.hero{ max-width: 900px; }
   position: relative;
 }
 
-.components-button{ height: 32px; }
+.components-button{ 
+  height: 32px; 
+  font-size: 15px!important;
+}
 
 .components-panel{
   z-index: 10;
@@ -294,18 +313,26 @@ section.hero{ max-width: 900px; }
   }
 }
 
-.panel-body-span{
-  --grid-template-columns: 1fr 24px;
-  width: 100%;
-  gap: 12px;
-  align-items: center;
 
-  &.plus{ --grid-template-columns: 24px 1fr; }
-  &.chevron{
-    --grid-template-columns: 24px 1fr;
-    &.plus{ --grid-template-columns: 24px 1fr 24px; }
-  }
+.panel-body-span{
+    --grid-template-columns:1fr 24px;
+    width: 100%;
+    gap: 12px;
+    max-height: 50px;
+    align-items: start;
+    overflow: hidden;
+    &.plus{
+        --grid-template-columns:24px 1fr;
+    } 
+    &.chevron{
+        --grid-template-columns:24px 1fr;
+        &.plus{
+         --grid-template-columns:24px 1fr 24px;  
+        }       
+    }
 }
+
+
 
 .chevron-icon:before,
 .plus-icon:before,
@@ -421,18 +448,43 @@ section.hero{ max-width: 900px; }
 .has-text-align-center { display: block; margin-left: auto; margin-right: auto; }
 .has-text-align-right {margin-left: 20px; }
 
+
+/*OBS ÄNDRAT FRÅN FLEX TO GRID, DETTA PÅVERKAR DOCK GANSKA MÅNGA PLATSER SÅ DUBBELKOLLA*/
+
 /* Text modal / content */
 .text-modal-section{
-  color: black;
+  --tms-grid-template-rows: auto 1fr auto;
   gap: 20px; /* enligt överenskommelse */
   box-sizing: border-box;
   width: 100%;
-  display: flex;
+  // display: flex;
+  display: grid;
+  justify-content: center;
+  grid-template-rows: var(--tms-grid-template-rows);
   flex-direction: column;
   justify-content: center;
   grid-area: text;
+  align-items: center;
 
   &.inverted{ flex-direction: column-reverse; }
+  &.contains-image:not(.contains-button):not(.contains-text),
+  &.contains-button:not(.contains-image):not(.contains-text),
+  &.contains-text:not(.contains-button):not(.contains-image)
+  {
+    --tms-grid-template-rows:1fr;
+  }
+  &.contains-button.contains-image:not(.contains-text){
+    --tms-grid-template-rows:1fr auto;
+  }
+  &.contains-text.contains-image:not(.contains-button){
+    --tms-grid-template-rows:auto 1fr;
+  }
+  &.contains-text.contains-button:not(.contains-image){
+    --tms-grid-template-rows:1fr auto;
+  }
+  &.contains-text.contains-image.contains-button{
+    --tms-grid-template-rows:auto 1fr auto;
+  }
 }
 
 .card-modal-section{
@@ -459,11 +511,18 @@ section.hero{ max-width: 900px; }
   z-index: 0;
 }
 
+.card-modal-article.light::after{
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(46.11% 41.12% at 51.58% 50%, rgba(255, 254, 254, 0.48) 0%, rgba(255, 255, 255, 0.8) 100%);
+  z-index: 0;
+}
+
 /* Cards grids */
 .cards-grid{
   display: flex;
   grid-template-columns: repeat(auto-fit, minmax(420px, auto));
-  gap: 20px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
   padding: 20px;
@@ -584,18 +643,16 @@ section.hero{ max-width: 900px; }
   margin-bottom: unset;
 }
 
-/* Padding/contains-regler — oförändrade förutom strukturfix */
-.text-modal-section{
-	color: black;
-	gap: 20px; /* håll 20px även här */
-  box-sizing: border-box;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-  justify-content: center;
-	grid-area: text;
-  // tidigare kommenterade varianter lämnas oförändrade
+
+.yoast-breadcrumbs{
+	padding:12px 80px !important;
+  max-width: 1300px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-block-start: 0 !important;
 }
+
+
 
 .cards-grid{
   &.cards {
@@ -729,6 +786,9 @@ th + th, td + td{ text-align: center; }
       .card-modal-card{ 
           max-width: 100%; 
           padding: 0;
+          & .text-modal-section .text-wrapper{
+            padding: 0;
+          }
         }
     }
 

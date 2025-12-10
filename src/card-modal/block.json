@@ -77,7 +77,6 @@
         },
 		"topSectionFlags": 
 			{ "type": "array", "default": [] }
-
 	},
 	"description": "Card modal",
 	"example": {},

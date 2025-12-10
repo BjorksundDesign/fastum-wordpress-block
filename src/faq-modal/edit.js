@@ -22,7 +22,6 @@ import { useEffect, useMemo, useState, useCallback } from '@wordpress/element';
 import { IconColorPickerRow, ColorPickerRow } from '../shared/components/color-icon-picker';
 import { Image } from '@10up/block-components';
 import './editor.scss';
-import '../styles/scss/global.scss'
 
 
 /**
