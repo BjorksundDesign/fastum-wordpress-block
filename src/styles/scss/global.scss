@@ -211,12 +211,11 @@ section.hero{ max-width: 900px; }
     padding: 0;
     justify-content: flex-start;
     padding-left: 8px;
-    background-color: transparent!important;
     font-size: 15px!important;
   }
   & input{
     border: unset !important;
-    background-color: unset;
+    background-color: transparent!important;
   }
   &.active{ border: 1px solid blue; }
 }
