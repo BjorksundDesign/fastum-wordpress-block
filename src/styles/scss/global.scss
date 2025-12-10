@@ -321,6 +321,7 @@ section.hero{ max-width: 900px; }
     max-height: 50px;
     align-items: start;
     overflow: hidden;
+    word-break: break-word;
     &.plus{
         --grid-template-columns:24px 1fr;
     } 
