@@ -14,7 +14,7 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --webpack-copy-php --blocks-manifest",
 		"build-css": "sass src/styles/scss/global.scss src/styles/css/global.css --style compressed",
-    	"watch-css": "sass --watch src/styles/scss/global.scss:src/styles/css/global.css --style compressed"
+		"watch-css": "sass --watch src/styles/scss/global.scss:src/styles/css/global.css --style compressed"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^30.18.0",

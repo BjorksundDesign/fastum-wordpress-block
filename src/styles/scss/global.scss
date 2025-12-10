@@ -97,7 +97,7 @@ section.hero{ max-width: 900px; }
         padding: 8px 12px;
         font-size: 16px;
         align-items: center;
-        color: inherit;
+        // color: inherit;
       }
       span::after{
         content: var(--faIconArrowRight);
