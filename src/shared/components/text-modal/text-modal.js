@@ -360,6 +360,12 @@ const setAlign = (value, idx, { updateCard, setAttributes }) => {
   }
 };
 
+
+const extractText = (html = '') => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+};
+
   function recount(arr) {
     const tally = {};
     return arr.map((it) => {
@@ -613,7 +619,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                               <>
                                   <span className='grid panel-body-span'>
-                                       {`${__('Heading - ')} ${item.text ?? ''}`} 
+                                       {`${__('Heading - ')} ${extractText(item.text)}`} 
                                       <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                       <div className="text-inspector-menu" 
@@ -670,7 +676,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                       <>
                           <span className='grid panel-body-span'>
-                                {`${__('Paragraph - ')} ${item.text ?? ''}`} 
+                                {`${__('Paragraph - ')} ${extractText(item.text)}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
@@ -713,7 +719,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                           <>
                             <span className='grid panel-body-span'>
-                                {`${__('List - ')} ${item.text ?? ''}`} 
+                                {`${__('List - ')} ${extractText(item.text)}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
@@ -784,7 +790,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                  title={
                           <>
                             <span className='grid panel-body-span panel-button'>
-                                {`${__('Button - ')} ${item.text ?? ''}`} 
+                                {`${__('Button - ')} ${extractText(item.text)}`} 
                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
                       </span>
                     <div className="text-inspector-menu" 
