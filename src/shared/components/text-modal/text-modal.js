@@ -419,7 +419,7 @@ const currentCard = attributes?.cards?.[idx];
 const current = currentCard?.textColor ?? attributes?.textColor ?? '';
 
 const buttonItems = items.filter(item => item.type === 'button');
-const textItems = items.filter(item => ['heading', 'paragraph', 'list'].includes(item.type));
+const textItems = items.filter(item => ['heading', 'paragraph', 'list', 'innerblock'].includes(item.type));
 
 const renderControl = (title, attributeTitle, modalType, attributes, setAttributes) => { 
     if (modalType.length > 3) {
@@ -555,7 +555,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               ))}
             </PanelRow>
           )}
-        {['headingmenu', 'paragraphmenu', 'listmenu', 'buttonmenu', 'imagemenu'].some(item => enable.includes(item)) && (
+        {['headingmenu', 'paragraphmenu', 'listmenu', 'buttonmenu', 'imagemenu', 'innerblockmenu'].some(item => enable.includes(item)) && (
         <PanelRow className="panel-settings">
           {enable.includes('headingmenu') && (
             <Button className="inspector-button" onClick={() => add('heading')}>
@@ -565,6 +565,11 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
           {enable.includes('paragraphmenu') && (
             <Button className="inspector-button" onClick={() => add('paragraph')}>
               {__('Add paragraph')}
+            </Button>
+          )}
+          {enable.includes('innerblockmenu') && (
+            <Button className="inspector-button" onClick={() => add('innerblock')}>
+              {__('Add wordpressblock')}
             </Button>
           )}
           {enable.includes('listmenu') && (
@@ -711,6 +716,42 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                 </PanelBody>
                   </>
               );
+            case 'innerblock':
+              return (
+                <>
+                <PanelBody key={item.id}
+                  title={
+                      <>
+                          <span className='grid panel-body-span'>
+                                {`${__('WP block')}`} 
+                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                      </span>
+                    <div className="text-inspector-menu" 
+                      data-open={isTextModalOpen(item.id)}
+                      hidden={!isTextModalOpen(item.id)}
+                      ref={isTextModalOpen(item.id) ? menuRef : null}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                       <PanelRow className="grid grid-4-button no-title minimal inspector-row">
+                        <RowButtons
+                          onUp={() => up(item.id)}
+                          onDown={() => down(item.id)}
+                          onRemove={() => remove(item.id)}
+                          onDuplicate={() => duplicate(item.id)}
+                          disableUp={disableUp}
+                          disableDown={disableDown}
+                        />
+                      </PanelRow>
+                    </div>
+                  </>
+              } 
+                  className="text-modal-panel-body" 
+                  initialOpen={false}>
+                    test
+                </PanelBody>
+                  </>
+              );
+
 
             case 'list':
               return (
@@ -1021,6 +1062,10 @@ export function TextModalRender({
                 placeholder={`Paragraph ${item.count || 1}`}
                 onChange={(v) => setText(item.id, v)}
               />
+            );
+          case 'innerblock':
+            return (
+              <InnerBlocks />
             );
           case 'list':
             return (

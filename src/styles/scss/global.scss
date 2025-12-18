@@ -61,6 +61,17 @@ section.hero{ max-width: 900px; }
 	color: inherit;
 }
 
+.alignleft .text-modal-section{
+  justify-content:flex-start;
+}
+
+.aligncenter .text-modal-section{
+  justify-content:center;
+}
+
+.alignright .text-modal-section{
+  justify-content:flex-end;
+}
 
 
 /* Buttons */
@@ -88,10 +99,10 @@ section.hero{ max-width: 900px; }
       span{
         display: flex;
         gap: 8px;
-        padding: 8px 20px;
+        padding: 8px 12px;
         font-size: 16px;
         align-items: center;
-        // color: inherit;
+        color: black;
       }
       span::after{
         content: var(--faIconArrowRight);
@@ -117,7 +128,7 @@ section.hero{ max-width: 900px; }
         gap: 8px;
         padding: 8px 12px;
         align-items: center;
-        color: inherit;
+        color: black;
       }
       span::after{
         content: var(--faIconArrowRight);
@@ -471,7 +482,7 @@ section.hero{ max-width: 900px; }
 
 /* Text modal / content */
 .text-modal-section{
-  --tms-grid-template-rows: auto 1fr auto;
+  --tms-grid-template-rows: auto;
   gap: 20px; /* enligt överenskommelse */
   box-sizing: border-box;
   width: 100%;
