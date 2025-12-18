@@ -17,15 +17,6 @@
 	display:grid !important;
 }
 
-.text-modal-ul{
-	display: grid;
-	--icon-space: 28px;
-	gap: 4px;
-	justify-items: start;
-    text-align: left;
-    max-width: 100%;
-	padding-left: var(--icon-space);
-}
 
 .remove-list-item{
 	all: unset;

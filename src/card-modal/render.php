@@ -169,7 +169,12 @@
                                 $list_items = (isset($item['list']) && is_array($item['list'])) ? $item['list'] : [];
                                 $icon       = $item['icon']      ?? '"\\f00c"';
                                 $icon_color = $item['iconColor'] ?? '#000000';
-                                echo '<ul class="text-modal-ul ' . esc_attr($align) . '">';
+                                $listType = strtolower((string)($item['listType'] ?? 'ul'));
+                                if (!in_array($listType, ['ul', 'ol'], true)) {
+                                    $listType = 'ul';
+                                }
+
+                                echo '<' . $listType . ' class="text-modal-ul ' . esc_attr($align) . '">';
                                 foreach ($list_items as $liText) {
                                     printf(
                                         '<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
@@ -178,7 +183,7 @@
                                         wp_kses_post($liText)
                                     );
                                 }
-                                echo '</ul>';
+                                echo '</' . $listType . '>';
                                 break;
                         }
                         ?>
@@ -208,7 +213,7 @@
                     $btn_text  = $it['text'] ?? (isset($it['count']) ? 'Button ' . (int)$it['count'] : 'Button');
                     $btn_class = trim(($isPrimary ? 'button-primary' : 'button-secondary') . ' ' . $align . ' ' . $modalType);
                     printf(
-                        '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener"><span class="wp-block-button__link">%3$s</span></a>',
+                        '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link">%3$s</span></a>',
                         esc_attr($btn_class),
                         esc_url($url),
                         esc_html($btn_text)
@@ -411,7 +416,11 @@
                                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
                                                         $icon       = $it['icon']      ?? '"\\f00c"';
                                                         $icon_color = $it['iconColor'] ?? '#000000';
-                                                        echo '<ul class="text-modal-ul ' . esc_attr($card_align) . '">';
+                                                        $listType = strtolower((string)($item['listType'] ?? 'ul'));
+                                                        if (!in_array($listType, ['ul', 'ol'], true)) {
+                                                            $listType = 'ul';
+                                                        }
+                                                        echo  '<' . $listType . ' class="text-modal-ul ' . esc_attr($card_align) . '">';
                                                         foreach ($list_items as $liText) {
                                                             printf('<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
                                                                 esc_attr($icon),
@@ -419,7 +428,7 @@
                                                                 wp_kses_post($liText)
                                                             );
                                                         }
-                                                        echo '</ul>';
+                                                        echo '</' . $listType . '>';
                                                         break;
                                                 }
                                             }
@@ -445,7 +454,7 @@
                                                 
                                                 if ($modalType === 'cards' || $modalType === 'dropdown') { echo '<hr />'; }
                                                 printf(
-                                                '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener"><span class="wp-block-button__link">%3$s</span></a>',
+                                                '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener noreferrer"><span class="wp-block-button__link">%3$s</span></a>',
                                                 esc_attr($btn_class),
                                                 esc_url($url),
                                                 esc_html($btn_text)
@@ -574,7 +583,11 @@
                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
                                         $icon       = $it['icon']      ?? '"\\f00c"';
                                         $icon_color = $it['iconColor'] ?? '#000000';
-                                        echo '<ul class="text-modal-ul ' . esc_attr($card_align) . '">';
+                                        $listType = strtolower((string)($item['listType'] ?? 'ul'));
+                                        if (!in_array($listType, ['ul', 'ol'], true)) {
+                                            $listType = 'ul';
+                                        }
+                                        echo '<' . $listType . ' class="text-modal-ul ' . esc_attr($card_align) . '">';
                                         foreach ($list_items as $liText) {
                                             printf('<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
                                                 esc_attr($icon),
@@ -582,7 +595,7 @@
                                                 wp_kses_post($liText)
                                             );
                                         }
-                                        echo '</ul>';
+                                        echo '</' . $listType . '>';
                                         break;
                                 }
                             }
@@ -607,7 +620,7 @@
                                 $btn_class = trim(($isPrimary ? 'button-primary' : 'button-secondary') . ' ' . $card_align . ' ' . $modalType);
                                 if ($modalType === 'cards' || $modalType === 'dropdown') { echo '<hr />'; }
                                 printf(
-                                    '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener"><span class="wp-block-button__link">%3$s</span></a>',
+                                    '<a class="wp-block-button fastum-button %1$s" href="%2$s" target="_blank" rel="noopener noreferrer"><span class="wp-block-button__link">%3$s</span></a>',
                                     esc_attr($btn_class),
                                     esc_url($url),
                                     esc_html($btn_text)

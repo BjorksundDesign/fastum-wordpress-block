@@ -583,7 +583,7 @@ section.hero{ max-width: 900px; }
     }
 }
 
-.li-preview::before, .list::before{
+.li-preview::before{
 	content: var(--faIcon);
 	color: var(--iconColor) !important;
    	font-weight: 900;
@@ -630,21 +630,38 @@ section.hero{ max-width: 900px; }
 }
 
 /* Lists in text modal — med tokeniserat gap */
+
 .text-modal-ul{
-  list-style: none;
   margin: 0;
-  --icon-space: 0px;
+  --icon-space: 28px;
   padding-left: var(--icon-space);
-  gap: var(--list-gap, 8px); /* tokeniserad snabbfix */
+  gap: var(--list-gap, 8px);
+  max-width: 100%;
+  text-align: left;
+  justify-items: start;
 
   .list{
-    display: flex;
     align-items: flex-start;
     margin: .25rem 0;
-
     span{ width: 100%; }
   }
 }
+
+ul{
+  &.text-modal-ul{
+    list-style: none;
+    &.list{
+     display: flex;  
+    }
+  }
+}
+
+ol{
+  &.text-modal-ul{
+    margin-left: var(--icon-space);
+  }
+}
+
 .text-modal-ul .list .li-icon{
   font-weight: 900;
   width: 1.25em;
@@ -654,7 +671,7 @@ section.hero{ max-width: 900px; }
 }
 .text-modal-ul .list .li-icon::before{ content: var(--faIcon, "\\f00c"); }
 
-.list::before{
+ul .list::before{
   content: var(--faIcon, "\f00c");
   font-family: var(--font-Awesome);
   font-weight: 900;
@@ -662,6 +679,8 @@ section.hero{ max-width: 900px; }
   display: inline-block;
   width: 1.25em;
   margin-right: .5rem;
+  vertical-align: middle;
+	font-size: 16px;
 }
 
 /* Panel borders */

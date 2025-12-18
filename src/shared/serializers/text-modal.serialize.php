@@ -62,7 +62,7 @@ if ( ! function_exists( 'tm_render_item' ) ) {
 
 				$classes = trim( 'wp-block-button__link ' . ( $isPrimary ? 'button-primary' : 'button-secondary' ) . ' wp-block-button fastum-button' );
 				$attrs = array( 'class' => $classes, 'href' => $href );
-				if ( $openInNew ) { $attrs['target'] = '_blank'; $attrs['rel'] = 'noopener'; }
+				if ( $openInNew ) { $attrs['target'] = '_blank'; $attrs['rel'] = 'noopener noreferrer'; }
 				$attr_str = '';
 				foreach ( $attrs as $k => $v ) $attr_str .= ' ' . $k . '="' . esc_attr( $v ) . '"';
 

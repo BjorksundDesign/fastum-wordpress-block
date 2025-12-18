@@ -75,8 +75,15 @@
             "type": "string",
             "default": "columns"
         },
-		"topSectionFlags": 
-			{ "type": "array", "default": [] }
+		"topSectionFlags": { 
+			"type": "array", 
+			"default": [] 
+		},
+		"listType": {
+			"type": "string",
+			"default": "ul"
+		}
+	
 	},
 	"description": "Card modal",
 	"example": {},

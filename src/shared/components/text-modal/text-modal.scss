@@ -33,16 +33,6 @@ gap: .5rem;
 // .text-wrapper .heading.m { font-size: 32px; line-height: 1.25; }
 // .text-wrapper .heading.s { font-size: 24px; line-height: 1.3; }
 // .text-wrapper .paragraph { font-size: 16px; line-height: 1.6; }
-.text-modal-ul { padding-left: 1.25rem; }
-.text-modal-ul .list { margin: .25rem 0; }
-
-.text-modal-ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-    --icon-space: 28px;
-    padding-left: var(--icon-space);
-}
 
 .text-modal-ul .list .li-icon {
   font-weight: 900; /* solid */
@@ -71,15 +61,7 @@ gap: .5rem;
   margin-bottom: unset;
 }
 
-.list::before {
-  content: var(--faIcon, "\f00c");
-    font-family: var(--font-Awesome);
-  font-weight: 900;
-  color: var(--iconColor, currentColor);
-  display: inline-block;
-  width: 1.25em;
-  margin-right: .5rem;
-}
+
 
 // .panel-settings-button{
 //   width: calc(50% - var(--gap) / 2 );

@@ -110,6 +110,10 @@
     "topSectionFlags": {
       "type": "array",
       "default": []
+    },
+    "listType": {
+      "type": "string",
+      "default": "ul"
     }
   },
   "description": "Card modal",

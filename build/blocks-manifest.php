@@ -173,6 +173,10 @@ return array(
 				'default' => array(
 					
 				)
+			),
+			'listType' => array(
+				'type' => 'string',
+				'default' => 'ul'
 			)
 		),
 		'description' => 'Card modal',

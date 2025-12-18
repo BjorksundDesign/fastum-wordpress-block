@@ -288,6 +288,7 @@ useEffect(() => {
   
   const setHeadingText = (id, text) => commit(updateItem(items, id, { text }));
   const setHeadingSize = (id, size) => commit(updateItem(items, id, { size }));
+  const setListType = (id, text) => commit(updateItem(items, id, { listType:text }));
   const setHeadingType = (id, headingType) => commit(updateItem(items, id, { headingType:headingType }));
   const setParagraphText = (id, text) => commit(updateItem(items, id, { text }));
   const setImage = (id, image, extra) => {
@@ -462,6 +463,11 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
     { label: 'L', value: 'l' },
     { label: 'M', value: 'm' },
     { label: 'S', value: 's' },
+  ];
+
+  const listTypeOptions = [
+    { label: 'Icon', value: 'ul' },
+    { label: 'Siffra', value: 'ol' },
   ];
 
    const headerTypeOptions = [
@@ -791,6 +797,12 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                         onColorChange={(c) => setListIconColor(item.id, c)}
                         label={__('Icon color')}
                       />
+                      <PanelRow className="grid grid-2-button inspector-row">
+                        Listtyp:
+                        {listTypeOptions.map(option => (
+                          <Button key={option.value} className="inspector-button" onClick={() => setListType(item.id, option.value)} disabled={item.listType === option.value} aria-label="List type option.value">{option.label}</Button>
+                        ))}
+                      </PanelRow>  
                     
                   {ensureList(item.list).map((li, liIndex) => (
                     <div style={{'--grid-template-columns':'auto 1fr auto'}}>
@@ -1068,8 +1080,9 @@ export function TextModalRender({
               <InnerBlocks />
             );
           case 'list':
+            const ListTag = item?.listType === 'ol' ? 'ol' : 'ul';
             return (
-              <ul key={item.id} className={`text-modal-ul `}>
+              <ListTag key={item.id} className={`text-modal-ul`}>
                 {ensureList(item.list).map((li, idx) => (
                   <li
                     key={`${item.id}_${idx}`}
@@ -1106,7 +1119,7 @@ export function TextModalRender({
                     />
                   </li>
                 ))}
-              </ul>
+              </ListTag>
             );
         default:
             return null;

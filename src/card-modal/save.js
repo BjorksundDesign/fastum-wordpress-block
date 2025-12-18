@@ -130,8 +130,9 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
               const listItems = Array.isArray(item.list) ? item.list : [];
               const iconVar = item.icon || '"\\f00c"';
               const iconColor = item.iconColor || '#000000';
+              const ListTag = item?.listType === 'ol' ? 'ol' : 'ul';
               return (
-                <ul key={item.id} className="text-modal-ul">
+                <ListTag key={item.id} className="text-modal-ul">
                   {listItems.map((li, idx) => (
                     <li
                       key={`${item.id}_${idx}`}
@@ -141,7 +142,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
                       <RichText.Content tagName="span" value={li || ''} />
                     </li>
                   ))}
-                </ul>
+                </ListTag>
               );
             }
             default:
