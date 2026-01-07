@@ -15,7 +15,9 @@ import {
 import { TextModalInspector, TextModalRender, RowButtons, RenderControl } from '../shared/components/text-modal';
 import { useEffect, useMemo, useState, useRef, useCallback  } from '@wordpress/element';
 import './style.scss';
-import '../styles/scss/global.scss';
+// import '../styles/scss/global.scss';
+import '../styles/css/global.css';
+
 
 
 
