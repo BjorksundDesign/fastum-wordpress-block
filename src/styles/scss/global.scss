@@ -669,7 +669,8 @@ ol{
   display: inline-block;
   color: var(--iconColor, currentColor);
 }
-.text-modal-ul .list .li-icon::before{ content: var(--faIcon, "\\f00c"); }
+
+ul.text-modal-ul .list .li-icon::before{ content: var(--faIcon, "\\f00c"); }
 
 ul .list::before{
   content: var(--faIcon, "\f00c");
