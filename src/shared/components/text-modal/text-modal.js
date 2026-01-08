@@ -7,22 +7,24 @@ import {
   Button,
   TextControl,
   SelectControl,
-  ToggleControl,
-  ToolbarGroup,
-  ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { RichText, ColorPalette, MediaUpload, LinkControl,   InnerBlocks,
- } from '@wordpress/block-editor';
+import { RichText, ColorPalette, MediaUpload, LinkControl, InnerBlocks, BlockControls } from '@wordpress/block-editor';
 import { IconColorPickerRow, ColorPickerRow } from '../color-icon-picker';
 import { ImageModalInspector, ImageModalRender } from '../image-modal';
 import { Image } from '@10up/block-components';
 import './text-modal.scss'
-// import '../../../styles/scss/global.scss'
-// import { useEffect, useRef  } from 'react';
+import { TextModalControllers } from '../text-modal-controller/text-modal-controller';
+import {
+  cardOrderMobileOptions,
+  headerSizeOptions,
+  listTypeOptions,
+  headerTypeOptions,
+  textColorOptions,
+  textAlignOptions,
+} from './text-modal-options';
+import { createTextModalSetters } from './text-modal-setters';
 
-/* =========================
-   Contrast & Text Color Utils
-   ========================= */
+
 const COMMON_FA = [
   { label: 'Check',         hex: 'f00c' },
   { label: 'Chevron Right', hex: 'f054' },
@@ -132,6 +134,8 @@ const getButtonStyle = (bgColor) => {
 
 
 
+
+
 export const RemoveCard = (cards, cardId) => {
   return cards.filter(c => c.id !== cardId);
 };
@@ -192,12 +196,25 @@ export function TextModalInspector({
   const [currentCardOrder, setCurrentCardOrder] = useState(context.cardIndex || '');
   const [openId, setOpenId] = useState(null);
 
+  const commit = (next) => writeItems?.(normalizeItems(next), context);
+  const setters = createTextModalSetters({ items, commit });
 
- const menuRef = useRef(null);
-  const isTextModalOpen = useCallback(
-    (id) => openId === id,
-    [openId]
-  );
+  const {
+    setHeadingText,
+    setHeadingSize,
+    setHeadingType,
+    setParagraphText,
+    setListType,
+    setImage,
+    setButtonText,
+    setButtonURL,
+  } = setters;
+
+  const menuRef = useRef(null);
+    const isTextModalOpen = useCallback(
+      (id) => openId === id,
+      [openId]
+    );
   
   const toggleTextModal = useCallback((id, event, forceClose = false) => {
   event?.stopPropagation?.();
@@ -279,30 +296,30 @@ useEffect(() => {
     return c;
   }, [items]);
   
-  const commit = (next) => writeItems?.(normalizeItems(next), context);
+  // const commit = (next) => writeItems?.(normalizeItems(next), context);
   
   const add = (type) => commit(addItem(items, type));
   const remove = (id) => commit(recount(removeItem(items, id)));
   const up = (id) => commit(moveItem(items, id, 'up'));
   const down = (id) => commit(moveItem(items, id, 'down'));
   
-  const setHeadingText = (id, text) => commit(updateItem(items, id, { text }));
-  const setHeadingSize = (id, size) => commit(updateItem(items, id, { size }));
-  const setListType = (id, text) => commit(updateItem(items, id, { listType:text }));
-  const setHeadingType = (id, headingType) => commit(updateItem(items, id, { headingType:headingType }));
-  const setParagraphText = (id, text) => commit(updateItem(items, id, { text }));
-  const setImage = (id, image, extra) => {
-  if (extra === 'remove') {
-    // Call a function to remove the image
-    commit(updateItem(items, id, { image: null })); // Assuming null removes the image
-    commit(recount(removeItem(items, id)));
-  } else {
-    // Call the function to set the image
-    commit(updateItem(items, id, { image }));
-  }
-};
-  const setButtonText = (id, text) => commit(updateItem(items, id, { text }));
-  const setButtonURL = (id, text) => commit(updateItem(items, id, { url: text }));
+//   const setHeadingText = (id, text) => commit(updateItem(items, id, { text }));
+//   const setHeadingSize = (id, size) => commit(updateItem(items, id, { size }));
+//   const setListType = (id, text) => commit(updateItem(items, id, { listType:text }));
+//   const setHeadingType = (id, headingType) => commit(updateItem(items, id, { headingType:headingType }));
+//   const setParagraphText = (id, text) => commit(updateItem(items, id, { text }));
+//   const setImage = (id, image, extra) => {
+//   if (extra === 'remove') {
+//     // Call a function to remove the image
+//     commit(updateItem(items, id, { image: null })); // Assuming null removes the image
+//     commit(recount(removeItem(items, id)));
+//   } else {
+//     // Call the function to set the image
+//     commit(updateItem(items, id, { image }));
+//   }
+// };
+//   const setButtonText = (id, text) => commit(updateItem(items, id, { text }));
+//   const setButtonURL = (id, text) => commit(updateItem(items, id, { url: text }));
 
   
 const handleBackgroundColorChange = (color) => {      
@@ -453,40 +470,40 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
     }
 };
 
-    const cardOrderMobile = [
-    { label: 'Mirror', value: 'mirror' },
-    { label: 'Custom', value: 'custom' },
-  ];
+//     const cardOrderMobile = [
+//     { label: 'Mirror', value: 'mirror' },
+//     { label: 'Custom', value: 'custom' },
+//   ];
 
-  const headerSizeOptions = [
-    { label: 'XL', value: 'xl' },
-    { label: 'L', value: 'l' },
-    { label: 'M', value: 'm' },
-    { label: 'S', value: 's' },
-  ];
+//   const headerSizeOptions = [
+//     { label: 'XL', value: 'xl' },
+//     { label: 'L', value: 'l' },
+//     { label: 'M', value: 'm' },
+//     { label: 'S', value: 's' },
+//   ];
 
-  const listTypeOptions = [
-    { label: 'Icon', value: 'ul' },
-    { label: 'Siffra', value: 'ol' },
-  ];
+//   const listTypeOptions = [
+//     { label: 'Icon', value: 'ul' },
+//     { label: 'Siffra', value: 'ol' },
+//   ];
 
-   const headerTypeOptions = [
-    { label: 'H1', value: 'h1' },
-    { label: 'H2', value: 'h2' },
-    { label: 'H3', value: 'h3' },
-    { label: 'H4', value: 'h4' },
-  ];
+//    const headerTypeOptions = [
+//     { label: 'H1', value: 'h1' },
+//     { label: 'H2', value: 'h2' },
+//     { label: 'H3', value: 'h3' },
+//     { label: 'H4', value: 'h4' },
+//   ];
 
-     const textColorOptions = [
-    { label: 'Black', value: '#000000' },
-    { label: 'White', value: '#ffffff' },
-  ];
+//      const textColorOptions = [
+//     { label: 'Black', value: '#000000' },
+//     { label: 'White', value: '#ffffff' },
+//   ];
 
-  const textAlignOptions = [
-  { label: 'Left', value: 'leftAlignText', icon: 'editor-alignleft' },
-  { label: 'Center', value: 'centerAlignText', icon: 'editor-aligncenter' },
-  { label: 'Right', value: 'rightAlignText', icon: 'editor-alignright' },
-];
+//   const textAlignOptions = [
+//   { label: 'Left', value: 'leftAlignText', icon: 'editor-alignleft' },
+//   { label: 'Center', value: 'centerAlignText', icon: 'editor-aligncenter' },
+//   { label: 'Right', value: 'rightAlignText', icon: 'editor-alignright' },
+// ];
        const stopPropagation = (event) => {
         event.stopPropagation(); // Prevent the click from propagating to the parent
     };
@@ -918,23 +935,131 @@ export function TextModalRender({
   context,
   cardAttributes,
   attributes,
-  contentOrientation,
-  buttonClass,
-  inverted = false, 
+  isSelected,
 }) {
   
   const [focusTarget, setFocusTarget] = useState(null);
-  const buttonStyle = getButtonStyle(backgroundColor || '#000000'); // Default to white if no background color
-
-  
-  
-
+  const [activeId, setActiveId] = useState(null);
+  const rootRef = useRef(null);
+  const [hasFocus, setHasFocus] = useState(false);
+  const toolbarRef = useRef(null);
   const items = normalizeItems(readItems?.() || []);
+  const insertAfter = (arr, index, item) => {
+  const next = [...arr];
+  next.splice(index + 1, 0, item);
+  return next;
+};
+  // const commit = (next) => writeItems?.(normalizeItems(next), context);
+    const duplicate = (id) => commit(duplicateItem(items, id));
+
   const commit = (next) => writeItems?.(normalizeItems(next), context);
+const setters = createTextModalSetters({ items, commit });
+const suppressNextBlurRef = useRef(false);
+const blurRafRef = useRef(0);
+const {
+  setHeadingText,
+  setHeadingSize,
+  setHeadingType,
+  setParagraphText,
+  setListType,
+  setImage,
+  setButtonText,
+  setButtonURL,
+} = setters;
+
+const isInPopover = (el) =>
+  !!el?.closest?.('.components-popover, .components-dropdown, .components-menu-group');     
+
+const isTextItem = (it) => ['heading','paragraph','list','innerblock'].includes(it.type);
+const isButtonItem = (it) => it.type === 'button';
+const isImageItem = (it) => it.type === 'image';
+
+
+      const subsetFor = (item) => {
+        if (!item) return null;
+        if (isTextItem(item)) return isTextItem;
+        if (isButtonItem(item)) return isButtonItem;
+        if (isImageItem(item)) return isImageItem;
+        return null;
+      };
+
+      const moveWithinSubset = (items, id, dir, predicate) => {
+        const from = items.findIndex((it) => it.id === id);
+        if (from === -1) return items;
+        if (!predicate(items[from])) return items;
+
+        const subsetIdxs = items
+          .map((it, idx) => (predicate(it) ? idx : -1))
+          .filter((idx) => idx !== -1);
+
+        const pos = subsetIdxs.indexOf(from);
+        const nextPos = dir === 'up' ? pos - 1 : pos + 1;
+        if (nextPos < 0 || nextPos >= subsetIdxs.length) return items;
+
+        const to = subsetIdxs[nextPos];
+
+        const next = [...items];
+        const [moved] = next.splice(from, 1);
+        next.splice(to, 0, moved);
+        return next;
+      };
+
+      const remove = (id) => commit(recount(removeItem(items, id)));
+
+      const up = (id) => {
+        const item = items.find((i) => i.id === id);
+        const pred = subsetFor(item);
+        if (!pred) return;
+        commit(moveWithinSubset(items, id, 'up', pred));
+      };
+
+      const down = (id) => {
+        const item = items.find((i) => i.id === id);
+        const pred = subsetFor(item);
+        if (!pred) return;
+        commit(moveWithinSubset(items, id, 'down', pred));
+      };
+
+
+  function recount(arr) {
+    const tally = {};
+    return arr.map((it) => {
+      tally[it.type] = (tally[it.type] || 0) + 1;
+      return { ...it, count: tally[it.type] };
+    });
+  }
+
+  function duplicateItem(items, id) {
+  const idx = items.findIndex((i) => i.id === id);
+  if (idx === -1) return items;
+
+  const original = items[idx];
+
+  // Om du bara vill tillåta 1 image i blocket – tillåt ej duplicering av image
+  if (original.type === 'image') {
+    return items;
+  }
+
+  // Djup kopia av relevanta fält
+  const copy = {
+    ...original,
+    id: newId(),
+  };
+
+  if (original.type === 'list') {
+    copy.list = [...ensureList(original.list)];
+  }
+
+  // Lägg in direkt efter originalet och räkna om counts
+  const inserted = insertAfter(items, idx, copy);
+  return recount(inserted);
+}
+
+
 
 
   const setText = (id, text) => commit(updateItem(items, id, { text }));
-  const setButtonText = (id, text) => commit(updateItem(items, id, { text }));
+  // const setButtonText = (id, text) => commit(updateItem(items, id, { text }));
 
   const textColor = () => {
   if (context.scope === 'global') {
@@ -976,65 +1101,168 @@ export function TextModalRender({
     commit(updateItem(snapshot, id, { list: updated }));
   };
 
+  const textItems = items.filter(item => ['heading', 'paragraph', 'list', 'innerblock'].includes(item.type));
+  const orderedItems = items.filter((i) =>
+  ['heading', 'paragraph', 'list', 'innerblock', 'button', 'image'].includes(i.type)
+);
+
   const tagFor = (item) => {
     if (item.type === 'heading') return item.headingType || 'h2';
     if (item.type === 'paragraph') return 'p';
     return 'div';
   };
 
-     const borderOptions = [
-    { label: 'Show', value: 'show' },
-    { label: 'Hide', value: 'hide' },
-  ];
+  const clearToolbar = useCallback(() => {
+  setActiveId(null);
+  setHasFocus(false);
+}, []);
 
-     const widthOptions = [
-    { label: 'Full', value: '100%' },
-    { label: 'Half', value: '50%' },
-  ];
-
-     const imageSizingOptions = [
-    { label: 'Cover', value: 'cover' },
-    { label: 'Contain', value: 'contain' },
-  ];
-
-     const imageAspectOptions = [
-    { label: '3/2', value: '3/2' },
-    { label: '2/3', value: '2/3' },
-    { label: 'None', value: 'none' },
-  ];
+const handleItemFocus = useCallback((id) => {
+  setActiveId(id);
+  setHasFocus(true);
+}, []);
 
 
+const handleBlurCapture = useCallback(() => {
+  if (blurRafRef.current) cancelAnimationFrame(blurRafRef.current);
 
-  // const additionalClasses = [];
+  blurRafRef.current = requestAnimationFrame(() => {
+    const root = rootRef.current;
+    const toolbar = toolbarRef.current;
+    const ae = document.activeElement;
 
-  // // Check for text-related items
-  // if (items.some(item => ['headline', 'paragraph', 'list'].includes(item.type))) {
-  //   additionalClasses.push('contains-text');
-  // }
+    // if we just clicked another editable, ignore this blur tick
+    if (suppressNextBlurRef.current) {
+      suppressNextBlurRef.current = false;
+      return;
+    }
 
-  // // Check for image items
-  // if (items.some(item => item.type === 'image')) {
-  //   additionalClasses.push('contains-image');
-  // }
+    // ✅ If focus moved into a WP popover/dropdown menu, keep toolbar open
+    if (isInPopover(ae)) return;
 
-  // // Check for button items
-  // if (items.some(item => item.type === 'button')) {
-  //   additionalClasses.push('contains-button');
-  // }
+    // keep if focus is still in render OR toolbar
+    if ((root && ae && root.contains(ae)) || (toolbar && ae && toolbar.contains(ae))) return;
 
-  // // Join the class names into a single string
-  // const classNames = additionalClasses.join(' ');
+    suppressNextBlurRef.current = false;
+
+      requestAnimationFrame(() => {
+        const ae = document.activeElement;
+
+        if (
+          isInPopover(ae) ||
+          rootRef.current?.contains(ae) ||
+          toolbarRef.current?.contains(ae)
+        ) {
+          return;
+        }
+
+        clearToolbar();
+});
+  });
+}, [clearToolbar]);
+
+
+const activeItem = items.find((i) => i.id === activeId);
+const isHeading = activeItem?.type === 'heading';
+const isList = activeItem?.type === 'list';
+const isInnerblock = activeItem?.type === 'innerblock';
+const isButton = activeItem?.type === 'button';
+
+const menus = [
+  // Heading size dropdown (only meaningful for heading)
+  isHeading && {
+    key: 'headingSize',
+    label: __('Heading size'),
+    options: headerSizeOptions,
+    getValue: () => activeItem?.size,
+    onSelect: ({ activeId, value }) => setHeadingSize(activeId, value),
+  },
+
+  // Heading type dropdown
+  isHeading && {
+    key: 'headingType',
+    label: __('Heading type'),
+    options: headerTypeOptions,
+    getValue: () => activeItem?.headingType,
+    onSelect: ({ activeId, value }) => setHeadingType(activeId, value),
+  },
+
+  // List type dropdown
+  isList && {
+    key: 'listType',
+    label: __('List type'),
+    options: listTypeOptions,
+    getValue: () => activeItem?.listType,
+    onSelect: ({ activeId, value }) => setListType(activeId, value),
+  },
+].filter(Boolean);
+  const enabledItems = items.filter((i) =>
+    ['heading', 'paragraph', 'list', 'innerblock', 'button', 'image'].includes(i.type)
+  );
+
+const handleRootMouseDownCapture = useCallback((e) => {
+  const t = e.target;
+
+  const clickedEditable = !!t.closest?.(
+    '[contenteditable="true"], .block-editor-rich-text__editable, .rich-text'
+  );
+
+  // switching text -> text
+  if (clickedEditable) {
+    suppressNextBlurRef.current = true;
+    return;
+  }
+
+  // toolbar / dropdowns
+  if (toolbarRef.current?.contains(t)) return;
+  if (isInPopover(t)) return;
+
+  // click outside: wait for focus to settle
+  requestAnimationFrame(() => {
+    const ae = document.activeElement;
+
+    if (rootRef.current?.contains(ae)) return;
+    if (toolbarRef.current?.contains(ae)) return;
+    if (isInPopover(ae)) return;
+
+    clearToolbar();
+  });
+}, [clearToolbar]);
 
   return (
-    <div className={`text-modal-section ${attributes.modalType !== 'dropdown' && (cardAttributes?.topSectionFlags ?? attributes.topSectionFlags)}`}>
-      {items.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
+    <div
+    ref={rootRef}
+      onMouseDownCapture={handleRootMouseDownCapture}    
+    >
+    {isSelected && activeId && hasFocus && context.scope !== 'card' && (
+      <div 
+        ref={toolbarRef} 
+        className="textmodal-toolbar"
+        onMouseDown={(e) => e.preventDefault()}
+      >
+      <TextModalControllers
+          activeId={activeId}
+          orderedItems={orderedItems}
+          onUp={up}
+          onDown={down}
+          onDuplicate={duplicate}
+          onRemove={remove}
+          menus={menus}
+        />
+        </div>
+  )}
+    <div 
+      className={`text-modal-section ${attributes.modalType !== 'dropdown' && (cardAttributes?.topSectionFlags ?? attributes.topSectionFlags)}`}
+      
+      >
+      {textItems.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
         <div role="text-wrapper" className={`${className} ${(cardAttributes?.align)}`} 
         style={{
         order: '2',
         color: textColor()
       }} 
         >
-      {items.map((item) => {
+      {textItems.map((item) => {
         if (item.type === 'heading' && !enable.includes('heading')) return null;
         if (item.type === 'paragraph' && !enable.includes('paragraph')) return null;
         if (item.type === 'list' && !enable.includes('list')) return null;
@@ -1045,35 +1273,36 @@ export function TextModalRender({
           case 'heading':
             const first = isFirstHeading(items, item.id);
             return (
-              <RichText
-                key={item.id}
-                position={first}
-                tagName={first ? 'h2' : tagFor(item)}
-                className={`block-editor-rich-text__editable wp-block is-selected wp-block-heading rich-text heading ${item.size || 'xl'} ${first ? 'is-first-heading' : ''}`}
-                id={`block-${item.id}`} // Assuming item.id is unique
-                role="document" // Use standard role for headings
-                aria-label={`Block: Heading`} // Accessibility label
-                data-block={item.id} // Data attribute for block ID
-                data-type="core/heading" // Data attribute for block type
-                data-title="Heading" // Data attribute for title
-                contentEditable={true} // Ensure it's editable
-                value={item.text ?? 'Heading'}
-                data-wp-block-attribute-key="content"
-                placeholder={`Heading ${item.count || 1}`}
-                data-listener-added_95ef2b5b="true"
-                onChange={(v) => setText(item.id, v)}
-              />
+                <RichText
+                  position={first}
+                  tagName={first ? 'h2' : tagFor(item)}
+                  className={`block-editor-rich-text__editable wp-block is-selected wp-block-heading rich-text heading ${item.size || 'xl'} ${first ? 'is-first-heading' : ''}`}
+                  id={`block-${item.id}`} // Assuming item.id is unique
+                  role="document" // Use standard role for headings
+                  aria-label={`Block: Heading`} // Accessibility label
+                  data-block={item.id} // Data attribute for block ID
+                  data-type="core/heading" // Data attribute for block type
+                  data-title="Heading" // Data attribute for title
+                  contentEditable={true} // Ensure it's editable
+                  value={item.text ?? 'Heading'}
+                  data-wp-block-attribute-key="content"
+                  placeholder={`Heading ${item.count || 1}`}
+                  data-listener-added_95ef2b5b="true"
+                  onFocus={(e) => handleItemFocus(item.id, e)}
+                  onChange={(v) => setText(item.id, v)}
+                />
             );
           case 'paragraph':
             return (
-              <RichText
-                key={item.id}
-                tagName="p"
-                className={`paragraph`}
-                value={item.text ?? 'Paragraph'}
-                placeholder={`Paragraph ${item.count || 1}`}
-                onChange={(v) => setText(item.id, v)}
-              />
+                  <RichText
+                  key={item.id}
+                  tagName="p"
+                  className={`paragraph`}
+                  value={item.text ?? 'Paragraph'}
+                  placeholder={`Paragraph ${item.count || 1}`}
+                  onFocus={(e) => handleItemFocus(item.id, e)}
+                  onChange={(v) => setText(item.id, v)}
+                />
             );
           case 'innerblock':
             return (
@@ -1089,7 +1318,7 @@ export function TextModalRender({
                     className="list"
                     style={{ '--faIcon': item.icon || '"\\f00c"', '--iconColor': item.iconColor || '#000000' }}
                   >
-                    <RichText
+                      <RichText
                       tagName="span"
                       value={li ?? ''}
                       placeholder={__('List item')}
@@ -1101,10 +1330,11 @@ export function TextModalRender({
                           el.focus?.();
                         }
                       }}
-                      onFocus={() => {
+                      onFocus={(e) => {
                         if (focusTarget && focusTarget.listId === item.id && focusTarget.index === idx) {
                           setFocusTarget(null);
-                        }
+                        };
+                        handleItemFocus(item.id, e)
                       }}
                       onKeyDown={(e) => {
                         const isBackspace = e.key === 'Backspace' || e.keyCode === 8;
@@ -1142,14 +1372,13 @@ export function TextModalRender({
                                 onClick={() => window.location.href = item.url} // Open URL in a new tab
                                 disabled
                                 >                                
-                                <RichText
+                                  <RichText
                                     tagName='span'
                                     label={'Button Text'}
-                                    // style={item.isPrimary ? {} : { backgroundColor: buttonStyle, color: buttonStyle === 'black' ? 'white' : 'black' }}
                                     value={item?.text || `Button ${item.count}`} // Display count
                                     onChange={(newText) => setButtonText(item.id, newText)}
+                                    onFocus={(e) => handleItemFocus(item.id, e)}
                                     className={`wp-block-button__link ${item.isPrimary ? 'button-primary' : 'button-secondary'}`}
-                                    // allowedFormats={[]} 
                                     />
                             </button>
                           </>
@@ -1159,21 +1388,26 @@ export function TextModalRender({
                 }
             })}
         </div>
-        ):null}
+      ):null}
          {items.some(item => item.type === 'image') ? (
         <div className="image-wrapper" style={{order : '1'}}>
             {items.map((item) => {
               if (item.type !== 'image' || disable.image) return null;
 
               return (
-                <ImageModalRender key={item.id} attributes={attributes} item={item} onChange={(id, mediaId) => {
-                const updatedItems = updateItem(items, id, { image: mediaId });
-                commit(updatedItems);
-              }} />
+                  <ImageModalRender 
+                    key={item.id} 
+                    attributes={attributes} 
+                    item={item} 
+                    onChange={(id, mediaId) => {
+                      const updatedItems = updateItem(items, id, { image: mediaId });
+                      commit(updatedItems);
+                    }} />
             );
         })}
       </div>
       ):null}
+    </div>
     </div>
   );
 }

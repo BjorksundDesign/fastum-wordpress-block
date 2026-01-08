@@ -109,7 +109,7 @@ export const splitItemsOnFirstHeading = (items = []) => {
 
 
 export default function Edit(props) {
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributes, isSelected } = props;
   const {
     numberOfCards,
     cards = [], // [{id, items: [...], image, align, backgroundColor}]
@@ -122,7 +122,6 @@ export default function Edit(props) {
     topSectionFlags,
     modalType,
   } = attributes;
-  console.log("test", attributes);
   
   const GLOBAL_TM_ID = 'global';
   const [openTextModals, setOpenTextModals] = useState({}); // { [id: string]: boolean }
@@ -132,8 +131,6 @@ export default function Edit(props) {
   const [isGlobalOpen, setGlobalOpen] = useState(true);
   const [openInspectorId, setOpenInspectorId] = useState(null); // the ONLY open menu id
   const inspectorMenuRef = useRef(null);   
-
-
 
    useEffect(() => {
   // keep only ids that still exist
@@ -775,6 +772,8 @@ useEffect(() => {
                 backgroundColor={attributes.backgroundColor}
                 context={{ scope: 'global' }}
                 attributes={attributes}
+                showToolbar={true}  
+                isSelected={isSelected}
                 />
           {attributes.modalType === 'lime-form' &&
             <div className="custom-container">
@@ -828,6 +827,8 @@ useEffect(() => {
                             enable={['heading']}
                             className={`text-wrapper`}
                             context={{ scope: 'card', cardIndex: i }}
+                            showToolbar={true} 
+                            isSelected={isSelected} 
                           />
                         </summary>
 
@@ -843,6 +844,7 @@ useEffect(() => {
                             className={`text-wrapper`}
                             enable={enableOptions}
                             context={{ scope: 'card', cardIndex: i }}
+                            isSelected={isSelected}
                           />
                         </div>
                       </details>
@@ -860,6 +862,8 @@ useEffect(() => {
                     cardAttributes={card}
                     className={`text-wrapper`}
                     context={{ scope: 'card', cardIndex: i }}
+                    showToolbar={true}  
+                    isSelected={isSelected}
                   />
                 )}
 

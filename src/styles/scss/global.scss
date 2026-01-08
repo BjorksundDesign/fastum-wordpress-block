@@ -691,6 +691,16 @@ ul .list::before{
   margin-bottom: unset;
 }
 
+.text-modal-section {
+  position: relative; // anchor absolute children
+}
+
+.textmodal-toolbar {
+  position: absolute;
+  top: 0;            // or whatever default you want
+  left: 0;
+  z-index: 9999;     // ensure above text
+}
 
 .yoast-breadcrumbs{
 	padding:12px 80px !important;
@@ -817,6 +827,30 @@ th + th, td + td{ text-align: center; }
   }
 
   .card-modal-card{ order: var(--currentCardOrder) !important; }
+}
+
+.text-item-row {
+  position: relative;
+}
+
+.text-item-row__controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 120ms ease, transform 120ms ease;
+
+  pointer-events: none; /* prevent stealing clicks when hidden */
+}
+
+.text-item-row:hover .text-item-row__controls,
+.text-item-row.is-active .text-item-row__controls {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 @media only screen and (max-width: 480px){
