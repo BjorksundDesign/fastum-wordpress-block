@@ -19,7 +19,6 @@
     $imageSize        = isset($attributes['imageSize']) ? (string) $attributes['imageSize'] : '';      // cover|contain (klass + object-fit)
     $imageWidth       = isset($attributes['imageWidth']) ? (string) $attributes['imageWidth'] : '100%';
     $imageAspect      = isset($attributes['imageAspect']) ? (string) $attributes['imageAspect'] : 'none';
-    $imageSize        = isset($attributes['imageSize']) ? (string) $attributes['imageSize'] : '';  // ev. extra klass
     $cardBorder       = isset($attributes['cardBorder']) ? (string) $attributes['cardBorder'] : '';
     $cardWidthOptions = isset($attributes['cardWidthOptions']) ? (string) $attributes['cardWidthOptions'] : ''; // "400px" | "600px"
     $className        = isset($attributes['className']) ? (string) $attributes['className'] : '';
@@ -115,7 +114,119 @@
         return ['first' => $first, 'rest' => $rest, 'firstIndex' => $i];
     };
 
+    // ---------------------------
+// FAQPage JSON-LD helpers
+// ---------------------------
+$ctb_clean_text = static function($text) {
+    $text = (string) $text;
+    $text = do_shortcode($text);
+    $text = wp_strip_all_tags($text);
+    $text = preg_replace('/\s+/u', ' ', $text);
+    return trim($text);
+};
+
+$ctb_first_heading_text = static function($items) use ($ctb_clean_text) {
+    if (!is_array($items)) return '';
+    foreach ($items as $it) {
+        if (!is_array($it)) continue;
+        if (($it['type'] ?? '') === 'heading') {
+            return $ctb_clean_text($it['text'] ?? '');
+        }
+    }
+    return '';
+};
+
+$ctb_items_to_plain_answer = static function($items) use ($ctb_clean_text) {
+    if (!is_array($items)) return '';
+
+    $parts = [];
+
+    foreach ($items as $it) {
+        if (!is_array($it)) continue;
+
+        $type = $it['type'] ?? '';
+
+        // Paragraph / heading
+        if (in_array($type, ['paragraph','heading','text','innerblock'], true)) {
+            $t = $ctb_clean_text($it['text'] ?? '');
+            if ($t !== '') $parts[] = $t;
+        }
+
+        // List: din data verkar vara ['list' => ['li1','li2',...]]
+        if ($type === 'list') {
+            $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
+            foreach ($list_items as $li) {
+                $t = $ctb_clean_text($li);
+                if ($t !== '') $parts[] = $t;
+            }
+        }
+
+        // (Image/button ignoreras som FAQ-svartext)
+    }
+
+    $answer = trim(implode(' ', $parts));
+    $answer = preg_replace('/\s+/u', ' ', $answer);
+    return trim($answer);
+};
+
+// Bygger JSON-LD objekt från cards
+$ctb_build_faq_jsonld = static function($cards) use ($split_on_first_heading, $ctb_first_heading_text, $ctb_items_to_plain_answer) {
+    if (!is_array($cards) || empty($cards)) return null;
+
+    $mainEntity = [];
+
+    foreach ($cards as $card) {
+        $per_items = (isset($card['items']) && is_array($card['items'])) ? $card['items'] : [];
+        if (empty($per_items)) continue;
+
+        // Använd samma split-logik som din dropdown render
+        $split = $split_on_first_heading($per_items);
+        $first = $split['first'] ?? null;
+        $rest  = $split['rest'] ?? [];
+
+        $question = '';
+        if (is_array($first) && (($first['type'] ?? '') === 'heading')) {
+            $question = $ctb_first_heading_text([$first]);
+        } else {
+            // fallback: leta första heading i hela listan
+            $question = $ctb_first_heading_text($per_items);
+        }
+
+        $answer = $ctb_items_to_plain_answer($rest);
+
+        if ($question === '' || $answer === '') continue;
+
+        $mainEntity[] = [
+            '@type' => 'Question',
+            'name'  => $question,
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text'  => $answer,
+            ],
+        ];
+    }
+
+    if (empty($mainEntity)) return null;
+
+    return [
+        '@context' => 'https://schema.org',
+        '@type'    => 'FAQPage',
+        'mainEntity' => $mainEntity,
+    ];
+};
+
+$faq_jsonld = null;
+
+// Bara dropdown = FAQ
+if ($modalType === 'dropdown' && !empty($cards)) {
+    $faq_jsonld = $ctb_build_faq_jsonld($cards);
+}
+
+
     ?>
+<?php if ( ! is_admin() && ! wp_doing_ajax() && ! empty($faq_jsonld) ) : ?>
+<script type="application/ld+json"><?php echo wp_json_encode($faq_jsonld,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<?php endif; ?>
    <article <?php echo $wrapper_attrs; ?>>
     <?php
         $top_flags = isset($attributes['topSectionFlags']) ? trim((string) $attributes['topSectionFlags']) : '';
@@ -123,11 +234,6 @@
             $top_flags = $section_flags($items); // fallback to computed flags
         }
         $show_top_section = ($topSectionFlags !== '' || $modalType === 'lime-form');
-
-            echo '<script>';
-            echo 'console.log("show_top_section:", ' . json_encode($show_top_section) . ');';
-            echo 'console.log("section_flags:", ' . json_encode($topSectionFlags) . ');';
-            echo '</script>';
         ?>
 
     <?php if ( $show_top_section ): ?>
@@ -416,7 +522,7 @@
                                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
                                                         $icon       = $it['icon']      ?? '"\\f00c"';
                                                         $icon_color = $it['iconColor'] ?? '#000000';
-                                                        $listType = strtolower((string)($item['listType'] ?? 'ul'));
+                                                        $listType = strtolower((string)($it['listType'] ?? 'ul'));
                                                         if (!in_array($listType, ['ul', 'ol'], true)) {
                                                             $listType = 'ul';
                                                         }
@@ -583,7 +689,7 @@
                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
                                         $icon       = $it['icon']      ?? '"\\f00c"';
                                         $icon_color = $it['iconColor'] ?? '#000000';
-                                        $listType = strtolower((string)($item['listType'] ?? 'ul'));
+                                        $listType = strtolower((string)($it['listType'] ?? 'ul'));
                                         if (!in_array($listType, ['ul', 'ol'], true)) {
                                             $listType = 'ul';
                                         }
