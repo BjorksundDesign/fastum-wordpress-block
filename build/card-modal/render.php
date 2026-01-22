@@ -58,11 +58,17 @@
         $inline_style_parts[] = "background-position:center center";
     }
 }
-    if (!empty($backgroundColor)) {
-        // överstyr ev. bild
-        $inline_style_parts[] = "background:unset";
-        $inline_style_parts[] = "background-color:" . esc_attr($backgroundColor);
-    }
+    if ($background_url) {
+        if ($backgroundColor !== '') {
+            $inline_style_parts[] =
+            "background-image: linear-gradient(" . esc_attr($backgroundColor) . "," . esc_attr($backgroundColor) . "), url('" . esc_url($background_url) . "')";
+        } else {
+            $inline_style_parts[] = "background-image:url('" . esc_url($background_url) . "')";
+        }
+        $inline_style_parts[] = "background-size:" . esc_attr($background_size);
+        $inline_style_parts[] = "background-repeat:no-repeat";
+        $inline_style_parts[] = "background-position:" . ($background_position !== '' ? esc_attr($background_position) : 'center center');
+        }
     // Add CSS variables (now correctly quoted for --faIcon)
     if ($faIcon !== '') {
         $inline_style_parts[] = '--faIcon:"' . esc_attr($faIcon) . '"';
