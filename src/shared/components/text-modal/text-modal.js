@@ -186,6 +186,8 @@ export function TextModalInspector({
   updateImage,
   initialBackgroundColor,
   onSetMobilePosition,
+  selectedItemId,
+  setSelectedId,
 }) {
   const items = normalizeItems(readItems?.() || []);
   const [isHovered, setIsHovered] = useState(false);
@@ -671,7 +673,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               onClick={stopPropagation}
               className="text-modal-panel-body" 
               // onClick={stopPropagation}
-              initialOpen={false}>
+              initialOpen={false}
+              opened={selectedItemId === item.id}
+              >
                   <PanelRow className="grid grid-1-button inspector-row">
                     Text:
                     <TextControl
@@ -727,7 +731,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   </>
               } 
                   className="text-modal-panel-body" 
-                  initialOpen={false}>
+                  initialOpen={false}
+                  opened={selectedItemId === item.id}
+                  >
                    <PanelRow className="grid grid-1-button inspector-row">
                     Text:
                     <TextControl
@@ -769,8 +775,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   </>
               } 
                   className="text-modal-panel-body" 
-                  initialOpen={false}>
-                    test
+                  initialOpen={false}
+                  opened={selectedItemId === item.id}
+                  >
                 </PanelBody>
                   </>
               );
@@ -806,7 +813,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   </>
               } 
                   className="text-modal-panel-body" 
-                  initialOpen={false}>
+                  initialOpen={false}
+                  opened={selectedItemId === item.id}
+                  >
                     <IconColorPickerRow
                         iconHex={item.iconRaw}
                         color={item.iconColor}
@@ -882,7 +891,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   </>
               } 
                   className="text-modal-panel-body" 
-                  initialOpen={false}>
+                  initialOpen={false}
+                  opened={selectedItemId === item.id}
+                  >
                         {(() => {
                             switch (item.type) {
                                 case 'button':
@@ -936,6 +947,8 @@ export function TextModalRender({
   cardAttributes,
   attributes,
   isSelected,
+  onRequestInspect,
+  onSelectItem
 }) {
   
   const [focusTarget, setFocusTarget] = useState(null);
@@ -1120,7 +1133,9 @@ const isImageItem = (it) => it.type === 'image';
 const handleItemFocus = useCallback((id) => {
   setActiveId(id);
   setHasFocus(true);
-}, []);
+  onSelectItem?.(id);
+  onRequestInspect?.(id); // 👈 NYTT: säg till Edit vilket item som valdes
+}, [onRequestInspect]);
 
 
 const handleBlurCapture = useCallback(() => {

@@ -130,7 +130,22 @@ export default function Edit(props) {
   const [isOpenById, setIsOpenById] = useState({});
   const [isGlobalOpen, setGlobalOpen] = useState(true);
   const [openInspectorId, setOpenInspectorId] = useState(null); // the ONLY open menu id
-  const inspectorMenuRef = useRef(null);   
+  const inspectorMenuRef = useRef(null);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [openCardInspectorId, setOpenCardInspectorId] = useState(null);
+
+
+
+  const requestInspectInCard = useCallback((cardId, itemId) => {
+  setOpenCardInspectorId(cardId);   // öppna kortets PanelBody i inspectorn
+  setSelectedItemId(itemId);        // välj item (TextModalInspector öppnar rätt PanelBody)
+}, []);
+
+const requestInspectInGlobal = useCallback((itemId) => {
+  setOpenCardInspectorId(null);     // stäng kort-paneler
+  setSelectedItemId(itemId);        // välj global item
+}, []);
+   
 
    useEffect(() => {
   // keep only ids that still exist
@@ -144,13 +159,6 @@ export default function Edit(props) {
   });
 }, [cards]);
 
-//   const toggleCardOpen = (id) => {
-//   setIsOpenById(prev => {
-//     const next = { ...prev };
-//     if (next[id]) delete next[id]; else next[id] = true;
-//     return next;
-//   });
-// };
 const isTextModalOpen = useCallback(
   (id) => openInspectorId === id,
   [openInspectorId]
@@ -301,6 +309,8 @@ const cloneItem = (item) => {
     setAttributes(patch);
     return;
   }
+
+
 
   const prevCard = next[cardIndex] || {};
   const nextCard = { ...prevCard, ...patch };
@@ -511,6 +521,8 @@ switch (attributes.modalType) {
     ...(attributes.modalType !== 'dropdown' ? ['image', 'imagemenu'] : []),
 ];
 
+
+
 // Samla alla items (wrapper + cards) i en lista
 const collectItems = (attributes) => {
   const top = Array.isArray(attributes.items) ? attributes.items : [];
@@ -569,7 +581,8 @@ useEffect(() => {
                           writeItems={(newItems) => setAttributes({ items: newItems })}
                           enable={inspectorMenuItems}
                           updateCard={updateCard}
-                          context={{ scope: 'global' }}  
+                          context={{ scope: 'global' }}
+                          selectedItemId={selectedItemId}  
                           />
                     {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&(
                       <Button 
@@ -667,6 +680,7 @@ useEffect(() => {
                               initialBackgroundColor={attributes.backgroundColor}
                               updateCard={updateCard}
                               context={{ scope: 'global' }}
+                              selectedItemId={selectedItemId}
                             />
                             
                           )}
@@ -681,6 +695,7 @@ useEffect(() => {
               initialBackgroundColor={attributes.backgroundColor}
               updateCard={updateCard}
               context={{ scope: 'global' }}
+              selectedItemId={selectedItemId}
             />
           </PanelBody>
 
@@ -720,6 +735,7 @@ useEffect(() => {
                                        updateCard={updateCard}
                                        onChangeBackgroundColor={(c) => setAttributes({ backgroundColor: c })}
                                        context={{ scope: 'card', cardIndex: i }}
+                                       selectedItemId={selectedItemId}
                                      />
                                    <PanelRow className="grid grid-4-button no-title minimal inspector-row">
                                    <RowButtons
@@ -737,6 +753,10 @@ useEffect(() => {
                       }  
                 key={`card-controls-${card.id}`} 
                 className="card-item panel-body" 
+                opened={openCardInspectorId === card.id}
+                onToggle={() =>
+                  setOpenCardInspectorId(prev => (prev === card.id ? null : card.id))
+                }
                 initialOpen={false}>
                 <div style={{'--grid-template-columns': 'auto 1fr'}}>
                    <TextModalInspector
@@ -752,6 +772,7 @@ useEffect(() => {
                             onChangeBackgroundColor={(c) => setAttributes({ backgroundColor: c })}
                             onSetMobilePosition={(pos) => setMobilePosition(i, pos)}   // ← new prop
                             context={{ scope: 'card', cardIndex: i }} // valfritt
+                            selectedItemId={selectedItemId}
                           />
                 </div>
               </PanelBody>
@@ -774,6 +795,9 @@ useEffect(() => {
                 attributes={attributes}
                 showToolbar={true}  
                 isSelected={isSelected}
+                // selectedItemId={selectedItemId}
+                // setSelectedItemId={setSelectedItemId}
+                onRequestInspect={(itemId) => requestInspectInGlobal(itemId)}
                 />
           {attributes.modalType === 'lime-form' &&
             <div className="custom-container">
@@ -828,7 +852,11 @@ useEffect(() => {
                             className={`text-wrapper`}
                             context={{ scope: 'card', cardIndex: i }}
                             showToolbar={true} 
-                            isSelected={isSelected} 
+                            isSelected={isSelected}
+                            // selectedItemId={selectedItemId}
+                            // onSelectItem={setSelectedItemId}
+                            onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
+                            onSelectItem={setSelectedItemId} 
                           />
                         </summary>
 
@@ -845,6 +873,10 @@ useEffect(() => {
                             enable={enableOptions}
                             context={{ scope: 'card', cardIndex: i }}
                             isSelected={isSelected}
+                            // selectedItemId={selectedItemId}
+                            // onSelectItem={setSelectedItemId}
+                            onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
+                            onSelectItem={setSelectedItemId}
                           />
                         </div>
                       </details>
@@ -864,6 +896,10 @@ useEffect(() => {
                     context={{ scope: 'card', cardIndex: i }}
                     showToolbar={true}  
                     isSelected={isSelected}
+                    // selectedItemId={selectedItemId}
+                    // onSelectItem={setSelectedItemId}
+                    onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
+                    onSelectItem={setSelectedItemId}
                   />
                 )}
 
