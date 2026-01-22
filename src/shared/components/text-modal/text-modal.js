@@ -188,6 +188,7 @@ export function TextModalInspector({
   onSetMobilePosition,
   selectedItemId,
   setSelectedId,
+  setSelectedItemId
 }) {
   const items = normalizeItems(readItems?.() || []);
   const [isHovered, setIsHovered] = useState(false);
@@ -197,6 +198,7 @@ export function TextModalInspector({
   const [openTextModals, setOpenTextModals] = useState({}); // { [id: string]: boolean }
   const [currentCardOrder, setCurrentCardOrder] = useState(context.cardIndex || '');
   const [openId, setOpenId] = useState(null);
+
 
   const commit = (next) => writeItems?.(normalizeItems(next), context);
   const setters = createTextModalSetters({ items, commit });
@@ -650,7 +652,14 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                               <>
                                   <span className='grid panel-body-span'>
                                        {`${__('Heading - ')} ${extractText(item.text)}`} 
-                                      <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                                       <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleTextModal(item.id, e);
+                                }} 
+                                style={{ cursor: 'pointer' }} 
+                              />
                       </span>
                       <div className="text-inspector-menu" 
                         data-open={isTextModalOpen(item.id)}
@@ -674,6 +683,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               className="text-modal-panel-body" 
               // onClick={stopPropagation}
               initialOpen={false}
+                  onToggle={() => {
+                    setSelectedItemId((prev) => (prev === item.id ? null : item.id));
+                  }}
               opened={selectedItemId === item.id}
               >
                   <PanelRow className="grid grid-1-button inspector-row">
@@ -709,7 +721,14 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                       <>
                           <span className='grid panel-body-span'>
                                 {`${__('Paragraph - ')} ${extractText(item.text)}`} 
-                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleTextModal(item.id, e);
+                                }} 
+                                style={{ cursor: 'pointer' }} 
+                              />
                       </span>
                     <div className="text-inspector-menu" 
                       data-open={isTextModalOpen(item.id)}
@@ -732,6 +751,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               } 
                   className="text-modal-panel-body" 
                   initialOpen={false}
+                  onToggle={() => {
+                    setSelectedItemId((prev) => (prev === item.id ? null : item.id));
+                  }}
                   opened={selectedItemId === item.id}
                   >
                    <PanelRow className="grid grid-1-button inspector-row">
@@ -753,7 +775,14 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                       <>
                           <span className='grid panel-body-span'>
                                 {`${__('WP block')}`} 
-                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleTextModal(item.id, e);
+                                }} 
+                                style={{ cursor: 'pointer' }} 
+                              />
                       </span>
                     <div className="text-inspector-menu" 
                       data-open={isTextModalOpen(item.id)}
@@ -776,6 +805,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               } 
                   className="text-modal-panel-body" 
                   initialOpen={false}
+                  onToggle={() => {
+                    setSelectedItemId((prev) => (prev === item.id ? null : item.id));
+                  }}
                   opened={selectedItemId === item.id}
                   >
                 </PanelBody>
@@ -791,7 +823,14 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                           <>
                             <span className='grid panel-body-span'>
                                 {`${__('List - ')} ${extractText(item.text)}`} 
-                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleTextModal(item.id, e);
+                                }} 
+                                style={{ cursor: 'pointer' }} 
+                              />
                       </span>
                     <div className="text-inspector-menu" 
                       data-open={isTextModalOpen(item.id)}
@@ -814,6 +853,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               } 
                   className="text-modal-panel-body" 
                   initialOpen={false}
+                  onToggle={() => {
+                    setSelectedItemId((prev) => (prev === item.id ? null : item.id));
+                  }}
                   opened={selectedItemId === item.id}
                   >
                     <IconColorPickerRow
@@ -870,7 +912,14 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                           <>
                             <span className='grid panel-body-span panel-button'>
                                 {`${__('Button - ')} ${extractText(item.text)}`} 
-                              <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} onClick={(e) => toggleTextModal(item.id, e)} style={{ cursor: 'pointer' }} />
+                               <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleTextModal(item.id, e);
+                                }} 
+                                style={{ cursor: 'pointer' }} 
+                              />
                       </span>
                     <div className="text-inspector-menu" 
                       data-open={isTextModalOpen(item.id)}
@@ -892,6 +941,9 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               } 
                   className="text-modal-panel-body" 
                   initialOpen={false}
+                  onToggle={() => {
+                    setSelectedItemId((prev) => (prev === item.id ? null : item.id));
+                  }}
                   opened={selectedItemId === item.id}
                   >
                         {(() => {

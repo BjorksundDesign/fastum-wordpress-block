@@ -134,8 +134,6 @@ export default function Edit(props) {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [openCardInspectorId, setOpenCardInspectorId] = useState(null);
 
-
-
   const requestInspectInCard = useCallback((cardId, itemId) => {
   setOpenCardInspectorId(cardId);   // öppna kortets PanelBody i inspectorn
   setSelectedItemId(itemId);        // välj item (TextModalInspector öppnar rätt PanelBody)
@@ -582,7 +580,8 @@ useEffect(() => {
                           enable={inspectorMenuItems}
                           updateCard={updateCard}
                           context={{ scope: 'global' }}
-                          selectedItemId={selectedItemId}  
+                          selectedItemId={selectedItemId}
+                          setSelectedItemId={setSelectedItemId}  
                           />
                     {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&(
                       <Button 
@@ -681,6 +680,7 @@ useEffect(() => {
                               updateCard={updateCard}
                               context={{ scope: 'global' }}
                               selectedItemId={selectedItemId}
+                              setSelectedItemId={setSelectedItemId}
                             />
                             
                           )}
@@ -696,6 +696,7 @@ useEffect(() => {
               updateCard={updateCard}
               context={{ scope: 'global' }}
               selectedItemId={selectedItemId}
+              setSelectedItemId={setSelectedItemId}
             />
           </PanelBody>
 
@@ -736,6 +737,7 @@ useEffect(() => {
                                        onChangeBackgroundColor={(c) => setAttributes({ backgroundColor: c })}
                                        context={{ scope: 'card', cardIndex: i }}
                                        selectedItemId={selectedItemId}
+  setSelectedItemId={setSelectedItemId}
                                      />
                                    <PanelRow className="grid grid-4-button no-title minimal inspector-row">
                                    <RowButtons
@@ -773,6 +775,7 @@ useEffect(() => {
                             onSetMobilePosition={(pos) => setMobilePosition(i, pos)}   // ← new prop
                             context={{ scope: 'card', cardIndex: i }} // valfritt
                             selectedItemId={selectedItemId}
+                            setSelectedItemId={setSelectedItemId}
                           />
                 </div>
               </PanelBody>

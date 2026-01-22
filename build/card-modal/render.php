@@ -49,15 +49,15 @@
     // Build inline style (bg image + optional bg color)
     $inline_style_parts = [];
     if ($background_url) {
-    $inline_style_parts[] = "background-image:url('" . esc_url($background_url) . "')";
-    $inline_style_parts[] = "background-size:" . esc_attr($background_size);
-    $inline_style_parts[] = "background-repeat:no-repeat";
-    if ($background_position !== '') {
-        $inline_style_parts[] = "background-position:" . esc_attr($background_position);
-    } else {
-        $inline_style_parts[] = "background-position:center center";
+        if ($background_position !== '') {
+            $inline_style_parts[] = "background-position:" . esc_attr($background_position);
+        } else {
+            $inline_style_parts[] = "background-position:center center";
+        }
+        $inline_style_parts[] = "background-image:url('" . esc_url($background_url) . "')";
+        $inline_style_parts[] = "background-size:" . esc_attr($background_size);
+        $inline_style_parts[] = "background-repeat:no-repeat";
     }
-}
     if ($background_url) {
         if ($backgroundColor !== '') {
             $inline_style_parts[] =
@@ -69,6 +69,10 @@
         $inline_style_parts[] = "background-repeat:no-repeat";
         $inline_style_parts[] = "background-position:" . ($background_position !== '' ? esc_attr($background_position) : 'center center');
         }
+
+        if (!$background_url && $backgroundColor !== '') {
+    $inline_style_parts[] = "background-color:" . esc_attr($backgroundColor);
+}
     // Add CSS variables (now correctly quoted for --faIcon)
     if ($faIcon !== '') {
         $inline_style_parts[] = '--faIcon:"' . esc_attr($faIcon) . '"';
