@@ -62,6 +62,9 @@ gap: .5rem;
 }
 
 
+.components-popover.components-tooltip {
+  z-index: 999999 !important;
+}
 
 // .panel-settings-button{
 //   width: calc(50% - var(--gap) / 2 );

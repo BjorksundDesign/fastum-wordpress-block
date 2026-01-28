@@ -114,6 +114,10 @@
     "listType": {
       "type": "string",
       "default": "ul"
+    },
+    "isFaq": {
+      "type": "boolean",
+      "default": false
     }
   },
   "description": "Card modal",

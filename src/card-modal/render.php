@@ -12,6 +12,7 @@
     $bgImageStyle    = isset($attributes['bgImageStyle']) ? (string) $attributes['bgImageStyle'] : '';
     $items           = isset($attributes['items']) && is_array($attributes['items']) ? $attributes['items'] : [];
     $backgroundColor = isset($attributes['backgroundColor']) ? (string) $attributes['backgroundColor'] : '';
+    $isFaq = !empty($attributes['isFaq']);
    
 
     // New / used in save.js
@@ -127,6 +128,9 @@
     // ---------------------------
 // FAQPage JSON-LD helpers
 // ---------------------------
+
+
+
 $ctb_clean_text = static function($text) {
     $text = (string) $text;
     $text = do_shortcode($text);
@@ -227,8 +231,8 @@ $ctb_build_faq_jsonld = static function($cards) use ($split_on_first_heading, $c
 
 $faq_jsonld = null;
 
-// Bara dropdown = FAQ
-if ($modalType === 'dropdown' && !empty($cards)) {
+// Bara om dropdown OCH togglen är på
+if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
     $faq_jsonld = $ctb_build_faq_jsonld($cards);
 }
 

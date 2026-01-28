@@ -249,6 +249,49 @@ section.hero{ max-width: 900px; }
   &.active{ border: 1px solid blue; }
 }
 
+.tm-title-truncate{
+  display: inline-block;
+  max-width: 260px; // justera efter panelbredd
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.components-panel__body-toggle,
+.components-panel__body-title {
+  overflow: visible !important;
+}
+
+.tm-text-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+}
+
+.components-modal__content {
+    flex: 1;
+    margin-top: unset;
+    overflow: auto;
+    padding: 4px 16px 16px;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.components-modal__header {
+    align-items: center;
+    border-bottom: 1px solid #0000;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: unset;
+    justify-content: space-between;
+    padding: 12px 0px;
+    position: unset;
+    z-index: 10;
+}
+
+
 .grid{
   display: grid;
 
@@ -266,6 +309,8 @@ section.hero{ max-width: 900px; }
 
 .grid-1-button{ --grid-template-columns: minmax(48px, auto) repeat(1, 1fr); }
 .grid-2-button{ --grid-template-columns: minmax(48px, auto) repeat(2, 1fr); }
+.grid-2-button.last-auto{ --grid-template-columns: minmax(48px, auto) repeat(1, 1fr) repeat(1, auto); }
+
 .grid-3-button{ --grid-template-columns: minmax(48px, auto) repeat(3, 1fr); }
 
 .grid-4-button{
@@ -288,6 +333,9 @@ section.hero{ max-width: 900px; }
   position: relative;
 
   &.minimal{ padding: 0; margin: 0; }
+  &.faq{
+    justify-items: center;
+  }
 }
 
 .components-panel__row{
@@ -309,6 +357,10 @@ section.hero{ max-width: 900px; }
   padding: 0 12px 0 12px !important;
   // pointer-events: none;
   &.card-item{ padding-right: 0 !important; }
+}
+
+.components-panel__body + .components-panel__body{
+    padding: 0 !important;
 }
 
 .components-panel__body{
@@ -710,7 +762,70 @@ ul .list::before{
   margin-block-start: 0 !important;
 }
 
+.image-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  opacity: 0.85;
+}
+.image-meta__row strong {
+  font-weight: 600;
+}
 
+.image-hover-meta{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(0, 0, 0, .55);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.3;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.image-hover-meta__row strong{
+  font-weight: 600;
+}
+
+.image-button-overlay-wrapper{
+  z-index: 6;
+}
+
+.image-render-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Knapprad under bilden */
+.image-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 20px;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.image-actions.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+
+}
+
+.image-hover-meta .is-missing,
+.image-meta .is-missing {
+  font-style: italic;
+  opacity: 0.7;
+}
 
 .cards-grid{
   &.cards {

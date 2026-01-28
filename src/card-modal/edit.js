@@ -10,6 +10,7 @@ import {
   PanelRow,
   Button,
   TextControl,
+  ToggleControl,
   SelectControl,
 } from '@wordpress/components';
 import { TextModalInspector, TextModalRender, RowButtons, RenderControl } from '../shared/components/text-modal';
@@ -121,6 +122,7 @@ export default function Edit(props) {
     contentOrientation,
     topSectionFlags,
     modalType,
+    isFaq
   } = attributes;
   
   const GLOBAL_TM_ID = 'global';
@@ -390,7 +392,7 @@ const duplicateCard = (cardIndex) => {
     { label: 'Hero', value: 'hero' },
     { label: 'Columns', value: 'columns' },
     { label: 'Cards', value: 'cards' },
-    { label: 'FAQ/Dropdown', value: 'dropdown' },
+    { label: `${isFaq ? 'FAQ Modal' :'Dropdown Modal'}`, value: 'dropdown' },
     { label: 'Limeform', value: 'lime-form' },
   ];
 
@@ -425,6 +427,10 @@ const duplicateCard = (cardIndex) => {
     { label: 'Color', value: 'color' },
   ];
 
+      const isFaqOptions = [
+    { label: 'Är FAQ', value: true },
+    { label: 'Ej FAQ', value: false },
+  ];
 
 
    const textColorOptions = [
@@ -484,7 +490,7 @@ switch (attributes.modalType) {
     modalTitle = 'Hero Modal';
     break;
   case 'dropdown':
-    modalTitle = 'FAQ/Dropdown Modal';
+    {isFaq ? modalTitle = 'FAQ Modal' : modalTitle = 'Dropdown Modal'};
     break;
   case 'lime-form':
     modalTitle = 'Lime Modal';
@@ -601,6 +607,16 @@ useEffect(() => {
             {renderControl('Modal type:', 'modalType', modalTypeOptions, attributes, setAttributes)}
              {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && (
               <>
+              {modalType === 'dropdown' && (
+                  renderControl('SEO', 'isFaq', isFaqOptions, attributes, setAttributes)
+                    // <PanelRow className="grid grid-1-button inspector-row faq">
+                    //    FAQ modal:
+                    //   <ToggleControl
+                    //     checked={!!isFaq}
+                    //     onChange={(val) => setAttributes({ isFaq: !!val })}
+                    //     />
+                    // </PanelRow>
+                  )}
               {renderControl('Card border:', 'cardBorder', borderOptions, attributes, setAttributes)}
               {/* {renderControl('Card width:', 'cardWidthOptions', cardWidthOptions, attributes, setAttributes)} */}
               </>
@@ -645,6 +661,8 @@ useEffect(() => {
               </>
                     
                   )}
+
+                  
                     {renderControl('Text color:', 'textColor', textColorOptions, attributes, setAttributes)}
             <PanelRow className="grid grid-3-button inspector-row">
                        Bg färg:

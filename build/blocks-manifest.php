@@ -177,6 +177,10 @@ return array(
 			'listType' => array(
 				'type' => 'string',
 				'default' => 'ul'
+			),
+			'isFaq' => array(
+				'type' => 'boolean',
+				'default' => false
 			)
 		),
 		'description' => 'Card modal',

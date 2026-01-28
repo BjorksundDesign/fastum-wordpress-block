@@ -6,8 +6,13 @@ import {
   PanelRow,
   Button,
   TextControl,
+  Tooltip,
   SelectControl,
+  Modal, 
+  TextareaControl, 
+  Icon, 
 } from '@wordpress/components';
+import { edit as editIcon } from '@wordpress/icons';
 import { RichText, ColorPalette, MediaUpload, LinkControl, InnerBlocks, BlockControls } from '@wordpress/block-editor';
 import { IconColorPickerRow, ColorPickerRow } from '../color-icon-picker';
 import { ImageModalInspector, ImageModalRender } from '../image-modal';
@@ -198,6 +203,8 @@ export function TextModalInspector({
   const [openTextModals, setOpenTextModals] = useState({}); // { [id: string]: boolean }
   const [currentCardOrder, setCurrentCardOrder] = useState(context.cardIndex || '');
   const [openId, setOpenId] = useState(null);
+  const [editModal, setEditModal] = useState(null);
+
 
 
   const commit = (next) => writeItems?.(normalizeItems(next), context);
@@ -382,6 +389,23 @@ const setAlign = (value, idx, { updateCard, setAttributes }) => {
   }
 };
 
+const openEditModalForItem = (item) => {
+  setEditModal({
+    id: item.id,
+    type: item.type,
+    value: item.text ?? '',
+  });
+};
+
+const openEditModalForListItem = (item, liIndex) => {
+  const list = ensureList(item.list);
+  setEditModal({
+    id: item.id,
+    type: 'listItem',
+    liIndex,
+    value: list[liIndex] ?? '',
+  });
+};
 
 const extractText = (html = '') => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -638,6 +662,8 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
         {textItems.map((item, index) => {
           const disableUp = index === 0;
           const disableDown = index === textItems.length - 1;
+          const full = extractText(item.text) || __('(Empty)');
+          const openEdit = () => setEditModal({ id: item.id, type: item.type, value: item.text ?? '' });
 
           if (item.type === 'heading' && !enable.includes('heading')) return null;
           if (item.type === 'paragraph' && !enable.includes('paragraph')) return null;
@@ -651,12 +677,12 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   title={
                               <>
                                   <span className='grid panel-body-span'>
-                                       {`${__('Heading - ')} ${extractText(item.text)}`} 
+                                            {`${__('Heading - ')} ${full}`}
                                        <span className={`plus-icon ${isTextModalOpen(item.id) ? 'true' : 'false'}`} 
                                 onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  toggleTextModal(item.id, e);
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    toggleTextModal(item.id, e); // forceClose
                                 }} 
                                 style={{ cursor: 'pointer' }} 
                               />
@@ -688,15 +714,24 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   }}
               opened={selectedItemId === item.id}
               >
-                  <PanelRow className="grid grid-1-button inspector-row">
-                    Text:
-                    <TextControl
-                      className="panel-control-settings inspector-button input"
-                      // label={__('Text')}
-                      value={item.text ?? 'Heading'}
-                      onChange={(v) => setHeadingText(item.id, v)}
-                    />
-                  </PanelRow>
+                  <PanelRow className="grid grid-2-button last-auto inspector-row">
+                      Text:
+                        <TextControl
+                          className="panel-control-settings inspector-button input"
+                          value={item.text ?? ''}
+                          onChange={(v) => setHeadingText(item.id, v)}
+                        />
+                        <Button
+                          className="tm-edit-icon"
+                          icon={editIcon}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openEditModalForItem(item);
+                          }}
+                          label={__('Expand text')}
+                        />
+                    </PanelRow>
                   <PanelRow className="grid grid-4-button inspector-row">
                     Size:
                     {headerSizeOptions.map(option => (
@@ -756,12 +791,22 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   }}
                   opened={selectedItemId === item.id}
                   >
-                   <PanelRow className="grid grid-1-button inspector-row">
+                   <PanelRow className="grid grid-2-button inspector-row">
                     Text:
                     <TextControl
                       className="panel-control-settings inspector-button input"
                       value={item.text ?? 'Paragraph'}
                       onChange={(v) => setParagraphText(item.id, v)}
+                    />
+                    <Button
+                      className="tm-edit-icon"
+                      icon={editIcon}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openEditModalForItem(item);
+                      }}
+                      label={__('Expand text')}
                     />
                   </PanelRow>
                 </PanelBody>
@@ -873,13 +918,23 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                       </PanelRow>  
                     
                   {ensureList(item.list).map((li, liIndex) => (
-                    <div style={{'--grid-template-columns':'auto 1fr auto'}}>
+                    <div style={{'--grid-template-columns':'auto 1fr auto auto'}}>
                     <PanelRow className="grid inspector-row"  key={`${item.id}_${liIndex}`}>
                       {`${__('List item')} ${liIndex + 1}`}
                       <TextControl
                         className="panel-control-settings inspector-button input"
                         value={li || ''}
                         onChange={(v) => setListItem(item.id, liIndex, v)}
+                      />
+                      <Button
+                        className="tm-edit-icon"
+                        icon={editIcon}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          openEditModalForListItem(item, liIndex);
+                        }}
+                        label={__('Expand text')}
                       />
                       <RowButtons 
                       //Behöver göra unika funktioner för listitems
@@ -897,6 +952,39 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
               return null;
           }
         })}
+          {editModal && (
+                  <Modal title={__('Edit text')} onRequestClose={() => setEditModal(null)}>
+                    <TextareaControl
+                      value={editModal.value}
+                      onChange={(v) => setEditModal((s) => ({ ...s, value: v }))}
+                    />
+
+                    <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                      <Button variant="tertiary" onClick={() => setEditModal(null)}>
+                        {__('Cancel')}
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          if (editModal.type === 'heading') {
+                            setHeadingText(editModal.id, editModal.value);
+                          } else if (editModal.type === 'paragraph') {
+                            setParagraphText(editModal.id, editModal.value);
+                          } else if (editModal.type === 'button') {
+                            setButtonText(editModal.id, editModal.value);
+                          } else if (editModal.type === 'listItem') {
+                            setListItem(editModal.id, editModal.liIndex, editModal.value);
+                          }
+
+                          setEditModal(null);
+                        }}
+                      >
+                        {__('Save')}
+                      </Button>
+                    </div>
+                  </Modal>
+                )}
         {buttonItems.some(item => item.type === 'button') && (
           <>
             {buttonItems.map((item, index) => {
@@ -981,6 +1069,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
             })}
             </>
         )}
+      
     </>
   );
 }
