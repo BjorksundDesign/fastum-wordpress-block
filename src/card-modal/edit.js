@@ -394,7 +394,7 @@ const duplicateCard = (cardIndex) => {
     { label: 'Hero', value: 'hero' },
     { label: 'Columns', value: 'columns' },
     { label: 'Cards', value: 'cards' },
-    { label: `${isFaq ? 'FAQ Modal' :'Dropdown Modal'}`, value: 'dropdown' },
+    { label: `${isFaq ? 'FAQ Modal' :'Dropdown'}`, value: 'dropdown' },
     { label: 'Limeform', value: 'lime-form' },
   ];
 
