@@ -14,8 +14,8 @@
 		"items": {
 			"type": "array",
 			"default": [
-			{ "id": "h1", "type": "heading", "text": "Rubrik", "size": "l", "headingType": "h2" },
-			{ "id": "p1", "type": "paragraph", "text": "Lägg till brödtext här…" }
+			{ "id": "h1", "type": "heading", "text": "Rubrik", "size": "l", "headingType": "h2", "buttonColor": "standard"},
+			{ "id": "p1", "type": "paragraph", "text": "Lägg till brödtext här…", "buttonColor": "standard" }
 			]
 		},
 		"cardCount": {
@@ -86,7 +86,7 @@
 		"isFaq": { 
 			"type": "boolean", 
 			"default": false 
-		}	
+		}
 	
 	},
 	"description": "Card modal",

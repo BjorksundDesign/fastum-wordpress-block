@@ -1,12 +1,108 @@
+@font-face {
+  font-family: fontAwesome;
+  src: url("../../shared/fonts/fa-solid-900.woff2") format('woff2');
+}
 :root{
   --font-Awesome: fontAwesome;
   --gap: 8px;
   --card-padding: 20px;
+  --faIconClosed: "\2b";
+  --faIconOpen: "\f068";
+  	interpolate-size: allow-keywords;
+
 }
 
 :root :where(.wp-block-heading) {
   font-weight: 600 !important;
+
 }
+
+
+.faq-modal-article{
+	display: grid;
+	justify-items: center;
+	padding: 80px 60px;
+	box-sizing: border-box;
+}
+
+
+
+.accordion-card .accordion-card__summary .text-modal-section{
+	display: grid;
+  grid-template-columns: 1fr auto;
+  margin-block: unset;
+	align-items: center;
+	&::after{
+  font-family: var(--font-Awesome);
+  content: var(--faIconClosed); 
+	color: #F26722;
+	font-weight: 500;
+	vertical-align: middle;
+	font-size: 20px;
+	order: 2;
+	}
+}
+
+
+.accordion-card::details-content{
+	block-size: 0;
+	transition: block-size 0.3s, content-visibility 0.3s; 
+	transition-behavior: allow-discrete;
+}
+
+.accordion-card[open]{
+	&::details-content{
+		block-size: auto;
+	}
+	.accordion-card__summary{
+		.text-modal-section:after{
+      content: var(--faIconOpen);
+		}
+	}
+}
+
+.accordion-card__content{
+	padding-top: 12px;
+}
+
+.accordion-card__content .text-modal-section{
+	padding:unset;
+  grid-template-columns: 1fr;
+	.button-wrapper{  
+	padding: unset;
+}}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+summary {
+    list-style: none; /* Remove default list style */
+    cursor: pointer;  /* Change cursor to pointer */
+    padding: 0;      /* Remove padding */
+}
+
+summary::-webkit-details-marker {
+    display: none; /* Hide marker in WebKit browsers */
+}
+
+/* Firefox specific */
+summary {
+    outline: transparent;  /* Remove focus outline */
+}
+
+/* Rotate chevron when open */
+.faq-article[open] .faq-summary__chevron { transform: rotate(180deg); }
+
+/* Optional: smooth open/close */
+.faq-content {
+  animation: faq-open 160ms ease-out both;
+}
+@keyframes faq-open {
+  from { opacity: .0; transform: translateY(-2px); }
+  to   { opacity: 1;  transform: translateY(0); }
+}
+
 
 a{
   cursor: pointer !important;
@@ -161,6 +257,17 @@ section.hero{ max-width: 900px; }
         align-items: flex-start;
        } 
     }
+}
+
+.button{
+  &-primary{
+    background-color: var(--wp--preset--color--custom-fastum-orange)!important;
+  }
+  &-secondary{
+    background-color: unset!important;
+  }
+  &-standard{
+  }
 }
 
 /* Fastum buttons (sammanfogad) */
@@ -359,7 +466,7 @@ section.hero{ max-width: 900px; }
   &.card-item{ padding-right: 0 !important; }
 }
 
-.components-panel__body + .components-panel__body{
+.components-panel__body .components-panel__body{
     padding: 0 !important;
 }
 

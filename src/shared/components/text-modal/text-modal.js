@@ -193,7 +193,7 @@ export function TextModalInspector({
   onSetMobilePosition,
   selectedItemId,
   setSelectedId,
-  setSelectedItemId
+  setSelectedItemId,
 }) {
   const items = normalizeItems(readItems?.() || []);
   const [isHovered, setIsHovered] = useState(false);
@@ -219,6 +219,7 @@ export function TextModalInspector({
     setImage,
     setButtonText,
     setButtonURL,
+    setButtonColor,
   } = setters;
 
   const menuRef = useRef(null);
@@ -536,6 +537,11 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
         event.stopPropagation(); // Prevent the click from propagating to the parent
     };
 
+  const buttonColorOptions = [
+    { label: 'Orange', value: 'primary' },
+    { label: 'Vit', value: 'secondary' },
+    { label: 'Auto', value: 'standard' },
+  ];
 
   return (
     //Need to add stop propegation
@@ -791,7 +797,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   }}
                   opened={selectedItemId === item.id}
                   >
-                   <PanelRow className="grid grid-2-button inspector-row">
+                   <PanelRow className="grid grid-2-button last-auto inspector-row">
                     Text:
                     <TextControl
                       className="panel-control-settings inspector-button input"
@@ -920,7 +926,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   {ensureList(item.list).map((li, liIndex) => (
                     <div style={{'--grid-template-columns':'auto 1fr auto auto'}}>
                     <PanelRow className="grid inspector-row"  key={`${item.id}_${liIndex}`}>
-                      {`${__('List item')} ${liIndex + 1}`}
+                      {`${__('Li')} ${liIndex + 1}`}
                       <TextControl
                         className="panel-control-settings inspector-button input"
                         value={li || ''}
@@ -1047,6 +1053,19 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                               onChange={(v) => setButtonText(item.id, v)}
                                             />
                                         </PanelRow>
+                                        <PanelRow className={`grid grid-3-button inspector-row`}>
+                                        Button color:
+                                            {buttonColorOptions.map(option => (
+                                              <Button 
+                                                  key={option.value} 
+                                                  className="inspector-button" 
+                                                   onClick={() => setButtonColor(item.id, option.value)} 
+                                                   disabled={(item.buttonColor ?? 'standard') === option.value}  
+                                                    aria-label={`${item.buttonColor} ${option.label}`}>
+                                                  {option.label}
+                                              </Button>
+                                            ))}
+                                        </PanelRow> 
                                         <PanelRow label="Button URL" className="grid grid-1-button inspector-row">
                                             Button URL:
                                             <LinkControl
@@ -1089,7 +1108,7 @@ export function TextModalRender({
   attributes,
   isSelected,
   onRequestInspect,
-  onSelectItem
+  onSelectItem,
 }) {
   
   const [focusTarget, setFocusTarget] = useState(null);
@@ -1119,6 +1138,7 @@ const {
   setImage,
   setButtonText,
   setButtonURL,
+  setButtonColor
 } = setters;
 
 const isInPopover = (el) =>
@@ -1534,7 +1554,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
                                     value={item?.text || `Button ${item.count}`} // Display count
                                     onChange={(newText) => setButtonText(item.id, newText)}
                                     onFocus={(e) => handleItemFocus(item.id, e)}
-                                    className={`wp-block-button__link ${item.isPrimary ? 'button-primary' : 'button-secondary'}`}
+                                    className={`wp-block-button__link button-${item.buttonColor}`}
                                     />
                             </button>
                           </>

@@ -42,6 +42,7 @@ const newItem = (type, indexInCard) => ({
   iconColor: DEFAULT_FA_ICON_COLOR,
   size: type === 'heading' ? 'm' : '',
   count: indexInCard + 1,
+  buttonColor: "standard",
   headingType: type === 'heading' ? 'h2' : undefined,
 });
 
@@ -122,7 +123,8 @@ export default function Edit(props) {
     contentOrientation,
     topSectionFlags,
     modalType,
-    isFaq
+    isFaq,
+    buttonColor
   } = attributes;
   
   const GLOBAL_TM_ID = 'global';
@@ -587,7 +589,8 @@ useEffect(() => {
                           updateCard={updateCard}
                           context={{ scope: 'global' }}
                           selectedItemId={selectedItemId}
-                          setSelectedItemId={setSelectedItemId}  
+                          setSelectedItemId={setSelectedItemId}
+                          buttonColor={attributes.buttonColor}  
                           />
                     {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&(
                       <Button 
@@ -699,6 +702,7 @@ useEffect(() => {
                               context={{ scope: 'global' }}
                               selectedItemId={selectedItemId}
                               setSelectedItemId={setSelectedItemId}
+                              buttonColor={attributes.buttonColor}  
                             />
                             
                           )}
@@ -715,6 +719,7 @@ useEffect(() => {
               context={{ scope: 'global' }}
               selectedItemId={selectedItemId}
               setSelectedItemId={setSelectedItemId}
+              buttonColor={attributes.buttonColor}  
             />
           </PanelBody>
 
@@ -755,7 +760,8 @@ useEffect(() => {
                                        onChangeBackgroundColor={(c) => setAttributes({ backgroundColor: c })}
                                        context={{ scope: 'card', cardIndex: i }}
                                        selectedItemId={selectedItemId}
-  setSelectedItemId={setSelectedItemId}
+                                        setSelectedItemId={setSelectedItemId}
+                                        buttonColor={attributes.buttonColor}  
                                      />
                                    <PanelRow className="grid grid-4-button no-title minimal inspector-row">
                                    <RowButtons
@@ -766,6 +772,7 @@ useEffect(() => {
                                      disableUp={disableUp}
                                      disableDown={disableDown}
                                      modalType='cardIconRowbutton'
+                                     buttonColor={attributes.buttonColor}  
                                    />
                                  </PanelRow>
                                </div>
@@ -794,6 +801,7 @@ useEffect(() => {
                             context={{ scope: 'card', cardIndex: i }} // valfritt
                             selectedItemId={selectedItemId}
                             setSelectedItemId={setSelectedItemId}
+                            buttonColor={attributes.buttonColor}  
                           />
                 </div>
               </PanelBody>
@@ -819,6 +827,7 @@ useEffect(() => {
                 // selectedItemId={selectedItemId}
                 // setSelectedItemId={setSelectedItemId}
                 onRequestInspect={(itemId) => requestInspectInGlobal(itemId)}
+                buttonColor={attributes.buttonColor}  
                 />
           {attributes.modalType === 'lime-form' &&
             <div className="custom-container">
@@ -877,7 +886,8 @@ useEffect(() => {
                             // selectedItemId={selectedItemId}
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
-                            onSelectItem={setSelectedItemId} 
+                            onSelectItem={setSelectedItemId}
+                            buttonColor={attributes.buttonColor}   
                           />
                         </summary>
 
@@ -898,6 +908,7 @@ useEffect(() => {
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                             onSelectItem={setSelectedItemId}
+                            buttonColor={attributes.buttonColor}  
                           />
                         </div>
                       </details>
@@ -921,6 +932,7 @@ useEffect(() => {
                     // onSelectItem={setSelectedItemId}
                     onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                     onSelectItem={setSelectedItemId}
+                    buttonColor={attributes.buttonColor}  
                   />
                 )}
 

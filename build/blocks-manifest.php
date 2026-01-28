@@ -93,12 +93,14 @@ return array(
 						'type' => 'heading',
 						'text' => 'Rubrik',
 						'size' => 'l',
-						'headingType' => 'h2'
+						'headingType' => 'h2',
+						'buttonColor' => 'standard'
 					),
 					array(
 						'id' => 'p1',
 						'type' => 'paragraph',
-						'text' => 'Lägg till brödtext här…'
+						'text' => 'Lägg till brödtext här…',
+						'buttonColor' => 'standard'
 					)
 				)
 			),
