@@ -183,6 +183,10 @@ section.hero{ max-width: 900px; }
     flex-direction: row;
     align-items: flex-start;
     box-sizing: border-box;
+
+    &:has(hr){
+      flex-direction: column;
+    }
     
     .cards, .dropdown{
       display: flex;
@@ -261,7 +265,7 @@ section.hero{ max-width: 900px; }
 
 .button{
   &.true{
-    background-color: var(--wp--preset--color--tertiary)!important;
+    background-color: unset!important;
     &.primary{
       background-color: var(--wp--preset--color--custom-fastum-orange)!important;
     }

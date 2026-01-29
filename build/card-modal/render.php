@@ -328,7 +328,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
             >
             <?php foreach ($items as $it): if (($it['type'] ?? '') !== 'button') continue; ?>
             <?php
-                    // if ($showButtonHR){ echo '<hr />';}
+                    if ($showButtonHR){ echo '<hr />';}
                     $buttonColor = !empty($it['buttonColor']) ? (string) $it['buttonColor'] : 'standard';
                     $buttonColor = sanitize_html_class($buttonColor);
                     $button_color_class = 'button' . ' ' . $buttonColor  . ' ' . $showButtonHR_string;
