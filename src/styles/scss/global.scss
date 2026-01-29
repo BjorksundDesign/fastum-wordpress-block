@@ -179,14 +179,16 @@ section.hero{ max-width: 900px; }
   justify-content: center;
   padding: 0;
   
+  &:has(hr){
+      flex-direction: column !important;
+    }
+
   &:has(.cards), &:has(.dropdown), &:has(.columns){
     flex-direction: row;
     align-items: flex-start;
     box-sizing: border-box;
 
-    &:has(hr){
-      flex-direction: column;
-    }
+    
     
     .cards, .dropdown{
       display: flex;
