@@ -167,7 +167,6 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
       >
         {buttons.map((btn, idx) => {
           const multipleButtons = currentModalType === 'cards' || currentModalType === 'dropdown';
-          const isPrimary = !!btn.isPrimary;
           const href = getUrl(btn.url);
           const btnColorClass = `button-${btn?.buttonColor || 'standard'}`;
           return (
@@ -176,7 +175,6 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
               <a
                 className={
                   `wp-block-button fastum-button ` +
-                  `${isPrimary ? 'button-primary' : 'button-secondary'} ` +
                   `${btnColorClass} ` +
                   `${alignClasses || ''} ${currentModalType || ''} ${extraClass || ''}`
                 }
