@@ -1,6 +1,6 @@
 {
 	"name": "custom-text-block",
-	"version": "1.2.0",
+	"version": "1.2.2",
 	"description": "Example block scaffolded with Create Block tool.",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
@@ -14,7 +14,10 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --webpack-copy-php --blocks-manifest",
 		"build-css": "sass src/styles/scss/global.scss src/styles/css/global.css --style compressed",
-		"watch-css": "sass --watch src/styles/scss/global.scss:src/styles/css/global.css --style compressed"
+		"watch-css": "sass --watch src/styles/scss/global.scss:src/styles/css/global.css --style compressed",
+		"release:patch": "npm version patch && git push --follow-tags",
+		"release:minor": "npm version minor && git push --follow-tags",
+		"release:major": "npm version major && git push --follow-tags"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^30.18.0",
