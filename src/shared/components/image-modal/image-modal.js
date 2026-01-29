@@ -168,6 +168,7 @@ const altText = hasAlt ? meta.alt : __('Saknas');
             // className={`image-container ${attributes.imageSize}`}
             // style={{ position: 'relative' }} // Ensures the button is positioned correctly
             // >
+            
 
             <div
                 className="image-render-wrap"
@@ -191,16 +192,19 @@ const altText = hasAlt ? meta.alt : __('Saknas');
                       </div>
                     </div>
           )}
-          </div>
-              <div className={`image-actions ${isHovered ? 'is-visible' : 'not-visible'}`}>
+              <div className={`image-actions ${isHovered ? 'is-visible' : 'not-visible'}`}
+               onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
                   <Button onClick={open} variant="primary" className="inspector-button">
-                    {__('Change Image')}
+                    {__('Change')}
                   </Button>
                   <Button onClick={() => onChange(item.id, null)} className="inspector-button">
-                    {__('Remove Image')}
+                    {__('Remove')}
                   </Button>
                 </div>
-              </div>
+          </div>
+          </div>
       ) : (
           <Button onClick={open} className="inspector-button" primary>
               {__('Select Image')}

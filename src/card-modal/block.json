@@ -86,8 +86,15 @@
 		"isFaq": { 
 			"type": "boolean", 
 			"default": false 
+		},
+		"showButtonHR": {
+			"type": "boolean",
+			"default": false
+		},
+		"modalButtonColor": {
+			"type": "string",
+			"default": "standard"
 		}
-	
 	},
 	"description": "Card modal",
 	"example": {},

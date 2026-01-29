@@ -194,6 +194,7 @@ export function TextModalInspector({
   selectedItemId,
   setSelectedId,
   setSelectedItemId,
+  showButtonHR,
 }) {
   const items = normalizeItems(readItems?.() || []);
   const [isHovered, setIsHovered] = useState(false);
@@ -540,7 +541,8 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
   const buttonColorOptions = [
     { label: 'Orange', value: 'primary' },
     { label: 'Vit', value: 'secondary' },
-    { label: 'Auto', value: 'standard' },
+    { label: 'Transp.', value: 'transparent' },
+    { label: 'Reset', value: 'standard' },
   ];
 
   return (
@@ -1060,7 +1062,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                                   key={option.value} 
                                                   className="inspector-button" 
                                                    onClick={() => setButtonColor(item.id, option.value)} 
-                                                   disabled={(item.buttonColor ?? 'standard') === option.value}  
+                                                   disabled={(item.buttonColor ?? 'transparent') === option.value}  
                                                     aria-label={`${item.buttonColor} ${option.label}`}>
                                                   {option.label}
                                               </Button>
@@ -1541,7 +1543,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
                     case 'button':
                         return (
                           <>
-                          {(attributes.modalType === 'cards' && context.scope === 'card' || attributes.modalType === 'dropdown' && context.scope === 'card' ) ? <hr /> : null}
+                          {attributes.showButtonHR ? <hr /> : null}
                             <button 
                                 key={item.id}
                                 className={`wp-block-button fastum-button ${attributes.align} ${attributes.modalType} ${context.scope}`}
@@ -1554,7 +1556,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
                                     value={item?.text || `Button ${item.count}`} // Display count
                                     onChange={(newText) => setButtonText(item.id, newText)}
                                     onFocus={(e) => handleItemFocus(item.id, e)}
-                                    className={`wp-block-button__link button-${item.buttonColor}`}
+                                    className={`wp-block-button__link button ${item.buttonColor} ${attributes.showButtonHR}`}
                                     />
                             </button>
                           </>

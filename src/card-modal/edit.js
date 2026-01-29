@@ -124,7 +124,7 @@ export default function Edit(props) {
     topSectionFlags,
     modalType,
     isFaq,
-    buttonColor
+    showButtonHR,
   } = attributes;
   
   const GLOBAL_TM_ID = 'global';
@@ -438,6 +438,11 @@ const duplicateCard = (cardIndex) => {
   ];
 
 
+     const buttonHROptions = [
+    { label: 'Visa', value: true },
+    { label: 'Dölj', value: false },
+  ];
+
    const textColorOptions = [
     { label: 'Black', value: '#000000' },
     { label: 'White', value: '#ffffff' },
@@ -593,7 +598,7 @@ useEffect(() => {
                           context={{ scope: 'global' }}
                           selectedItemId={selectedItemId}
                           setSelectedItemId={setSelectedItemId}
-                          buttonColor={attributes.buttonColor}  
+                          showButtonHR={attributes.showButtonHR} 
                           />
                     {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&(
                       <Button 
@@ -664,6 +669,8 @@ useEffect(() => {
                   </PanelRow>
                   {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
                   {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}
+                  {renderControl('Button line:', 'showButtonHR', buttonHROptions, attributes, setAttributes)}
+                  
               </>
                     
                   )}
@@ -705,7 +712,7 @@ useEffect(() => {
                               context={{ scope: 'global' }}
                               selectedItemId={selectedItemId}
                               setSelectedItemId={setSelectedItemId}
-                              buttonColor={attributes.buttonColor}  
+                               
                             />
                             
                           )}
@@ -722,7 +729,7 @@ useEffect(() => {
               context={{ scope: 'global' }}
               selectedItemId={selectedItemId}
               setSelectedItemId={setSelectedItemId}
-              buttonColor={attributes.buttonColor}  
+              showButtonHR={attributes.showButtonHR}  
             />
           </PanelBody>
 
@@ -764,7 +771,7 @@ useEffect(() => {
                                        context={{ scope: 'card', cardIndex: i }}
                                        selectedItemId={selectedItemId}
                                         setSelectedItemId={setSelectedItemId}
-                                        buttonColor={attributes.buttonColor}  
+                                        showButtonHR={attributes.showButtonHR}  
                                      />
                                    <PanelRow className="grid grid-4-button no-title minimal inspector-row">
                                    <RowButtons
@@ -775,7 +782,7 @@ useEffect(() => {
                                      disableUp={disableUp}
                                      disableDown={disableDown}
                                      modalType='cardIconRowbutton'
-                                     buttonColor={attributes.buttonColor}  
+                                     showButtonHR={attributes.showButtonHR}  
                                    />
                                  </PanelRow>
                                </div>
@@ -804,7 +811,7 @@ useEffect(() => {
                             context={{ scope: 'card', cardIndex: i }} // valfritt
                             selectedItemId={selectedItemId}
                             setSelectedItemId={setSelectedItemId}
-                            buttonColor={attributes.buttonColor}  
+                            showButtonHR={attributes.showButtonHR}  
                           />
                 </div>
               </PanelBody>
@@ -830,7 +837,7 @@ useEffect(() => {
                 // selectedItemId={selectedItemId}
                 // setSelectedItemId={setSelectedItemId}
                 onRequestInspect={(itemId) => requestInspectInGlobal(itemId)}
-                buttonColor={attributes.buttonColor}  
+                showButtonHR={attributes.showButtonHR}  
                 />
           {attributes.modalType === 'lime-form' &&
             <div className="custom-container">
@@ -890,7 +897,7 @@ useEffect(() => {
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                             onSelectItem={setSelectedItemId}
-                            buttonColor={attributes.buttonColor}   
+                            showButtonHR={attributes.showButtonHR}   
                           />
                         </summary>
 
@@ -911,7 +918,7 @@ useEffect(() => {
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                             onSelectItem={setSelectedItemId}
-                            buttonColor={attributes.buttonColor}  
+                            showButtonHR={attributes.showButtonHR}  
                           />
                         </div>
                       </details>
@@ -935,7 +942,7 @@ useEffect(() => {
                     // onSelectItem={setSelectedItemId}
                     onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                     onSelectItem={setSelectedItemId}
-                    buttonColor={attributes.buttonColor}  
+                    showButtonHR={attributes.showButtonHR}  
                   />
                 )}
 

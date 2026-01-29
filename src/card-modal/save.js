@@ -22,6 +22,7 @@ export default function save({ attributes }) {
     faIconColor,
     topSectionFlags,
     buttonColor = 'standard',
+    showButtonHR = false,
   } = attributes;
 
   // Rotens CSS-variabler (för listikoner m.m.)
@@ -166,16 +167,16 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
         style={{ order: '3', ...(color ? { color } : {}) }}
       >
         {buttons.map((btn, idx) => {
-          const multipleButtons = currentModalType === 'cards' || currentModalType === 'dropdown';
+          const multipleButtons = attributes.showButtonHR;
           const href = getUrl(btn.url);
-          const btnColorClass = `button-${btn?.buttonColor || 'standard'}`;
+          const btnColorClass = `button ${btn?.buttonColor} ${attributes.showButtonHR}`;
+          
           return (
             <div key={btn.id || `btn_${idx}`}>
               {multipleButtons ? <hr /> : null}
               <a
                 className={
                   `wp-block-button fastum-button ` +
-                  `${btnColorClass} ` +
                   `${alignClasses || ''} ${currentModalType || ''} ${extraClass || ''}`
                 }
                 href={href}

@@ -183,6 +183,14 @@ return array(
 			'isFaq' => array(
 				'type' => 'boolean',
 				'default' => false
+			),
+			'showButtonHR' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'modalButtonColor' => array(
+				'type' => 'string',
+				'default' => 'standard'
 			)
 		),
 		'description' => 'Card modal',

@@ -9,6 +9,7 @@
     $align           = isset($attributes['align']) ? (string) $attributes['align'] : '';
     $textColor       = isset($attributes['textColor']) ? trim((string) $attributes['textColor']) : '';
     $modalType       = isset($attributes['modalType']) ? (string) $attributes['modalType'] : '';
+    $showButtonHR    = isset($attributes['showButtonHR']) ? (bool) $attributes['showButtonHR'] : false;
     $bgImageStyle    = isset($attributes['bgImageStyle']) ? (string) $attributes['bgImageStyle'] : '';
     $items           = isset($attributes['items']) && is_array($attributes['items']) ? $attributes['items'] : [];
     $backgroundColor = isset($attributes['backgroundColor']) ? (string) $attributes['backgroundColor'] : '';
@@ -27,7 +28,7 @@
 
     $faIcon      = isset($attributes['faIcon']) ? (string) $attributes['faIcon'] : '';
     $faIconColor = isset($attributes['faIconColor']) ? (string) $attributes['faIconColor'] : '';
-
+    $showButtonHR_string = $showButtonHR ? 'true' : 'false';
     // Build article classes (match save.js)
     $article_classes = implode(' ', array_filter([
         'card-modal-article',
@@ -45,6 +46,7 @@
     $background_url       = $attributes['style']['background']['backgroundImage']['url'] ?? '';
     $background_size      = $attributes['style']['background']['backgroundSize'] ?? 'cover';
     $background_position  = $attributes['style']['background']['backgroundPosition'] ?? ''; // ← NY
+
 
     // Build inline style (bg image + optional bg color)
     $inline_style_parts = [];
@@ -324,22 +326,19 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                 class="button-wrapper <?php echo esc_attr(trim($align . ' ' . $modalType)); ?>"
                 style="<?php echo esc_attr($btn_wrapper_style_attr); ?>"
             >
-                <?php foreach ($items as $it): if (($it['type'] ?? '') !== 'button') continue; ?>
-                    <?php
+            <?php foreach ($items as $it): if (($it['type'] ?? '') !== 'button') continue; ?>
+            <?php
+                    // if ($showButtonHR){ echo '<hr />';}
                     $buttonColor = !empty($it['buttonColor']) ? (string) $it['buttonColor'] : 'standard';
                     $buttonColor = sanitize_html_class($buttonColor);
-                    $button_color_class = 'button-' . $buttonColor;
-                    if ($buttonCount > 1 && $modalType === 'cards') echo '<hr />';
-                    $isPrimary = !empty($it['isPrimary']);
+                    $button_color_class = 'button' . ' ' . $buttonColor  . ' ' . $showButtonHR_string;
                     $url       = $get_url($it['url'] ?? null);
-                    $btn_text  = $it['text'] ?? (isset($it['count']) ? 'Button ' . (int)$it['count'] : 'Button');
+                    $btn_text  = $it['text'] ?? (isset($it['count']) ? 'Button ' . $showButtonHR . (int)$it['count'] : 'Button');
                     $btn_class = trim(
-                        ($isPrimary ? 'button-primary' : 'button-secondary') . ' ' .
-                        $button_color_class . ' ' . 
                         $align . ' ' . $modalType
                         );
                     printf(
-                        '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link %4$s">%3$s</span></a>',
+                        '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link test %4$s">%3$s</span></a>',
                         esc_attr($btn_class),
                         esc_url($url),
                         esc_html($btn_text),
@@ -574,19 +573,17 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                             echo '<div class="button-wrapper ' . esc_attr(trim($card_align . ' ' . $modalType)) . '" style="' . esc_attr($btn_style_attr) . '">';
                                             foreach ($rest as $btn) {
                                                 if (($btn['type'] ?? '') !== 'button') continue;
+                                                if ($showButtonHR){ echo '<hr />';}
                                                 $buttonColor = !empty($btn['buttonColor']) ? (string) $btn['buttonColor'] : 'standard';
                                                 $buttonColor = sanitize_html_class($buttonColor);
-                                                $button_color_class = 'button-' . $buttonColor;
-                                                $isPrimary = !empty($btn['isPrimary']);
+                                                $button_color_class = 'button' . ' ' . $buttonColor  . ' ' . $showButtonHR_string;
                                                 $url       = $get_url($btn['url'] ?? null);
                                                 $btn_text  = $btn['text'] ?? (isset($btn['count']) ? 'Button ' . (int)$btn['count'] : 'Button');
                                                 $btn_class = trim(
-                                                ($isPrimary ? 'button-primary' : 'button-secondary') . ' ' .
-                                                $button_color_class . ' ' . 
                                                 $align . ' ' . $modalType
                                                 );
                                             printf(
-                                                '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link %4$s">%3$s</span></a>',
+                                                '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link test %4$s">%3$s</span></a>',
                                                 esc_attr($btn_class),
                                                 esc_url($url),
                                                 esc_html($btn_text),
@@ -748,19 +745,17 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                             echo '<div class="button-wrapper ' . esc_attr(trim($card_align . ' ' . $modalType)) . '" style="' . esc_attr($btn_style_attr) . '">';
                             foreach ($per_items as $btn) {
                                 if (($btn['type'] ?? '') !== 'button') continue;
+                                if ($showButtonHR){ echo '<hr />';}
                                 $buttonColor = !empty($btn['buttonColor']) ? (string) $btn['buttonColor'] : 'standard';
                                 $buttonColor = sanitize_html_class($buttonColor);
-                                $button_color_class = 'button-' . $buttonColor;
-                                $isPrimary = !empty($btn['isPrimary']);
+                                $button_color_class = 'button' . ' ' . $buttonColor  . ' ' . $showButtonHR_string;
                                 $url       = $get_url($btn['url'] ?? null);
                                 $btn_text  = $btn['text'] ?? (isset($btn['count']) ? 'Button ' . (int)$btn['count'] : 'Button');
                                 $btn_class = trim(
-                                    ($isPrimary ? 'button-primary' : 'button-secondary') . ' ' .
-                                    $button_color_class . ' ' . 
                                     $align . ' ' . $modalType
                                     );
                                 printf(
-                                    '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link">%3$s</span></a>',
+                                    '<a class="wp-block-button fastum-button %1$s" href="%2$s" rel="noopener noreferrer"><span class="wp-block-button__link test %4$s">%3$s</span></a>',
                                     esc_attr($btn_class),
                                     esc_url($url),
                                     esc_html($btn_text),

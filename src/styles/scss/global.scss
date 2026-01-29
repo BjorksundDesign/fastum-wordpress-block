@@ -260,14 +260,27 @@ section.hero{ max-width: 900px; }
 }
 
 .button{
-  &-primary{
-    background-color: var(--wp--preset--color--custom-fastum-orange)!important;
-  }
-  &-secondary{
+  &.true{
     background-color: var(--wp--preset--color--tertiary)!important;
+    &.primary{
+      background-color: var(--wp--preset--color--custom-fastum-orange)!important;
+    }
+    &.secondary{
+      background-color: var(--wp--preset--color--tertiary)!important;
+    }
+    &.transparent{
+      background-color: unset!important;
+    }
   }
-  &-standard{
-  }
+   &.primary{
+      background-color: var(--wp--preset--color--custom-fastum-orange)!important;
+    }
+    &.secondary{
+      background-color: var(--wp--preset--color--tertiary)!important;
+    }
+    &.transparent{
+      background-color: unset!important;
+    }
 }
 
 /* Fastum buttons (sammanfogad) */
@@ -918,11 +931,13 @@ ul .list::before{
 .image-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 0 20px;
+  padding: 20px;
   gap: 8px;
   opacity: 0;
   transform: translateY(-2px);
   pointer-events: none;
+  position: absolute;
+  bottom: -60px;
   transition: opacity 120ms ease, transform 120ms ease;
 }
 
