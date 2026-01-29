@@ -13,10 +13,18 @@ registerBlockType(metadata.name, {
     icon: {
         src: <img src={Icon} alt="Block Icon" />
     },
+
+    
         __experimentalLabel: ( props ) => {
-        const attributes = props;
+        const attributes = props
+        
         const modalType = attributes?.modalType || 'default';
-            
+        const metaData = attributes?.metadata || '';
+        console.log('props', props);
+        
+        if (metaData !== ''){
+            return metaData.name;
+        }
         if (attributes?.isFaq === true) {
             return 'FAQ';
         }
@@ -41,7 +49,7 @@ registerBlockType(metadata.name, {
             return 'lime-form';
         }
 
-        return 'Fastum blck';
+        return 'Fastum block';
         },
     supports: {
         align: true,

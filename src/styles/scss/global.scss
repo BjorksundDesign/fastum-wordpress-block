@@ -264,7 +264,7 @@ section.hero{ max-width: 900px; }
     background-color: var(--wp--preset--color--custom-fastum-orange)!important;
   }
   &-secondary{
-    background-color: unset!important;
+    background-color: var(--wp--preset--color--tertiary)!important;
   }
   &-standard{
   }
@@ -445,6 +445,11 @@ section.hero{ max-width: 900px; }
   }
 }
 
+h1 ~ p {
+  /* Selects a Paragraph as long as it follows a Heading 1. */
+}
+
+
 .components-panel__row{
   &.minimal{ margin: 0; min-height: 0; }
   &.inspector-row:last-child:not(.minimal){ padding-bottom: 12px; }
@@ -463,7 +468,7 @@ section.hero{ max-width: 900px; }
 .components-panel__body:has(.is-opened){
   padding: 0 12px 0 12px !important;
   // pointer-events: none;
-  &.card-item{ padding-right: 0 !important; }
+  // &.card-item{ padding-right: 0 !important; }
 }
 
 .components-panel__body .components-panel__body{

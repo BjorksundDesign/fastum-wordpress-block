@@ -149,6 +149,9 @@ const requestInspectInGlobal = useCallback((itemId) => {
 }, []);
    
 
+console.log(props);
+
+
    useEffect(() => {
   // keep only ids that still exist
   const existing = new Set((cards || []).map(c => c.id));
