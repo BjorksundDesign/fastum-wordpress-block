@@ -31,52 +31,6 @@
 }
 
 
-.cards-grid{
-	.card-modal-card {
-		// background-color: #f0f0f0;
-		border: 1px solid #ccc;
-		border-radius: 8px;
-		padding: 20px;
-		width: auto;
-		// max-width: 400px;
-		height: auto;
-		overflow: hidden;
-		display: flex;
-		.text-modal-section{
-			// padding: unset;
-			// justify-content: space-between;
-			.text-wrapper{
-				padding: 0px 20px;
-			}
-		}
-		.text-modal-img {
-			// border-radius: unset;
-			aspect-ratio: 3 / 2;
-		}
-		&.hide{
-			border: unset;
-		}
-		&.cover{
-			padding: 0 0 12px 0;
-		}
-	}
-	&.columns{
-	.card-modal-card {
-		.text-modal-section{
-			.text-wrapper{
-				// padding: 0;
-			}
-		}
-	}
-}
-	&.cards{
-		& .text-modal-section{
-			justify-content: flex-start;
-		}
-	}
-	
-}
-
 
 .text-modal-wrapper{
 	max-width: unset !important;
@@ -196,8 +150,6 @@ ul > .list{
 .text-modal-img{
 	width: 100%;
 	height: 100%;
-	border-radius: 12px;
-	object-fit: cover;
 }
 .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)){
  max-width: unset !important;
@@ -344,7 +296,6 @@ section{
     flex-wrap: wrap;
 	margin-top: 12px;
 	justify-content: center;
-	padding: 0 20px 0 20px;
 }
 
 .button-wrapper.left{
@@ -358,66 +309,6 @@ section{
 .button-wrapper.right{
 	justify-content: right;
 }
-
-// .button-wrapper:has(.cards), .button-wrapper:has(.dropdown), .button-wrapper:has(.columns){
-// 	flex-direction: column;
-//     align-items: flex-start;
-// 	box-sizing: border-box;
-// 	.cards > span, .dropdown > span{
-// 		background-color: unset;
-// 		font-weight: 500;	
-// 	}
-
-// 	.cards, .dropdown{
-// 		display: flex;
-// 		flex-direction: row;
-// 		align-items: center;
-// 		padding:unset;
-// 		gap: 10px;
-// 		grid-template-columns: auto auto;
-// 		span{
-// 			display: flex;
-// 			gap: 8px;
-// 			padding: 8px 20px;
-// 			font-size: 16px;
-// 			align-items: center;	
-//             color: inherit;
-// 		}
-// 		span::after{
-// 			content: var(--faIconArrowRight);
-// 			color: black;
-// 			font-weight: 500;
-// 			font-family: fontAwesome;
-// 			vertical-align: middle;
-// 			font-size: 14px;
-//             line-height: 14px;
-// 		}
-// 	}
-
-//     .columns{
-// 		display: flex;
-// 		flex-direction: row;
-// 		align-items: center;
-// 		padding:unset;
-// 		gap: 10px;
-// 		grid-template-columns: auto auto;
-// 		span{
-// 			display: flex;
-// 			gap: 8px;
-// 			padding: 8px 12px;
-// 			align-items: center;	
-//             color: inherit;
-// 		}
-// 		span::after{
-// 			content: var(--faIconArrowRight);
-// 			color: black;
-// 			font-weight: 500;
-// 			font-family: fontAwesome;
-// 			vertical-align: middle;
-// 			font-size: 14px;
-// 		}
-// 	}
-// }
 
 
 .fastum-button:not(:first-child){
@@ -1038,31 +929,6 @@ article{
 		padding: 12px;
 	}
 
-
-
-   
-    .cards-grid{
-    & .card-modal-card{
-            	width: 100% !important;
-        }
-}
   
-}
-
-
-@media only screen and (max-width: 480px) {
-
-	.text-modal-section{
-		padding: 20px;
-	}
-
-}
-
-@media only screen and (max-width: 768px) {
-
-	.text-modal-section{
-		padding: 20px;
-	}
-
 }
 

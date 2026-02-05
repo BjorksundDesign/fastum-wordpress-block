@@ -1,6 +1,15 @@
 import { BlockControls } from '@wordpress/block-editor';
 import { ToolbarGroup, ToolbarButton, ToolbarDropdownMenu, Dropdown, MenuGroup, MenuItem  } from '@wordpress/components';
-import { chevronUp, chevronDown, copy, trash, check } from '@wordpress/icons';
+import { chevronUp,
+  chevronDown,
+  copy,
+  trash,
+  check,
+  arrowLeft,
+  arrowRight,
+  external,
+  login, } from '@wordpress/icons';
+import { createParentMoveHandlers } from './text-modal-parent-move';
 import { __ } from '@wordpress/i18n';
 
 export function TextModalControllers({
@@ -11,6 +20,11 @@ export function TextModalControllers({
   onDuplicate,
   onRemove,
   menus = [], // array of dropdown configs    
+
+  context,
+  attributes,
+  setAttributes,
+  updateCard,
 }) {
   if (!activeId) return null;
 
@@ -19,6 +33,25 @@ export function TextModalControllers({
 
   const disableUp = idx === 0;
   const disableDown = idx === orderedItems.length - 1;
+
+   const cardsCount = Array.isArray(attributes?.cards) ? attributes.cards.length : 0;
+   const cardOptions = Array.from({ length: cardsCount }, (_, i) => ({
+  title: `Card ${i + 1}`,
+  onClick: () => handleMoveIntoCard(activeId, i),
+  isDisabled: context?.scope === 'card' && context?.cardIndex === i,
+}));
+  const isCard = context?.scope === 'card';
+  const cardIndex = isCard ? context.cardIndex : null;
+  const hasCards = cardsCount > 0;
+
+  const disableBreakOut = !isCard;
+  const disableMoveLeft = !isCard || cardIndex === 0;
+  const disableMoveRight = !isCard || cardIndex == null || cardIndex >= cardsCount - 1;
+  const disableInsertFirst = isCard || !hasCards;
+
+  const { handleBreakOut, handleMoveIntoCard } =
+      createParentMoveHandlers({ attributes, setAttributes, updateCard, context });
+
 
   return (
     <BlockControls group="block">
@@ -35,6 +68,33 @@ export function TextModalControllers({
           onClick={() => onDown(activeId)}
           disabled={disableDown}
         />
+        {context.scope === 'card' && (
+          <ToolbarButton
+            icon={external}
+            label={__('Break out')}
+            onClick={() => handleBreakOut(activeId)}
+          />
+        )}
+
+
+{cardsCount > 0 && (
+  cardsCount === 1 ? (
+    <ToolbarButton
+      icon={login}
+      label={__('Move to card')}
+      onClick={() => handleMoveIntoCard(activeId, 0)}
+      disabled={context?.scope === 'card' && context?.cardIndex === 0}
+    />
+  ) : (
+    <ToolbarDropdownMenu
+      icon={login}
+      label={__('Move to card')}
+      controls={cardOptions}
+    />
+  )
+)}
+
+
         <ToolbarButton
           icon={copy}
           label={__('Duplicate')}

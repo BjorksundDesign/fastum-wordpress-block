@@ -20,9 +20,8 @@ registerBlockType(metadata.name, {
         
         const modalType = attributes?.modalType || 'default';
         const metaData = attributes?.metadata || '';
-        console.log('props', props);
         
-        if (metaData !== ''){
+        if (metaData.name !== ''){
             return metaData.name;
         }
         if (attributes?.isFaq === true) {

@@ -1111,6 +1111,9 @@ export function TextModalRender({
   isSelected,
   onRequestInspect,
   onSelectItem,
+  setAttributes,
+  updateCard,
+  showToolbar = false,
 }) {
   
   const [focusTarget, setFocusTarget] = useState(null);
@@ -1408,31 +1411,38 @@ const handleRootMouseDownCapture = useCallback((e) => {
 }, [clearToolbar]);
 
   return (
-    <div
+    <div 
     ref={rootRef}
       onMouseDownCapture={handleRootMouseDownCapture}    
-    >
-    {isSelected && activeId && hasFocus && context.scope !== 'card' && (
-      <div 
-        ref={toolbarRef} 
-        className="textmodal-toolbar"
-        onMouseDown={(e) => e.preventDefault()}
-      >
-      <TextModalControllers
-          activeId={activeId}
-          orderedItems={orderedItems}
-          onUp={up}
-          onDown={down}
-          onDuplicate={duplicate}
-          onRemove={remove}
-          menus={menus}
-        />
-        </div>
-  )}
-    <div 
       className={`text-modal-section ${attributes.modalType !== 'dropdown' && (cardAttributes?.topSectionFlags ?? attributes.topSectionFlags)}`}
-      
       >
+        {isSelected && activeId && hasFocus && showToolbar && (
+          <div 
+            ref={toolbarRef} 
+            className="textmodal-toolbar"
+            onMouseDown={(e) => e.preventDefault()}
+          >
+          <TextModalControllers
+            activeId={activeId}
+            orderedItems={
+              context?.scope === 'card'
+                ? attributes.cards?.[context.cardIndex]?.items ?? []
+                : orderedItems
+            }
+            onUp={up}
+            onDown={down}
+            onDuplicate={duplicate}
+            onRemove={remove}
+            menus={menus}
+    
+            // ✅ NYTT: bara "data"
+            context={context}
+            attributes={attributes}
+            setAttributes={setAttributes}
+            updateCard={updateCard}
+          />
+            </div>
+      )}
       {textItems.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
         <div role="text-wrapper" className={`${className} ${(cardAttributes?.align)}`} 
         style={{
@@ -1585,7 +1595,6 @@ const handleRootMouseDownCapture = useCallback((e) => {
         })}
       </div>
       ):null}
-    </div>
     </div>
   );
 }

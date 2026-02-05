@@ -149,9 +149,6 @@ const requestInspectInGlobal = useCallback((itemId) => {
 }, []);
    
 
-console.log(props);
-
-
    useEffect(() => {
   // keep only ids that still exist
   const existing = new Set((cards || []).map(c => c.id));
@@ -423,8 +420,7 @@ const duplicateCard = (cardIndex) => {
 
      const imageAspectOptions = [
     { label: '3/2', value: '3/2' },
-    { label: '2/3', value: '2/3' },
-    { label: 'None', value: 'none' },
+    { label: 'None', value: 'unset' },
   ];
 
     const bgImageStyle = [
@@ -668,7 +664,8 @@ useEffect(() => {
                       })}
                   </PanelRow>
                   {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
-                  {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}                  
+                  {attributes.imageSize === 'contain' &&
+                  renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}                  
               </>
               
                     
@@ -836,7 +833,9 @@ useEffect(() => {
                 // selectedItemId={selectedItemId}
                 // setSelectedItemId={setSelectedItemId}
                 onRequestInspect={(itemId) => requestInspectInGlobal(itemId)}
-                showButtonHR={attributes.showButtonHR}  
+                showButtonHR={attributes.showButtonHR}
+                setAttributes={setAttributes}
+                updateCard={updateCard}  
                 />
           {attributes.modalType === 'lime-form' &&
             <div className="custom-container">
@@ -896,7 +895,8 @@ useEffect(() => {
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                             onSelectItem={setSelectedItemId}
-                            showButtonHR={attributes.showButtonHR}   
+                            setAttributes={setAttributes}
+                            updateCard={updateCard}
                           />
                         </summary>
 
@@ -917,7 +917,8 @@ useEffect(() => {
                             // onSelectItem={setSelectedItemId}
                             onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                             onSelectItem={setSelectedItemId}
-                            showButtonHR={attributes.showButtonHR}  
+                            setAttributes={setAttributes}
+                            updateCard={updateCard}   
                           />
                         </div>
                       </details>
@@ -941,7 +942,8 @@ useEffect(() => {
                     // onSelectItem={setSelectedItemId}
                     onRequestInspect={(itemId) => requestInspectInCard(card.id, itemId)}
                     onSelectItem={setSelectedItemId}
-                    showButtonHR={attributes.showButtonHR}  
+                    setAttributes={setAttributes}
+                    updateCard={updateCard}   
                   />
                 )}
 

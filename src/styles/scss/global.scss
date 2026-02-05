@@ -150,6 +150,19 @@ section.hero{ max-width: 900px; }
   justify-items: center;
   padding: 30px 80px;
   box-sizing: border-box;
+  &-padding{
+
+  }
+}
+
+.article-padding__sml{
+
+}
+.article-padding__med{
+  
+}
+.article-padding__lrg{
+  
 }
 
 .paragraph{
@@ -169,6 +182,21 @@ section.hero{ max-width: 900px; }
   justify-content:flex-end;
 }
 
+.fa-icon-base{
+  &.break-out{
+    &:before{ content: '⤴'; } // bryt ut
+  }
+  &.move-card-left{
+    &:before{ content: '←'; }
+  }
+  &.move-card-right{
+    &:before{ content: '→'; }
+  }
+  &.insert-first-card{
+    &:before{ content: '⤵'; } // lägg in i första kortet
+  }
+}
+
 
 /* Buttons */
 .button-wrapper{
@@ -177,7 +205,6 @@ section.hero{ max-width: 900px; }
   flex-wrap: wrap;
   margin-top: 12px;
   justify-content: center;
-  padding: 0;
   
   &:has(hr){
       flex-direction: column !important;
@@ -730,41 +757,114 @@ h1 ~ p {
   z-index: 0;
 }
 
-/* Cards grids */
-.cards-grid{
+.image-container{
+	width: 100%;
+	height: 100%;
+	grid-area: img;
+	// overflow: hidden;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+	
+}
+
+/* =========================
+   Cards grid (merged)
+   ========================= */
+
+.cards-grid {
   display: flex;
-  grid-template-columns: repeat(auto-fit, minmax(420px, auto));
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
   padding: 20px;
   max-width: min(1300px, 100vw);
 
-  &.columns{
+  /* -------------------------
+     Card base
+     ------------------------- */
+  .card-modal-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    padding: 20px;
+
+    /* modifiers */
+    &.hide {
+      border: unset;
+    }
+
+    &.cover {
+      padding: 0 0 20px 0;
+      .text-wrapper,
+      .button-wrapper {
+        padding: 0 var(--card-padding);
+      }
+    }
+
+    &.contain {
+      .text-wrapper,
+      .button-wrapper {
+        padding: 0;
+      }
+    }
+  }
+
+  /* -------------------------
+     Columns layout
+     ------------------------- */
+  &.columns {
     display: grid;
-    max-width: min(1300px, 100vw);
     grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    .card-modal-card{ max-width: min(1300px, 100vw); }
-     & .image-container{
-        border-radius: 12px;
+    max-width: min(1300px, 100vw);
+
+    .card-modal-card {
+      max-width: min(1300px, 100vw);
+    }
+
+    .image-container {
+      border-radius: 12px;
     }
   }
-  &.cards{
-    & .image-container:not(.cover){
-        border-radius: 12px;
+
+  /* -------------------------
+     Cards layout
+     ------------------------- */
+  &.cards {
+    .text-modal-section {
+      justify-content: flex-start;
     }
-    & .card-modal-card{
-      padding-bottom: 12px;
-    }
-    & .button-wrapper{
-      padding: 0 20px;
+
+    .image-container {
+      &:not(.cover) {
+        img {
+          border-radius: 12px;
+          aspect-ratio: unset;
+        }
+      }
+
+      &.cover {
+        img {
+          border-radius: 0;
+          aspect-ratio: 3 / 2;
+        }
+      }
     }
   }
-  &.dropdown{
-      width: 100%;
-      gap: 8px;
-    }
+
+  /* -------------------------
+     Dropdown layout
+     ------------------------- */
+  &.dropdown {
+    width: 100%;
+    gap: 8px;
+  }
 }
+
+
 
 .li-preview::before{
 	content: var(--faIcon);
@@ -961,38 +1061,15 @@ ul .list::before{
 }
 
 .cards-grid{
-  &.cards {
-    & .contains-text {
-      padding: var(--card-padding);
-    }
-    & .contains-button {
-      padding-bottom: 0;
-    }
-  }
-
   &:not(.contain) {
     &.cards,
     &.columns {
       & .contains-image {
         padding: 0;
-        &.contains-text {
-          padding-bottom: var(--card-padding);
-          &.contains-button {
-            padding-bottom: 0;
-          }
-        }
       }
     }
   }
 &.columns{
-  & .contains-image{
-    &.contains-text{
-        padding-bottom: var(--card-padding);
-      &.contains-button{
-        padding-bottom: var(--card-padding);
-      }
-    }
-  }
   & .contains-button{
     padding-bottom: var(--card-padding);
   } 
@@ -1050,10 +1127,7 @@ th + th, td + td{ text-align: center; }
 
     &.columns{
       display: flex;
-      max-width: 980px;
-
-      .card-modal-card{ max-width: 980px; padding: 0; }
-    }
+        }
 
     &.cards {
         .card-modal-card{ width: min(100%, 420px) !important; }
@@ -1121,10 +1195,6 @@ th + th, td + td{ text-align: center; }
 
       .card-modal-card{ 
           max-width: 100%; 
-          padding: 0;
-          & .text-modal-section .text-wrapper{
-            padding: 0;
-          }
         }
     }
 
