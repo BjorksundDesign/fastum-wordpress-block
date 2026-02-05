@@ -125,6 +125,7 @@ export default function Edit(props) {
     modalType,
     isFaq,
     showButtonHR,
+    modalMargin,
   } = attributes;
   
   const GLOBAL_TM_ID = 'global';
@@ -416,6 +417,7 @@ const duplicateCard = (cardIndex) => {
      const imageSizingOptions = [
     { label: 'Cover', value: 'cover' },
     { label: 'Contain', value: 'contain' },
+    { label: 'Icon', value: 'contain iconWrapper' },
   ];
 
      const imageAspectOptions = [
@@ -443,6 +445,12 @@ const duplicateCard = (cardIndex) => {
     { label: 'Black', value: '#000000' },
     { label: 'White', value: '#ffffff' },
   ];
+
+     const modalMarginOptions = [
+      { label: 'Regular', value: 'regularMargin' },
+      { label: 'Small', value: 'smallMargin' },
+  ];
+
 
 
 
@@ -612,6 +620,7 @@ useEffect(() => {
               className="panel-body"
               >
             {renderControl('Modal type:', 'modalType', modalTypeOptions, attributes, setAttributes)}
+            {renderControl('Margin:', 'modalMargin', modalMarginOptions, attributes, setAttributes)}  
              {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && (
               <>
               {modalType === 'dropdown' && (
@@ -818,7 +827,7 @@ useEffect(() => {
       </InspectorControls>
 
       {/* Frontend/Editor preview */}
-      <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} article`} style={{backgroundColor: backgroundColor}}>
+      <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} ${attributes.modalMargin} article`} style={{backgroundColor: backgroundColor}}>
         {topSectionFlags !== '' || attributes.modalType === 'lime-form' ?
         <section className={`card-modal-section ${attributes.modalType}`}>
           <TextModalRender

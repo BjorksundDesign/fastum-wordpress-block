@@ -447,12 +447,11 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                             $img_style = [];
                                             if ($imageWidth !== '') { $img_style[] = 'width:' . esc_attr($imageWidth); }
                                             if ($imageAspect && $imageAspect !== 'none') { $img_style[] = 'aspect-ratio:' . esc_attr($imageAspect); }
-                                            if ($imageSize !== '') { $img_style[] = 'object-fit:' . esc_attr($imageSize); }
                                             $img_style_attr = implode(';', $img_style);
                                             if ($img_style_attr && substr($img_style_attr, -1) !== ';') { $img_style_attr .= ';'; }
 
                                             // NOTE: keeping imageWidth in class as requested
-                                            $img_class      = trim('text-modal-img ' . $imageAspect . ' ' . $imageSize . ' ' . $imageWidth);
+                                            $img_class      = trim('text-modal-img ' . $imageAspect .  $imageWidth);
                                             $img_wrap_class = trim('image-container ' . $imageSize);
 
                                             echo '<div class="image-wrapper" style="order:1">';
@@ -619,12 +618,11 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                             $img_style = [];
                             if ($imageWidth !== '') { $img_style[] = 'width:' . esc_attr($imageWidth); }
                             if ($imageAspect && $imageAspect !== 'none') { $img_style[] = 'aspect-ratio:' . esc_attr($imageAspect); }
-                            if ($imageSize !== '') { $img_style[] = 'object-fit:' . esc_attr($imageSize); }
                             $img_style_attr = implode(';', $img_style);
                             if ($img_style_attr && substr($img_style_attr, -1) !== ';') { $img_style_attr .= ';'; }
 
                             // NOTE: keeping imageWidth in class as requested
-                            $img_class      = trim('text-modal-img ' . $imageAspect . ' ' . $imageSize . ' ' . $imageWidth);
+                            $img_class      = trim('text-modal-img ' . $imageAspect . $imageWidth);
                             $img_wrap_class = trim('image-container ' . $imageSize);
 
                             echo '<div class="image-wrapper" style="order:1">';

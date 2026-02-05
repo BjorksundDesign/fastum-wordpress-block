@@ -207,7 +207,6 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
     const imgStyleBase = {
       width: imageWidth || '100%',
       ...(imageAspect && imageAspect !== 'none' ? { aspectRatio: imageAspect } : {}),
-      ...(imageSize ? { objectFit: imageSize } : {}), // cover/contain
     };
 
     return (

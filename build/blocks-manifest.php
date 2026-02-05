@@ -191,6 +191,10 @@ return array(
 			'modalButtonColor' => array(
 				'type' => 'string',
 				'default' => 'standard'
+			),
+			'modalMargin' => array(
+				'type' => 'string',
+				'default' => 'small'
 			)
 		),
 		'description' => 'Card modal',

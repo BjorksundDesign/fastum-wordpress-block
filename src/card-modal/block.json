@@ -94,6 +94,10 @@
 		"modalButtonColor": {
 			"type": "string",
 			"default": "standard"
+		},
+		"modalMargin":{
+			"type": "string",
+			"default": "small"
 		}
 	},
 	"description": "Card modal",

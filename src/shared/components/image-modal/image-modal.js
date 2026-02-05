@@ -146,7 +146,6 @@ const altText = hasAlt ? meta.alt : __('Saknas');
       style={{
         width: attributes.imageWidth,
         aspectRatio: attributes.imageAspect,
-        objectFit: attributes.imageSize,
       }}
       className={`text-modal-img ${attributes.imageAspectRatio} ${attributes.imageSizing} ${attributes.imageWidth}`}
       onSelect={handleImageChange}

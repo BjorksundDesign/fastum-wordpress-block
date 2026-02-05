@@ -58,7 +58,7 @@ textarea{
 
 .image{
 	width: 100%;
-	object-fit: contain;
+	object-fit: cover;
 	height: auto;
 	max-height: 50%;
 }
@@ -92,7 +92,6 @@ input{
     width: 100%; /* Makes the image responsive */
     height: auto; /* Maintains aspect ratio */
     max-height: 300px; /* Optional: Limit the height */
-    object-fit: cover; /* Optional: Crop the image to fit */
 }
 
 .linkTextControl, .linkLinkControl {

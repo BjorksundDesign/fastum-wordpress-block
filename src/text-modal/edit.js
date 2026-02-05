@@ -138,6 +138,7 @@ export default function Edit(props) {
      const imageSizingOptions = [
     { label: 'Cover', value: 'cover' },
     { label: 'Contain', value: 'contain' },
+
   ];
 
      const imageAspectOptions = [
