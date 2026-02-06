@@ -801,6 +801,12 @@ h1 ~ p {
 /* =========================
    Cards grid (merged)
    ========================= */
+    .iconWrapper{
+      --image-border-radius:0px;
+      & .text-modal-img{
+        object-fit: contain !important;
+      }
+    }
 
 .cards-grid {
   display: flex;
@@ -840,12 +846,7 @@ h1 ~ p {
         padding: 0;
       }
     }
-    &.iconWrapper{
-      --image-border-radius:0px;
-      .text-modal-img{
-        object-fit: contain;
-      }
-    }
+   
   }
 
   /* -------------------------
@@ -869,7 +870,7 @@ h1 ~ p {
       }
 
       &.cover {
-        .text-modal-img {
+        & .text-modal-img {
           border-radius: 0;
           aspect-ratio: 3 / 2 !important;
         }
