@@ -634,9 +634,12 @@ useEffect(() => {
                     // </PanelRow>
                   )}
               {renderControl('Card border:', 'cardBorder', borderOptions, attributes, setAttributes)}
+
               {/* {renderControl('Card width:', 'cardWidthOptions', cardWidthOptions, attributes, setAttributes)} */}
               </>
              )}
+             {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
+             {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}  
              {renderControl('Button line:', 'showButtonHR', buttonHROptions, attributes, setAttributes)}
              {cards.length !== 0 && attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&
                 cards.some(card => 
@@ -672,9 +675,7 @@ useEffect(() => {
                         }
                       })}
                   </PanelRow>
-                  {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
-                  {attributes.imageSize === 'contain' &&
-                  renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}                  
+                           
               </>
               
                     
