@@ -972,8 +972,9 @@ h1 ~ p {
 ul{
   &.text-modal-ul{
     list-style: none;
-    &.list{
+    & .list{
      display: flex;  
+    padding-left: 24px;
     }
   }
 }
@@ -981,6 +982,9 @@ ul{
 ol{
   &.text-modal-ul{
     margin-left: var(--icon-space);
+    & .list{
+      padding-left: 0px;
+    }
   }
 }
 
@@ -1024,9 +1028,7 @@ ul .list::before{
   z-index: 9999;     // ensure above text
 }
 
-.custom-container .tabell{
-  font-size: 12px !important;
-}
+
 
 .yoast-breadcrumbs{
 	padding:12px 12px !important;
@@ -1208,6 +1210,10 @@ th + th, td + td{ text-align: center; }
     --card-padding:12px;
     --paragraph-font-size: 17px;
   }
+
+  .custom-container .tabell{
+  font-size: 12px !important;
+}
 
   .yoast-breadcrumbs{
     padding:12px 80px !important;
