@@ -634,8 +634,6 @@ useEffect(() => {
                     // </PanelRow>
                   )}
               {renderControl('Card border:', 'cardBorder', borderOptions, attributes, setAttributes)}
-              {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
-              {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}  
               {/* {renderControl('Card width:', 'cardWidthOptions', cardWidthOptions, attributes, setAttributes)} */}
               </>
              )}
@@ -674,7 +672,9 @@ useEffect(() => {
                         }
                       })}
                   </PanelRow>
-                           
+                  {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
+                  {attributes.imageSize === 'contain' &&
+                  renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}                  
               </>
               
                     
