@@ -798,15 +798,12 @@ h1 ~ p {
   }	
 }
 
-/* =========================
-   Cards grid (merged)
-   ========================= */
-    .iconWrapper{
-      --image-border-radius:0px;
-      & .text-modal-img{
-        object-fit: contain !important;
-      }
-    }
+.iconWrapper{
+  --image-border-radius:0px;
+  & .text-modal-img{
+    object-fit: contain !important;
+  }
+}
 
 .cards-grid {
   display: flex;
