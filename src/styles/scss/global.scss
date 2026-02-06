@@ -813,7 +813,7 @@ h1 ~ p {
   /* -------------------------
      Card base
      ------------------------- */
-  .card-modal-card {
+  & .card-modal-card {
     border: 1px solid #ccc;
     width: auto;
     height: auto;
@@ -834,7 +834,6 @@ h1 ~ p {
         padding: 0 var(--card-padding);
       }
     }
-
     &.contain {
       .text-wrapper,
       .button-wrapper {
