@@ -9,6 +9,7 @@
     $align           = isset($attributes['align']) ? (string) $attributes['align'] : '';
     $textColor       = isset($attributes['textColor']) ? trim((string) $attributes['textColor']) : '';
     $modalType       = isset($attributes['modalType']) ? (string) $attributes['modalType'] : '';
+    $modalMargin       = isset($attributes['modalMargin']) ? (string) $attributes['modalMargin'] : '';
     $showButtonHR    = isset($attributes['showButtonHR']) ? (bool) $attributes['showButtonHR'] : false;
     $bgImageStyle    = isset($attributes['bgImageStyle']) ? (string) $attributes['bgImageStyle'] : '';
     $items           = isset($attributes['items']) && is_array($attributes['items']) ? $attributes['items'] : [];
@@ -34,6 +35,7 @@
         'card-modal-article',
         sanitize_html_class($bgImageStyle),
         sanitize_html_class($modalType),
+        sanitize_html_class($modalMargin),
         'article',
     ]));
 
@@ -175,8 +177,6 @@ $ctb_items_to_plain_answer = static function($items) use ($ctb_clean_text) {
                 if ($t !== '') $parts[] = $t;
             }
         }
-
-        // (Image/button ignoreras som FAQ-svartext)
     }
 
     $answer = trim(implode(' ', $parts));
@@ -184,7 +184,6 @@ $ctb_items_to_plain_answer = static function($items) use ($ctb_clean_text) {
     return trim($answer);
 };
 
-// Bygger JSON-LD objekt från cards
 $ctb_build_faq_jsonld = static function($cards) use ($split_on_first_heading, $ctb_first_heading_text, $ctb_items_to_plain_answer) {
     if (!is_array($cards) || empty($cards)) return null;
 
