@@ -1215,6 +1215,10 @@ th + th, td + td{ text-align: center; }
   font-size: 12px !important;
 }
 
+	  .article{
+    padding: var(--article-vertical-padding) 12px;
+  }
+
   .yoast-breadcrumbs{
     padding:12px 12px !important;
     max-width: 1300px !important;
