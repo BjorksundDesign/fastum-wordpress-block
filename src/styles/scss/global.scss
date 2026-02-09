@@ -1242,11 +1242,9 @@ th + th, td + td{ text-align: center; }
 
   .article{
     padding: var(--article-vertical-padding) 12px;
-
   }
 
-  .text-modal-ul{ --list-gap: 4px; } /* snabbfix override */
-
+  .text-modal-ul{ --list-gap: 4px; }
   .xl { font-size: 32px; } // hero / page headline
   .l  { font-size: 26px; } // section headline
   .m  { font-size: 22px; } // card / modal headline
