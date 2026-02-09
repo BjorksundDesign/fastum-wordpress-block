@@ -573,6 +573,8 @@ const computeTopFlagsFromList = (list = []) => {
   ].filter(Boolean).join(' ');
 };
 
+
+
 useEffect(() => {
   const flags = computeTopFlagsFromList(attributes.items || []);
   if (flags !== (attributes.topSectionFlags || '')) {

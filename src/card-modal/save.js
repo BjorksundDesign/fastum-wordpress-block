@@ -23,7 +23,6 @@ export default function save({ attributes }) {
     topSectionFlags,
     buttonColor = 'standard',
     showButtonHR = false,
-    modalMargin,
   } = attributes;
 
   // Rotens CSS-variabler (för listikoner m.m.)
@@ -33,7 +32,7 @@ export default function save({ attributes }) {
   };
 
   const blockProps = useBlockProps.save({
-    className: `card-modal-article ${bgImageStyle || ''} ${modalType || ''} ${modalMargin || ''} article`,
+    className: `card-modal-article ${bgImageStyle || ''} ${modalType || ''} article`,
     style: {
       ...(backgroundColor ? { backgroundColor } : {}),
       ...faIconStyle,
