@@ -126,6 +126,7 @@ export default function Edit(props) {
     isFaq,
     showButtonHR,
     modalMargin,
+    cardSize,
   } = attributes;
   
   const GLOBAL_TM_ID = 'global';
@@ -409,9 +410,15 @@ const duplicateCard = (cardIndex) => {
     { label: 'Half', value: '50%' },
   ];
 
-       const cardWidthOptions = [
+  const cardWidthOptions = [
     { label: 'Card', value: '400px' },
     { label: 'Column', value: '600px' },
+  ];
+
+  const cardSizeOptions = [
+    { label: 'Large', value: 'lrgCard' },
+    { label: 'Medium', value: 'medCard' },
+    { label: 'Small', value: 'smlCard' },
   ];
 
      const imageSizingOptions = [
@@ -632,9 +639,8 @@ useEffect(() => {
                     // </PanelRow>
                   )}
               {renderControl('Card border:', 'cardBorder', borderOptions, attributes, setAttributes)}
-
-              {/* {renderControl('Card width:', 'cardWidthOptions', cardWidthOptions, attributes, setAttributes)} */}
-              </>
+              {/* {renderControl('Card size:', 'cardSize', cardSizeOptions, attributes, setAttributes)} */}
+               </>
              )}
              {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
              {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}  
@@ -853,13 +859,13 @@ useEffect(() => {
         </section>
         : ''}
         {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && cards.length > 0 && 
-        <div className={`cards-grid ${attributes.modalType}`}>
+        <div className={`cards-grid ${attributes.modalType} ${attributes.cardSize}`}>
           {cards.map((card, i) => {
             const open = !!isOpenById[card.id];
             return (
               <section
               key={card.id}
-              className={`${attributes.modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${attributes.imageSize} ${attributes.align} ${attributes.cardBorder}`}
+              className={`${attributes.modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${attributes.imageSize} ${attributes.align} ${attributes.cardBorder} ${attributes.cardSize}`}
               style={{ backgroundColor: card.backgroundColor, "--currentCardOrder": card.cardOrderMobile }}
               >
                 {attributes.modalType === 'dropdown' ? (

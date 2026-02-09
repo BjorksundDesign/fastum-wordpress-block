@@ -22,6 +22,10 @@
 			"type": "number",
 			"default": 1
 		},
+		"cardsPerRow": {
+			"type": "number",
+			"default": 3
+		},
 		"modalBackground":{"type": "integer"},
 		 "style": {
 			"type": "object"
@@ -98,6 +102,10 @@
 		"modalMargin":{
 			"type": "string",
 			"default": "small"
+		},
+		"cardSize":{
+			"type": "string",
+			"default": "medCard"			
 		}
 	},
 	"description": "Card modal",

@@ -380,42 +380,6 @@ article{
     } 
 }
 
-
-.grid-1-button{
-    --grid-template-columns: minmax(48px, auto) repeat(1, 1fr);
-}
-
-.grid-2-button{
-    --grid-template-columns: minmax(48px, auto) repeat(2, 1fr);
-}
-
-.grid-3-button{
-    --grid-template-columns: minmax(48px, auto) repeat(3, 1fr);
-}
-
-.grid-4-button{
-    --grid-template-columns: minmax(48px, auto) repeat(4, 1fr);
-    &.no-title{
-    --grid-template-columns: repeat(4, 1fr);       
-    }
-}
-
-
-.grid-5-button{
-    --grid-template-columns: minmax(48px, auto) repeat(5, 1fr);
-}
-
-
-.grid-no-button, .grid-0-button{
-    --grid-template-columns: auto;
-    width: 100%;
-}
-
-.grid-image{
-    grid-template-columns: 1fr;
-    grid-template-areas: "img";
-}
-
 .block-editor-link-control{
  min-width: unset;
 }
@@ -670,24 +634,6 @@ article{
     margin: 0;
 }
 
-// .has-text-align-left {
-//     float: left;
-//     margin-right: 20px;
-// }
-
-.has-text-align-center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.has-text-align-right {
-    float: right;
-    margin-left: 20px;
-}
-
-
-
 .card-modal-article.shaded::after {
 	content: '';
 	position: absolute;
@@ -701,7 +647,6 @@ article{
 
 .cards-grid{
 	display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(420px, auto));
     gap: 20px;
     justify-content: center;
 	flex-wrap: wrap;
@@ -710,7 +655,6 @@ article{
     &.columns{
         display: grid;
         max-width: min(1300px, 100vw);
-        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); 
         & .card-modal-card{
             max-width: min(1300px, 100vw);
         }   
@@ -721,7 +665,6 @@ article{
     & .card-modal-card{
 	max-height: unset;
 	margin-top: unset;
-	max-width:420px;
     order: unset;
     box-sizing: border-box; 
 }

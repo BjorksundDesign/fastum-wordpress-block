@@ -108,6 +108,10 @@ return array(
 				'type' => 'number',
 				'default' => 1
 			),
+			'cardsPerRow' => array(
+				'type' => 'number',
+				'default' => 3
+			),
 			'modalBackground' => array(
 				'type' => 'integer'
 			),
@@ -195,6 +199,10 @@ return array(
 			'modalMargin' => array(
 				'type' => 'string',
 				'default' => 'small'
+			),
+			'cardSize' => array(
+				'type' => 'string',
+				'default' => 'medCard'
 			)
 		),
 		'description' => 'Card modal',
