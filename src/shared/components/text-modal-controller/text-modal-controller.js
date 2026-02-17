@@ -43,6 +43,7 @@ export function TextModalControllers({
   const isCard = context?.scope === 'card';
   const cardIndex = isCard ? context.cardIndex : null;
   const hasCards = cardsCount > 0;
+  const disableType = ['hero', 'lime-form'];
 
   const disableBreakOut = !isCard;
   const disableMoveLeft = !isCard || cardIndex === 0;
@@ -52,6 +53,7 @@ export function TextModalControllers({
   const { handleBreakOut, handleMoveIntoCard } =
       createParentMoveHandlers({ attributes, setAttributes, updateCard, context });
 
+console.log(cardsCount, attributes);
 
   return (
     <BlockControls group="block">
@@ -76,8 +78,7 @@ export function TextModalControllers({
           />
         )}
 
-
-{cardsCount > 0 && (
+{cardsCount > 0 && !disableType.includes(attributes?.modalType) && (
   cardsCount === 1 ? (
     <ToolbarButton
       icon={login}

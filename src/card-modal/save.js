@@ -23,6 +23,11 @@ export default function save({ attributes }) {
     topSectionFlags,
     buttonColor = 'standard',
     showButtonHR = false,
+    numberOfCards = 0,
+    contentOrientation = false,
+    isFaq = false,
+    modalMargin = 'regularMargin',
+    cardSize = 'medCard',
   } = attributes;
 
   // Rotens CSS-variabler (för listikoner m.m.)
@@ -32,7 +37,7 @@ export default function save({ attributes }) {
   };
 
   const blockProps = useBlockProps.save({
-    className: `card-modal-article ${bgImageStyle || ''} ${modalType || ''} article`,
+    className: `card-modal-article ${bgImageStyle || ''} ${modalType || ''} ${modalMargin || ''} article`,
     style: {
       ...(backgroundColor ? { backgroundColor } : {}),
       ...faIconStyle,
@@ -262,7 +267,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
               return (
                 <section
                   key={card.id}
-                  className={`dropdown-modal-card ${imageSize || ''} ${cardAlign || ''} ${cardBorder || ''}`}
+                  className={`dropdown-modal-card ${imageSize || ''} ${cardAlign || ''} ${cardBorder || ''} ${modalType === 'cards' ? cardSize : ''}`}
                   style={{
                     ...(cardBg ? { backgroundColor: cardBg } : {}),
                     ...(cardWidthOptions ? { maxWidth: cardWidthOptions } : {}),
@@ -292,7 +297,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
             return (
               <section
                   key={card.id}
-                  className={`${modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${imageSize || ''} ${cardAlign || ''} ${cardBorder || ''}`}
+                  className={`${modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${imageSize || ''} ${cardAlign || ''} ${cardBorder || ''} ${modalType === 'cards' ? cardSize : ''}`}
                   style={{
                     ...(cardBg ? { backgroundColor: cardBg } : {}),
                     ...(cardWidthOptions ? { maxWidth: cardWidthOptions } : {}),

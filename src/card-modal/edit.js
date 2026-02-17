@@ -416,7 +416,6 @@ const duplicateCard = (cardIndex) => {
   ];
 
   const cardSizeOptions = [
-    { label: 'Large', value: 'lrgCard' },
     { label: 'Medium', value: 'medCard' },
     { label: 'Small', value: 'smlCard' },
   ];
@@ -627,7 +626,15 @@ useEffect(() => {
               className="panel-body"
               >
             {renderControl('Modal type:', 'modalType', modalTypeOptions, attributes, setAttributes)}
-            {renderControl('Margin:', 'modalMargin', modalMarginOptions, attributes, setAttributes)}  
+            
+            {attributes.modalType !== 'hero' && (
+              <>
+                {renderControl('Margin:', 'modalMargin', modalMarginOptions, attributes, setAttributes)}
+                {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
+              {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}  
+              {renderControl('Button line:', 'showButtonHR', buttonHROptions, attributes, setAttributes)}
+              </>
+            )}
              {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && (
               <>
               {modalType === 'dropdown' && (
@@ -641,12 +648,11 @@ useEffect(() => {
                     // </PanelRow>
                   )}
               {renderControl('Card border:', 'cardBorder', borderOptions, attributes, setAttributes)}
-              {/* {renderControl('Card size:', 'cardSize', cardSizeOptions, attributes, setAttributes)} */}
                </>
              )}
-             {renderControl('Image sizing:', 'imageSize', imageSizingOptions, attributes, setAttributes)}
-             {renderControl('Image aspect:', 'imageAspect', imageAspectOptions, attributes, setAttributes)}  
-             {renderControl('Button line:', 'showButtonHR', buttonHROptions, attributes, setAttributes)}
+
+             {attributes.modalType === 'cards' && (renderControl('Card size:', 'cardSize', cardSizeOptions, attributes, setAttributes))}
+             
              {cards.length !== 0 && attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' &&
                 cards.some(card => 
                   card.items && card.items.some(item => item.image)) && (
@@ -861,13 +867,13 @@ useEffect(() => {
         </section>
         : ''}
         {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && cards.length > 0 && 
-        <div className={`cards-grid ${attributes.modalType} ${attributes.cardSize}`}>
+        <div className={`cards-grid ${attributes.modalType} ${attributes.modalType === 'cards' && attributes.cardSize}`}>
           {cards.map((card, i) => {
             const open = !!isOpenById[card.id];
             return (
               <section
               key={card.id}
-              className={`${attributes.modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${attributes.imageSize} ${attributes.align} ${attributes.cardBorder} ${attributes.cardSize}`}
+              className={`${attributes.modalType === 'dropdown' ? 'dropdown-modal-card' : 'card-modal-card'} ${attributes.imageSize} ${attributes.align} ${attributes.cardBorder}  ${attributes.modalType === 'cards' && attributes.cardSize}`}
               style={{ backgroundColor: card.backgroundColor, "--currentCardOrder": card.cardOrderMobile }}
               >
                 {attributes.modalType === 'dropdown' ? (

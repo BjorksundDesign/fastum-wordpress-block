@@ -21,9 +21,11 @@
     $imageWidth       = isset($attributes['imageWidth']) ? (string) $attributes['imageWidth'] : '100%';
     $imageAspect      = isset($attributes['imageAspect']) ? (string) $attributes['imageAspect'] : 'none';
     $cardBorder       = isset($attributes['cardBorder']) ? (string) $attributes['cardBorder'] : '';
+    $cardSize         = isset($attributes['cardSize']) ? (string) $attributes['cardSize'] : '';
     $cardWidthOptions = isset($attributes['cardWidthOptions']) ? (string) $attributes['cardWidthOptions'] : ''; // "400px" | "600px"
     $className        = isset($attributes['className']) ? (string) $attributes['className'] : '';
     $topSectionFlags  = isset($attributes['topSectionFlags']) ? (string) $attributes['topSectionFlags'] : '';
+    $modalMargin      = isset($attributes['modalMargin']) ? (string) $attributes['modalMargin'] : 'regularMargin';
 
 
     $faIcon      = isset($attributes['faIcon']) ? (string) $attributes['faIcon'] : '';
@@ -34,6 +36,7 @@
         'card-modal-article',
         sanitize_html_class($bgImageStyle),
         sanitize_html_class($modalType),
+        sanitize_html_class($modalMargin),
         'article',
     ]));
 
@@ -394,6 +397,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                         sanitize_html_class($imageSize),
                         sanitize_html_class($card_align),
                         sanitize_html_class($cardBorder),
+                        ($modalType === 'cards' ? sanitize_html_class($cardSize) : ''),
                     ]));
                     $style_parts = [];
                     if ($card_bg !== '')         { $style_parts[] = 'background-color:' . esc_attr($card_bg); }

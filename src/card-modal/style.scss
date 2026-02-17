@@ -40,12 +40,6 @@ ul > .list{
 	font-size: 16px;
 }
 
-.list span a{
-	text-decoration: underline;
-	font-family: inherit;
-	color: blue;
-}
-
 .invertOrder{
 	order: 2;
 
@@ -144,25 +138,6 @@ ul > .list{
 	height: 100%;
 	grid-area: img;
 }
-
-.two-columns{
-	grid-template-columns: 60% 40%;
-	grid-template-areas: "text image";
-	max-width: 1300px;
-	min-width: 900px;
-}
-
-.oneColumn{
-	max-width: 900px;
-	grid-template-columns: 100%;
-	grid-template-areas: "text";
-
-}
-
-.two-columns.invert{
-	grid-template-columns: 40% 60%;
-	grid-template-areas: "image text";
-} 
 
 .card-list-title-wrapper{
 	white-space: nowrap;
@@ -645,22 +620,6 @@ article{
 	z-index: 0;
 }
 
-.cards-grid{
-	display: flex;
-    gap: 20px;
-    justify-content: center;
-	flex-wrap: wrap;
-	padding: 20px;
-    max-width: min(1300px, 100vw);
-    &.columns{
-        display: grid;
-        max-width: min(1300px, 100vw);
-        & .card-modal-card{
-            max-width: min(1300px, 100vw);
-        }   
-    }
-}
-
 .cards-grid.cards{
     & .card-modal-card{
 	max-height: unset;
@@ -706,25 +665,6 @@ article{
 .image-wrapper, .grid-image{
     height: auto;
 }
-
-.card-modal-section{
-    position: relative;
-	max-width: 1300px;
-	z-index: 1;
-	&.hero{
-		max-width: 900px;
-	}
-	&.lime-form{
-		max-width: 900px;
-		padding: 20px 40px;
-    	box-sizing: border-box;
-	}
-	&.dropdown{
-		max-width: 900px;
-	}
-	
-}
-
 
 @media only screen and (max-width: 980px) {
 
