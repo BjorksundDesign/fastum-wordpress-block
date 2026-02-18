@@ -4,6 +4,7 @@ import {
   useBlockProps,
   InnerBlocks,
 } from '@wordpress/block-editor';
+import { Image } from '@10up/block-components';
 import {
   Panel,
   PanelBody,
@@ -840,10 +841,31 @@ useEffect(() => {
       </InspectorControls>
 
       {/* Frontend/Editor preview */}
-      <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} ${attributes.modalMargin} article`} style={{backgroundColor: backgroundColor}}>
+      <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} ${attributes.modalMargin} article`} style={{backgroundColor: backgroundColor, position: 'relative'}}>
         {console.log('article', attributes)}
+        {/* Background image using @10up/block-components Image component */}
+        {attributes?.style?.background?.backgroundImage?.id && (
+          <Image
+            id={attributes.style.background.backgroundImage.id}
+            size="large"
+            fetchpriority="high"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: attributes?.style?.background?.backgroundSize || 'cover',
+              objectPosition: attributes?.style?.background?.backgroundPosition || 'center',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }}
+            className="card-modal-background-img"
+            alt={attributes?.style?.background?.backgroundImageAlt || ''}
+          />
+        )}
         {topSectionFlags !== '' || attributes.modalType === 'lime-form' ?
-        <section className={`card-modal-section ${attributes.modalType}`}>
+        <section className={`card-modal-section ${attributes.modalType}`} style={{position: 'relative', zIndex: 1}}>
           <TextModalRender
                 readItems={() => attributes.items}
                 writeItems={(newItems) => setAttributes({ items: newItems })}
@@ -868,7 +890,7 @@ useEffect(() => {
         </section>
         : ''}
         {attributes.modalType !== 'hero' && attributes.modalType !== 'lime-form' && cards.length > 0 && 
-        <div className={`cards-grid ${attributes.modalType} ${attributes.modalType === 'cards' && attributes.cardSize}`}>
+        <div className={`cards-grid ${attributes.modalType} ${attributes.modalType === 'cards' && attributes.cardSize}`} style={{position: 'relative', zIndex: 1}}>
           {cards.map((card, i) => {
             const open = !!isOpenById[card.id];
             return (

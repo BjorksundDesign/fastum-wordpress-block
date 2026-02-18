@@ -49,36 +49,14 @@
      /** Background from block supports (optional) */
     $background_url       = $attributes['style']['background']['backgroundImage']['url'] ?? '';
     $background_size      = $attributes['style']['background']['backgroundSize'] ?? 'cover';
-    $background_position  = $attributes['style']['background']['backgroundPosition'] ?? ''; // ← NY
+    $background_position  = $attributes['style']['background']['backgroundPosition'] ?? '';
+    $background_alt       = $attributes['style']['background']['backgroundImageAlt'] ?? '';
 
-
-    // Build inline style (bg image + optional bg color)
+    // Build inline style (bg color only - image handled as <img> tag)
     $inline_style_parts = [];
-    if ($background_url) {
-        if ($background_position !== '') {
-            $inline_style_parts[] = "background-position:" . esc_attr($background_position);
-        } else {
-            $inline_style_parts[] = "background-position:center center";
-        }
-        $inline_style_parts[] = "background-image:url('" . esc_url($background_url) . "')";
-        $inline_style_parts[] = "background-size:" . esc_attr($background_size);
-        $inline_style_parts[] = "background-repeat:no-repeat";
+    if (!$background_url && $backgroundColor !== '') {
+        $inline_style_parts[] = "background-color:" . esc_attr($backgroundColor);
     }
-    if ($background_url) {
-        if ($backgroundColor !== '') {
-            $inline_style_parts[] =
-            "background-image: linear-gradient(" . esc_attr($backgroundColor) . "," . esc_attr($backgroundColor) . "), url('" . esc_url($background_url) . "')";
-        } else {
-            $inline_style_parts[] = "background-image:url('" . esc_url($background_url) . "')";
-        }
-        $inline_style_parts[] = "background-size:" . esc_attr($background_size);
-        $inline_style_parts[] = "background-repeat:no-repeat";
-        $inline_style_parts[] = "background-position:" . ($background_position !== '' ? esc_attr($background_position) : 'center center');
-        }
-
-        if (!$background_url && $backgroundColor !== '') {
-    $inline_style_parts[] = "background-color:" . esc_attr($backgroundColor);
-}
     // Add CSS variables (now correctly quoted for --faIcon)
     if ($faIcon !== '') {
         $inline_style_parts[] = '--faIcon:"' . esc_attr($faIcon) . '"';
@@ -88,6 +66,11 @@
     }
     $inline_style = implode(';', $inline_style_parts);
     if ($inline_style && substr($inline_style, -1) !== ';') { $inline_style .= ';'; }
+    
+    // Add position:relative if background image is present (for absolute positioned img)
+    if ($background_url && strpos($inline_style, 'position:') === false) {
+        $inline_style = 'position:relative;' . $inline_style;
+    }
 
     // Apply wrapper attrs to <article>
     $wrapper_attrs = get_block_wrapper_attributes([
@@ -248,6 +231,29 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
 <?php endif; ?>
    <article <?php echo $wrapper_attrs; ?>>
     <?php
+    // Render background image as <img> tag for lazy loading and priority control
+    if ($background_url): ?>
+        <img 
+            src="<?php echo esc_url($background_url); ?>" 
+            alt="<?php echo esc_attr($background_alt); ?>"
+            loading="lazy"
+            style="<?php 
+                $bg_img_styles = [
+                    'position:absolute',
+                    'top:0',
+                    'left:0',
+                    'width:100%',
+                    'height:100%',
+                    'object-fit:' . esc_attr($background_size),
+                    'object-position:' . ($background_position !== '' ? esc_attr($background_position) : 'center'),
+                    'z-index:0'
+                ];
+                echo esc_attr(implode(';', $bg_img_styles) . ';');
+            ?>"
+            class="card-modal-background-img"
+        />
+    <?php endif; ?>
+    <?php
         $top_flags = isset($attributes['topSectionFlags']) ? trim((string) $attributes['topSectionFlags']) : '';
         if ($top_flags === '') {
             $top_flags = $section_flags($items); // fallback to computed flags
@@ -256,7 +262,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
         ?>
 
     <?php if ( $show_top_section ): ?>
-    <section class="<?php echo esc_attr($section_classes); ?>">
+    <section class="<?php echo esc_attr($section_classes); ?>" style="position:relative;z-index:1;">
 
         <?php if ($show_top_section !== ''): ?>
             <div class="text-modal-section <?php echo esc_attr($topSectionFlags); ?>">
@@ -389,7 +395,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
     <?php endif; ?>
 
         <?php if ($modalType !== 'hero' && $modalType !== 'lime-form'  && count($cards) > 0): ?>
-            <div class="cards-grid <?php echo esc_attr(sanitize_html_class($modalType)); ?>">
+            <div class="cards-grid <?php echo esc_attr(sanitize_html_class($modalType)); ?>" style="position:relative;z-index:1;">
                 <?php foreach ($cards as $card): ?>
                     <?php
                     $card_bg         = (string)($card['backgroundColor'] ?? '');
