@@ -2,7 +2,7 @@
 /**
  * Server render for your block mirroring save.js
  */
-
+    static $fastum_first_block = true;
     // 0) Normalize attributes
     $attributes = is_array($attributes) ? $attributes : [];
 
@@ -14,6 +14,7 @@
     $items           = isset($attributes['items']) && is_array($attributes['items']) ? $attributes['items'] : [];
     $backgroundColor = isset($attributes['backgroundColor']) ? (string) $attributes['backgroundColor'] : '';
     $isFaq           = !empty($attributes['isFaq']);   
+    
 
     // New / used in save.js
     $cards            = isset($attributes['cards']) && is_array($attributes['cards']) ? $attributes['cards'] : [];
@@ -262,8 +263,14 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
 
             <?php
             // TEXT (order:2)
-            $tw_classes = 'text-wrapper ' . $align;
-            $tw_style   = 'order:2;' . ($textColor !== '' ? ' color:' . esc_attr($textColor) . ';' : '');
+            $tw_classes = 'text-wrapper';
+            $tw_style_parts = ['order:2'];
+            $valid_aligns = ['left' => 1, 'center' => 1, 'right' => 1];
+            if ($align && isset($valid_aligns[$align])) {
+                $tw_style_parts[] = 'text-align:' . esc_attr($align);
+            }
+            if ($textColor !== '') $tw_style_parts[] = 'color:' . esc_attr($textColor);
+            $tw_style = implode(';', $tw_style_parts) . ';';
             ?>
             <div class="<?php echo esc_attr($tw_classes); ?>" style="<?php echo esc_attr($tw_style); ?>">
                 <?php if (!empty($items)) : ?>
@@ -275,17 +282,16 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                 $sizeClass  = !empty($item['size']) ? sanitize_html_class($item['size']) : 'xl';
                                 $text       = $item['text'] ?? '';
                                 printf(
-                                    '<%1$s class="heading %2$s %3$s">%4$s</%1$s>',
+                                    '<%1$s class="heading %2$s">%3$s</%1$s>',
                                     esc_html($headingTag),
                                     esc_attr($sizeClass),
-                                    esc_attr($align),
                                     wp_kses_post($text)
                                 );
                                 break;
 
                             case 'paragraph':
                                 $p_text = $item['text'] ?? '';
-                                printf('<p class="paragraph %1$s">%2$s</p>', esc_attr($align), wp_kses_post($p_text));
+                                printf('<p class="paragraph">%1$s</p>', wp_kses_post($p_text));
                                 break;
 
                             case 'list':
@@ -298,7 +304,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                     $listType = 'ul';
                                 }
 
-                                echo '<' . $listType . ' class="text-modal-ul ' . esc_attr($align) . '">';
+                                echo '<' . $listType . ' class="text-modal-ul">';
                                 foreach ($list_items as $liText) {
                                     printf(
                                         '<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
@@ -321,12 +327,16 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
             foreach ($items as $i) { if (($i['type'] ?? '') === 'button') $buttonCount++; }
             if ($buttonCount > 0):
                 $btn_wrapper_styles = ['order:3'];
+                $valid_aligns = ['left' => 1, 'center' => 1, 'right' => 1];
+                if ($align && isset($valid_aligns[$align])) {
+                    $btn_wrapper_styles[] = 'text-align:' . esc_attr($align);
+                }
                 if ($textColor !== '') $btn_wrapper_styles[] = 'color:' . esc_attr($textColor);
                 $btn_wrapper_style_attr = implode(';', $btn_wrapper_styles);
                 if ($btn_wrapper_style_attr && substr($btn_wrapper_style_attr, -1) !== ';') $btn_wrapper_style_attr .= ';';
             ?>
             <div
-                class="button-wrapper <?php echo esc_attr(trim($align . ' ' . $modalType)); ?>"
+                class="button-wrapper <?php echo esc_attr(trim($modalType)); ?>"
                 style="<?php echo esc_attr($btn_wrapper_style_attr); ?>"
             >
             <?php foreach ($items as $it): if (($it['type'] ?? '') !== 'button') continue; ?>
@@ -384,8 +394,8 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                     <?php
                     $card_bg         = (string)($card['backgroundColor'] ?? '');
                     $card_id         = (string)($card['id'] ?? '');
-                    $raw_card_align    = $card['align'] ?? $align ?? 'leftAlignText';
-                    $card_align     = sanitize_html_class( $raw_card_align ? (string)$raw_card_align : 'leftAlignText' );
+                    $raw_card_align    = $card['align'] ?? $align ?? 'left';
+                    $card_align_value = in_array($raw_card_align, ['left', 'center', 'right'], true) ? $raw_card_align : 'left';
                     $per_items       = (isset($card['items']) && is_array($card['items'])) ? $card['items'] : [];
                     $card_text_color = (string)($card['textColor'] ?? $textColor);
 
@@ -395,7 +405,6 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                     $base_classes = implode(' ', array_filter([
                         ($modalType === 'dropdown') ? 'dropdown-modal-card' : 'card-modal-card',
                         sanitize_html_class($imageSize),
-                        sanitize_html_class($card_align),
                         sanitize_html_class($cardBorder),
                         ($modalType === 'cards' ? sanitize_html_class($cardSize) : ''),
                     ]));
@@ -418,8 +427,8 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                             class="<?php echo esc_attr($base_classes); ?>"
                             <?php if ($style_attr !== ''): ?>style="<?php echo esc_attr($style_attr); ?>"<?php endif; ?>
                         >
-                            <details class="accordion-card <?php echo esc_attr(trim($card_align . ' ' . $cardBorder)); ?>"
-                                style="<?php echo esc_attr('color:' . $card_text_color . ';'); ?>">
+                            <details class="accordion-card <?php echo esc_attr(trim($cardBorder)); ?>"
+                                style="<?php echo esc_attr('color:' . $card_text_color . ';text-align:' . $card_align_value . ';'); ?>">
 
                                 <summary class="accordion-card__summary" aria-expanded="false">
                                     <div class="<?php echo esc_attr($section_flags($first ? [$first] : [])); ?>">
@@ -431,10 +440,9 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                                 $size = !empty($first['size']) ? sanitize_html_class($first['size']) : 'xl';
                                                 $txt  = $first['text'] ?? '';
                                                 printf(
-                                                    '<%1$s class="heading %2$s %3$s">%4$s</%1$s>',
+                                                    '<%1$s class="heading %2$s">%3$s</%1$s>',
                                                     esc_html($tag),
                                                     esc_attr($size),
-                                                    esc_attr($card_align),
                                                     wp_kses_post($txt)
                                                 );
                                             }
@@ -521,8 +529,8 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                         // Text (order:2)
                                         $has_text = array_reduce($rest, fn($c,$it)=> $c || in_array(($it['type'] ?? ''), ['heading','paragraph','list'], true), false);
                                         if ($has_text) {
-                                            $text_style = 'order:2;' . ($card_text_color !== '' ? ' color:' . esc_attr($card_text_color) . ';' : '');
-                                            echo '<div class="text-wrapper ' . esc_attr($card_align) . '" style="' . esc_attr($text_style) . '">';
+                                            $text_style = 'order:2;text-align:' . $card_align_value . ';' . ($card_text_color !== '' ? 'color:' . esc_attr($card_text_color) . ';' : '');
+                                            echo '<div class="text-wrapper" style="' . esc_attr($text_style) . '">';
                                             foreach ($rest as $it) {
                                                 switch ($it['type'] ?? '') {
                                                     case 'heading':
@@ -530,10 +538,9 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                                         $size = !empty($it['size']) ? sanitize_html_class($it['size']) : 'xl';
                                                         $txt  = $it['text'] ?? '';
                                                         printf(
-                                                            '<%1$s class="heading %2$s %3$s">%4$s</%1$s>',
+                                                            '<%1$s class="heading %2$s">%3$s</%1$s>',
                                                             esc_html($tag),
                                                             esc_attr($size),
-                                                            esc_attr($card_align),
                                                             wp_kses_post($txt)
                                                         );
                                                         break;
@@ -549,7 +556,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                                         if (!in_array($listType, ['ul', 'ol'], true)) {
                                                             $listType = 'ul';
                                                         }
-                                                        echo  '<' . $listType . ' class="text-modal-ul ' . esc_attr($card_align) . '">';
+                                                        echo  '<' . $listType . ' class="text-modal-ul">';
                                                         foreach ($list_items as $liText) {
                                                             printf('<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
                                                                 esc_attr($icon),
@@ -692,8 +699,8 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                         // Text (order:2)
                         $has_text = array_reduce($per_items, fn($c,$it)=> $c || in_array(($it['type'] ?? ''), ['heading','paragraph','list'], true), false);
                         if ($has_text) {
-                            $text_style = 'order:2;' . ($card_text_color !== '' ? ' color:' . esc_attr($card_text_color) . ';' : '');
-                            echo '<div class="text-wrapper ' . esc_attr($card_align) . '" style="' . esc_attr($text_style) . '">';
+                            $text_style = 'order:2;text-align:' . $card_align_value . ';' . ($card_text_color !== '' ? 'color:' . esc_attr($card_text_color) . ';' : '');
+                            echo '<div class="text-wrapper" style="' . esc_attr($text_style) . '">';
                             foreach ($per_items as $it) {
                                 switch ($it['type'] ?? '') {
                                     case 'heading':
@@ -701,16 +708,15 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                         $size = !empty($it['size']) ? sanitize_html_class($it['size']) : 'xl';
                                         $txt  = $it['text'] ?? '';
                                         printf(
-                                            '<%1$s class="heading %2$s %3$s">%4$s</%1$s>',
+                                            '<%1$s class="heading %2$s">%3$s</%1$s>',
                                             esc_html($tag),
                                             esc_attr($size),
-                                            esc_attr($card_align),
                                             wp_kses_post($txt)
                                         );
                                         break;
                                     case 'paragraph':
                                         $txt = $it['text'] ?? '';
-                                        printf('<p class="paragraph %1$s">%2$s</p>', esc_attr($card_align), wp_kses_post($txt));
+                                        printf('<p class="paragraph">%1$s</p>', wp_kses_post($txt));
                                         break;
                                     case 'list':
                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
@@ -720,7 +726,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                         if (!in_array($listType, ['ul', 'ol'], true)) {
                                             $listType = 'ul';
                                         }
-                                        echo '<' . $listType . ' class="text-modal-ul ' . esc_attr($card_align) . '">';
+                                        echo '<' . $listType . ' class="text-modal-ul">';
                                         foreach ($list_items as $liText) {
                                             printf('<li class="list" style="--faIcon:%1$s; --iconColor:%2$s;"><span>%3$s</span></li>',
                                                 esc_attr($icon),

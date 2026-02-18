@@ -29,7 +29,7 @@ export const textColorOptions = [
 ];
 
 export const textAlignOptions = [
-  { label: 'Left', value: 'leftAlignText', icon: 'editor-alignleft' },
-  { label: 'Center', value: 'centerAlignText', icon: 'editor-aligncenter' },
-  { label: 'Right', value: 'rightAlignText', icon: 'editor-alignright' },
+  { label: 'Left', value: 'left', icon: 'editor-alignleft' },
+  { label: 'Center', value: 'center', icon: 'editor-aligncenter' },
+  { label: 'Right', value: 'right', icon: 'editor-alignright' },
 ];

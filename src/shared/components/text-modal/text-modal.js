@@ -80,6 +80,21 @@ const newId = () => `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 const nextCountForType = (items, type) =>
   items.filter((i) => i.type === type).length + 1;
 
+
+const normalizeAlign = (value) => {
+  switch (value) {
+    case 'leftAlignText':
+      return 'left';
+    case 'centerAlignText':
+      return 'center';
+    case 'rightAlignText':
+      return 'right';
+    default:
+      return value;
+  }
+};
+
+
 const addItem = (items, type) => {
   const isFirstHeadingCheck = type === 'heading' && items.filter(item => item.type === 'heading').length === 0;
   const base = {
@@ -607,7 +622,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   className="inspector-button"
                   icon={option.icon}
                   onClick={() => updateCard?.({ align: option.value }, idx)}
-                  disabled={(currentCard?.align ?? 'left') === option.value}
+                  disabled={normalizeAlign(currentCard?.align) === option.value}
                   aria-label={`textAlign ${option.label}`}
                 >
                 </Button>
@@ -1153,6 +1168,9 @@ const isTextItem = (it) => ['heading','paragraph','list','innerblock'].includes(
 const isButtonItem = (it) => it.type === 'button';
 const isImageItem = (it) => it.type === 'image';
 
+const rawTextAlign = cardAttributes?.align ?? attributes?.style?.typography?.textAlign ?? 'inherit';
+const currentTextAlign = normalizeAlign(rawTextAlign);
+
 
       const subsetFor = (item) => {
         if (!item) return null;
@@ -1444,10 +1462,11 @@ const handleRootMouseDownCapture = useCallback((e) => {
             </div>
       )}
       {textItems.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
-        <div role="text-wrapper" className={`${className} ${(cardAttributes?.align)}`} 
+        <div role="text-wrapper" className={`${className}`} 
         style={{
         order: '2',
-        color: textColor()
+        color: textColor(),
+        textAlign: currentTextAlign ?? 'inherit'
       }} 
         >
       {textItems.map((item) => {
@@ -1546,7 +1565,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
           </div>
         )}       
         {items.some(item => item.type === 'button') && enable.includes('button') ? (
-        <div role="button-wrapper" className={`button-wrapper ${attributes?.align || ''} ${cardAttributes?.align || ''}`} style={textColor && attributes.modalType === 'cards' ? { color: textColor, order: '3' } : {order : '3'}}>
+        <div role="button-wrapper" className={`button-wrapper ${attributes?.align || ''}`} style={textColor && attributes.modalType === 'cards' ? { color: textColor, order: '3' } : {order : '3'}}>
           {/* {if (item.type === 'button' && !enable.includes('button')) return null;} */}
             {items.map(item => {
                 switch (item.type) {

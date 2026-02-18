@@ -13,6 +13,7 @@
   --faIconOpen: "\f068";
   --paragraph-font-size: 16px;
   --article-vertical-padding: 30px;
+  --article-hero-padding-top: 90px;
   --modal-max-width: 1440px;
   --modal-sidepadding: 80px;
   --min-content-width: 350px;
@@ -155,12 +156,13 @@ hr{
   width: 100%; 
   margin-block: unset; 
   max-width: 900px;
-  color: #00000038;
+  color: var(--wp--preset--line--color);
   border-style: solid;
 }
 p{ margin-block: unset; }
 section{ width: 100%; }
 div{ background-position: center; }
+
 
 /* Article */
 .article{
@@ -175,7 +177,7 @@ div{ background-position: center; }
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--wp--preset--text--color--white);
     padding: 60px;
     gap: 12px;
     height: clamp(400px, 80vh, 700px);
@@ -196,6 +198,10 @@ section.hero{ max-width: 900px; }
   box-sizing: border-box;
 }
 
+.wp-site-blocks > * > .article:not(.hero){
+    padding-top: var(--article-hero-padding-top);
+ }
+
 
 .paragraph, li{
 	font-size: var(--paragraph-font-size)!important;
@@ -205,7 +211,7 @@ section.hero{ max-width: 900px; }
 .list span a, p a{
 	text-decoration: none!important;
 	font-family: inherit;
-	color: blue;
+	color: var(--wp--preset--color--link-color);
   font-size: inherit;
 }
 
@@ -274,11 +280,11 @@ section.hero{ max-width: 900px; }
         padding: 8px 12px;
         font-size: var(--paragraph-font-size);
         align-items: center;
-        color: black;
+        color: var(--wp--preset--text--color--black);
       }
       span::after{
         content: var(--faIconArrowRight);
-        color: black;
+        color: var(--wp--preset--text--color--black);
         font-weight: 500;
         font-family: fontAwesome;
         vertical-align: middle;
@@ -300,11 +306,11 @@ section.hero{ max-width: 900px; }
         gap: 8px;
         padding: 8px 12px;
         align-items: center;
-        color: black;
+        color: var(--wp--preset--text--color--black);
       }
       span::after{
         content: var(--faIconArrowRight);
-        color: black;
+        color: var(--wp--preset--text--color--black);
         font-weight: 500;
         font-family: fontAwesome;
         vertical-align: middle;
@@ -366,7 +372,7 @@ section.hero{ max-width: 900px; }
   display: grid;
   align-items: center;
   justify-items: center;
-  color: black;
+  color: var(--wp--preset--text--color--black);
   white-space: nowrap;
   
   &.cards.card,
@@ -375,7 +381,7 @@ section.hero{ max-width: 900px; }
     display: grid;
     align-items: center;
     justify-items: center;
-    color: black !important;
+    color: var(--wp--preset--text--color--black);
     white-space: nowrap;
   }
 }
@@ -388,7 +394,7 @@ section.hero{ max-width: 900px; }
   border-radius: 4px !important;
   transition: background-color 0.3s ease;
   height: unset;
-  color: var(--wp--preset--color--black);
+  color: var(--wp--preset--text--color--black);
   font-size: var(--paragraph-font-size);
   font-weight: 600;
 }
@@ -396,12 +402,12 @@ section.hero{ max-width: 900px; }
 .fastum-button > .wp-block-button__link {
   
   &:hover {
-    background-color: #808080 !important;
-    color: white !important;
+    background-color: var(--wp--preset--button--color--hover) !important;
+    color: var(--wp--preset--text--color--white) !important;
   }
 
   &:hover::after {
-    color: white !important;
+    color: var(--wp--preset--text--color--white) !important;
   }
 }
 
@@ -423,13 +429,13 @@ section.hero{ max-width: 900px; }
 
   &:disabled{
     background: #AAAAAA;
-    color: black;
+    color: var(--wp--preset--text--color--black);
     opacity: 0.5;
   }
   &.row-button{
     background: unset;
     &:hover:not(:disabled){
-      background-color: lightgrey;
+      background-color: var(--wp--preset--button--color--hover);
       cursor: pointer;
     }
   }
@@ -665,7 +671,7 @@ h1 ~ p {
 }
 .plus-icon{
   pointer-events: all;
-  &:hover{ background-color: #e2e2e2; }
+  &:hover{ background-color: var(--wp--preset--button--color--hover); }
   &.true{
     pointer-events: none;
   }
@@ -843,7 +849,7 @@ h1 ~ p {
      Card base
      ------------------------- */
   & .card-modal-card {
-    border: 1px solid #ccc;
+    border: 1px solid var(--wp--preset--line--color);
     width: 100%;
     min-width: var(--card-min);
     max-width: min(var(--card-max), 100vw);
@@ -1024,6 +1030,9 @@ ol{
       padding-left: 0px;
       &:before{
         content: ""!important;
+      }
+      &::marker{
+        font-weight: 700; 
       }
     }
   }
@@ -1286,6 +1295,8 @@ th + th, td + td{ text-align: center; }
   .article{
     padding: var(--article-vertical-padding) 12px;
   }
+
+
 
   .text-modal-ul{ --list-gap: 4px; }
 

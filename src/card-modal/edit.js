@@ -841,6 +841,7 @@ useEffect(() => {
 
       {/* Frontend/Editor preview */}
       <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} ${attributes.modalMargin} article`} style={{backgroundColor: backgroundColor}}>
+        {console.log('article', attributes)}
         {topSectionFlags !== '' || attributes.modalType === 'lime-form' ?
         <section className={`card-modal-section ${attributes.modalType}`}>
           <TextModalRender
