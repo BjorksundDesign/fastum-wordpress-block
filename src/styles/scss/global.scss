@@ -2,6 +2,7 @@
   font-family: fontAwesome;
   src: url("../../shared/fonts/fa-solid-900.woff2") format('woff2');
 }
+
 :root{
   --font-Awesome: fontAwesome;
   --gap: 8px;
@@ -14,9 +15,11 @@
   --article-vertical-padding: 30px;
   --modal-max-width: 1440px;
   --modal-sidepadding: 80px;
-  	interpolate-size: allow-keywords;
-  	-webkit-interpolate-size: allow-keywords;
-
+  --min-content-width: 350px;
+  --min-column-width: 320px;
+  --goal-column-width: 420px;
+  interpolate-size: allow-keywords;
+  -webkit-interpolate-size: allow-keywords;
 }
 
 .regularMargin{
@@ -32,9 +35,10 @@
 
 }
 
+/*Fontsizes kontrolleras av temats CSS, detta är fallback storlekar*/
+
 .xl{
 	font-size: 63px;
-  font-weight: 600;
 }
 
 .l{
@@ -162,7 +166,7 @@ div{ background-position: center; }
 .article{
   max-width: unset !important;
   position: relative;
-  width: 100%;
+  width: max(var(--min-content-width), 100%);
   justify-self: center;
 
   &.hero{
@@ -739,6 +743,7 @@ h1 ~ p {
   display: grid;
   justify-content: center;
   grid-template-rows: var(--tms-grid-template-rows);
+  grid-template-columns: 1fr;
   flex-direction: column;
   justify-content: center;
   grid-area: text;
@@ -828,8 +833,7 @@ h1 ~ p {
   flex-wrap: wrap;
   padding: 20px;
   justify-content: center;
-  max-width: min(var(--modal-max-width), 100vw);
-  width: 100%;
+  max-width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
   //  grid-template-columns: repeat(
   //   auto-fit,
   //   minmax(min(100%, var(--card-min, 300px)), 1fr)
@@ -950,9 +954,11 @@ h1 ~ p {
 }
   &.columns{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr));
   }
 }
+
+
 
 /* Rich text placeholder visibility */
 .rich-text [data-rich-text-placeholder]:after{ opacity: 1; }
@@ -1182,6 +1188,8 @@ th + th, td + td{ text-align: center; }
 @media only screen and (max-width: 980px){
   .text-modal-ul{ --list-gap: 6px; } /* snabbfix override */
 
+  /*Fontsizes kontrolleras av temats CSS, detta är fallback storlekar*/
+
   .xl{ font-size: 48px; }
   .l{ font-size: 36px; }
   .m{ font-size: 28px; }
@@ -1280,6 +1288,9 @@ th + th, td + td{ text-align: center; }
   }
 
   .text-modal-ul{ --list-gap: 4px; }
+
+  /*Fontsizes kontrolleras av temats CSS, detta är fallback storlekar*/
+
   .xl { font-size: 32px; } // hero / page headline
   .l  { font-size: 26px; } // section headline
   .m  { font-size: 22px; } // card / modal headline
@@ -1291,6 +1302,7 @@ th + th, td + td{ text-align: center; }
   .cards-grid{
     &.columns{
       max-width: 100%;
+      grid-template-columns: 1fr;
     }
     &.dropdown{
       width: 100%;
