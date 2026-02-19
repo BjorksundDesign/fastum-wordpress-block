@@ -15,9 +15,9 @@
 		"start": "wp-scripts start --webpack-copy-php --blocks-manifest",
 		"build-css": "sass src/styles/scss/global.scss src/styles/css/global.css --style compressed",
 		"watch-css": "sass --watch src/styles/scss/global.scss:src/styles/css/global.css --style compressed",
-		"release:patch": "npm version patch && node .sync-versions.js && git add custom-text-block.php readme.txt && git commit --amend --no-edit && git push --follow-tags",
-		"release:minor": "npm version minor && node .sync-versions.js && git add custom-text-block.php readme.txt && git commit --amend --no-edit && git push --follow-tags",
-		"release:major": "npm version major && node .sync-versions.js && git add custom-text-block.php readme.txt && git commit --amend --no-edit && git push --follow-tags"
+		"release:patch": "./release.sh patch",
+		"release:minor": "./release.sh minor",
+		"release:major": "./release.sh major"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^30.18.0",

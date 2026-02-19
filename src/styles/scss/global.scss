@@ -965,7 +965,7 @@ h1 ~ p {
   &.columns{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr));
-    & * .text-wrapper{
+    & .text-wrapper{
       justify-content: center;
     }
   }
