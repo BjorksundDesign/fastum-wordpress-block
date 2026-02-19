@@ -1518,7 +1518,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
           case 'list':
             const ListTag = item?.listType === 'ol' ? 'ol' : 'ul';
             return (
-              <ListTag key={item.id} className={`text-modal-ul`}>
+              <ListTag key={item.id} className={`text-modal-ul ${item?.listType ?? ''}`}>
                 {ensureList(item.list).map((li, idx) => (
                   <li
                     key={`${item.id}_${idx}`}

@@ -236,7 +236,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
         <img 
             src="<?php echo esc_url($background_url); ?>" 
             alt="<?php echo esc_attr($background_alt); ?>"
-            loading="lazy"
+            fetchpriority="high"
             style="<?php 
                 $bg_img_styles = [
                     'position:absolute',
