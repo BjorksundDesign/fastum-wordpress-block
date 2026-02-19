@@ -837,7 +837,7 @@ h1 ~ p {
 
 
 .cards-grid {
-  // display: flex;
+  display: grid;
   gap: 12px;
   flex-wrap: wrap;
   padding: 20px;
