@@ -842,7 +842,7 @@ h1 ~ p {
   flex-wrap: wrap;
   padding: 20px;
   justify-content: center;
-  max-width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
+  width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
   //  grid-template-columns: repeat(
   //   auto-fit,
   //   minmax(min(100%, var(--card-min, 300px)), 1fr)
