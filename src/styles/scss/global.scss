@@ -846,7 +846,7 @@ h1 ~ p {
   max-width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
    grid-template-columns: repeat(
     auto-fit,
-    minmax(min(100%, var(--card-min)), min(var(--card-max), 1fr))
+    minmax(min(100%, var(--card-min)), var(--card-max))
   );
 
   /* -------------------------
