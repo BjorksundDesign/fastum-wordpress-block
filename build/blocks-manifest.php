@@ -59,7 +59,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'custom-text-block/card-modal',
-		'version' => '0.1.0',
+		'version' => '1.3.10',
 		'title' => 'Fastum block',
 		'category' => 'design',
 		'attributes' => array(

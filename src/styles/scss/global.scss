@@ -837,17 +837,17 @@ h1 ~ p {
 
 
 .cards-grid {
-  display: flex;
+  // display: flex;
   gap: 12px;
   flex-wrap: wrap;
   padding: 20px;
   justify-content: center;
   align-items: center;
-  width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
-  //  grid-template-columns: repeat(
-  //   auto-fit,
-  //   minmax(min(100%, var(--card-min, 300px)), 1fr)
-  // );
+  max-width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
+   grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--card-min)), min(var(--card-max), 1fr))
+  );
 
   /* -------------------------
      Card base
@@ -857,7 +857,7 @@ h1 ~ p {
     width: 100%;
     min-width: var(--card-min);
     max-width: min(var(--card-max), 100vw);
-    height: auto;
+    height: 100%;
     display: flex;
     padding: var(--card-padding);
     border-radius:calc(8px + var(--card-padding));
@@ -1029,7 +1029,7 @@ ul{
       padding-left: 24px;
     }
   }
-  &.ul{
+  &.dot{
     list-style: disc;
     &.text-modal-ul{
     margin-left: var(--icon-space);
@@ -1285,6 +1285,11 @@ th + th, td + td{ text-align: center; }
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+@media only screen and (max-width: 1200px){
+  :root{
+    --modal-sidepadding: 40px;
+  }
 }
 
 @media only screen and (max-width: 480px){
