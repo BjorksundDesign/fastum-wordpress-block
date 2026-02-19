@@ -842,6 +842,7 @@ h1 ~ p {
   flex-wrap: wrap;
   padding: 20px;
   justify-content: center;
+  align-items: center;
   width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
   //  grid-template-columns: repeat(
   //   auto-fit,

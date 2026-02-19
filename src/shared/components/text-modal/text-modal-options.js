@@ -14,7 +14,7 @@ export const headerSizeOptions = [
 export const listTypeOptions = [
   { label: 'Icon', value: 'ul' },
   { label: 'Siffra', value: 'ol' },
-  { label: 'Punkt', value: 'ul' },
+  { label: 'Punkt', value: 'dot' },
 ];
 
 export const headerTypeOptions = [
