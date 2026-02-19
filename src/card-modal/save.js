@@ -254,7 +254,7 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
       }
       {/* Cards/Columns/Dropdown (ej hero/lime-form) */}
       {modalType !== 'hero' && modalType !== 'lime-form' && (
-        <div className={`cards-grid ${modalType || ''}`}>
+        <div className={`cards-grid ${modalType || ''} ${modalType === 'cards' ? cardSize : ''}`}>
           {cards.map((card) => {
             const cardBg = card?.backgroundColor;
             const cardTextColor = card?.textColor || textColor;

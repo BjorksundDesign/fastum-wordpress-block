@@ -395,7 +395,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
     <?php endif; ?>
 
         <?php if ($modalType !== 'hero' && $modalType !== 'lime-form'  && count($cards) > 0): ?>
-            <div class="cards-grid <?php echo esc_attr(sanitize_html_class($modalType)); ?>" style="position:relative;z-index:1;">
+            <div class="cards-grid <?php echo esc_attr(sanitize_html_class($modalType)); ?> <?php echo ($modalType === 'cards' ? esc_attr(sanitize_html_class($cardSize)) : ''); ?></div>" style="position:relative;z-index:1;">
                 <?php foreach ($cards as $card): ?>
                     <?php
                     $card_bg         = (string)($card['backgroundColor'] ?? '');

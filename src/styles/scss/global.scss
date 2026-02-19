@@ -59,6 +59,16 @@
 	font-size: 22px;
 }
 
+.smlCard{
+  --card-min: 200px;
+  --card-max: 300px; /* valfritt */
+}
+
+.medCard{
+  --card-min: 320px;
+  --card-max: 420px; /* valfritt */
+}
+
 .faq-modal-article{
 	display: grid;
 	justify-items: center;
@@ -934,15 +944,7 @@ h1 ~ p {
   }
 }
 
-.smlCard{
-  --card-min: 200px;
-  --card-max: 300px; /* valfritt */
-}
 
-.medCard{
-  --card-min: 320px;
-  --card-max: 420px; /* valfritt */
-}
 
 .li-preview::before{
 	content: var(--faIcon);
