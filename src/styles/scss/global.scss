@@ -924,6 +924,7 @@ h1 ~ p {
 
   &.cards {
     display: flex;
+    align-items: stretch;
 
     .image-container {
       &.contain {
