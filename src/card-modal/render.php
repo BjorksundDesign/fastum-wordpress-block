@@ -341,10 +341,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                 $btn_wrapper_style_attr = implode(';', $btn_wrapper_styles);
                 if ($btn_wrapper_style_attr && substr($btn_wrapper_style_attr, -1) !== ';') $btn_wrapper_style_attr .= ';';
             ?>
-            <div
-                class="button-wrapper <?php echo esc_attr(trim($modalType)); ?>"
-                style="<?php echo esc_attr($btn_wrapper_style_attr); ?>"
-            >
+            <div class="button-wrapper <?php echo esc_attr(trim($align . ' ' . $modalType)); ?>" style="<?php echo esc_attr($btn_wrapper_style_attr); ?>">
             <?php foreach ($items as $it): if (($it['type'] ?? '') !== 'button') continue; ?>
             <?php
                     if ($showButtonHR){ echo '<hr />';}
@@ -552,7 +549,7 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                                         break;
                                                     case 'paragraph':
                                                         $txt = $it['text'] ?? '';
-                                                        printf('<p class="paragraph %1$s">%2$s</p>', esc_attr($card_align), wp_kses_post($txt));
+                                                        printf('<p class="paragraph %1$s">%2$s</p>', esc_attr($card_align_value), wp_kses_post($txt));
                                                         break;
                                                     case 'list':
                                                         $list_items = (isset($it['list']) && is_array($it['list'])) ? $it['list'] : [];
@@ -581,12 +578,12 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                                         $card_button_count = 0;
                                         foreach ($rest as $pi) { if (($pi['type'] ?? '') === 'button') $card_button_count++; }
                                         if ($card_button_count > 0) {
-                                            $btn_styles = ['order:3'];
-                                            if ($card_text_color !== '') $btn_styles[] = 'color:' . esc_attr($card_text_color);
-                                            $btn_style_attr = implode(';', $btn_styles);
-                                            if ($btn_style_attr && substr($btn_style_attr, -1) !== ';') $btn_style_attr .= ';';
+                                            $btn_wrapper_styles = ['order:3'];
+                                            if ($card_text_color !== '') $btn_wrapper_styles[] = 'color:' . esc_attr($card_text_color);
+                                            $btn_wrapper_style_attr = implode(';', $btn_wrapper_styles);
+                                            if ($btn_wrapper_style_attr && substr($btn_wrapper_style_attr, -1) !== ';') $btn_wrapper_style_attr .= ';';
 
-                                            echo '<div class="button-wrapper ' . esc_attr(trim($card_align . ' ' . $modalType)) . '" style="' . esc_attr($btn_style_attr) . '">';
+                                            echo '<div class="button-wrapper ' . esc_attr(trim(string: $card_align_value . ' ' . $modalType)) . '" style="' . esc_attr($btn_wrapper_style_attr) . '">';
                                             foreach ($rest as $btn) {
                                                 if (($btn['type'] ?? '') !== 'button') continue;
                                                 if ($showButtonHR){ echo '<hr />';}
@@ -751,12 +748,12 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
                         $card_button_count = 0;
                         foreach ($per_items as $pi) { if (($pi['type'] ?? '') === 'button') $card_button_count++; }
                         if ($card_button_count > 0) {
-                            $btn_styles = ['order:3'];
-                            if ($card_text_color !== '') $btn_styles[] = 'color:' . esc_attr($card_text_color);
-                            $btn_style_attr = implode(';', $btn_styles);
-                            if ($btn_style_attr && substr($btn_style_attr, -1) !== ';') $btn_style_attr .= ';';
+                            $btn_wrapper_styles = ['order:3'];
+                            if ($card_text_color !== '') $btn_wrapper_styles[] = 'color:' . esc_attr($card_text_color);
+                            $btn_wrapper_style_attr = implode(';', $btn_wrapper_styles);
+                            if ($btn_wrapper_style_attr && substr($btn_wrapper_style_attr, -1) !== ';') $btn_wrapper_style_attr .= ';';
 
-                            echo '<div class="button-wrapper ' . esc_attr(trim($card_align . ' ' . $modalType)) . '" style="' . esc_attr($btn_style_attr) . '">';
+                            echo '<div class="button-wrapper ' . esc_attr(trim($card_align_value . ' ' . $modalType)) . '" style="' . esc_attr($btn_wrapper_style_attr) . '">';
                             foreach ($per_items as $btn) {
                                 if (($btn['type'] ?? '') !== 'button') continue;
                                 if ($showButtonHR){ echo '<hr />';}

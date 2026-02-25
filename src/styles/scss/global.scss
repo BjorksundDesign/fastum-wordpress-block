@@ -763,6 +763,8 @@ h1 ~ p {
   box-sizing: border-box;
   // changed 25 feb 26 to max
   width: max(100vh, var(--modal-min-width));
+    // This fixes to show the plus in dropdowns
+  max-width: 100%;
   // display: flex;
   display: grid;
   justify-content: center;
@@ -797,6 +799,7 @@ h1 ~ p {
 .card-modal-section{
   // Removed 25 feb 26
   // max-width: var(--modal-max-width);
+  padding: var(--card-padding);
   z-index: 1;
   &.hero{ max-width: 900px; }
   &.lime-form{
@@ -856,12 +859,13 @@ h1 ~ p {
   justify-content: center;
   align-items: center;
     // Edited from max to width 25 feb 26
-  width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
-   grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, var(--card-min)), var(--card-max))
-  );
-
+  width: clamp(var(--min-content-width), 100%, var(--modal-max-width));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min), min(var(--card-max), 1fr)));
+  &.columns{
+    & .card-modal-card{
+      padding-bottom: calc(var(--card-padding) * 1.4);
+    }
+  }
   /* -------------------------
      Card base
      ------------------------- */
@@ -870,12 +874,12 @@ h1 ~ p {
     width: 100%;
     min-width: var(--card-min);
     max-width: min(var(--card-max), 100vw);
-    height: 100%;
+    max-height: 100%;
     display: flex;
     padding: var(--card-padding);
+    justify-content: center;
     border-radius:calc(8px + var(--card-padding));
     overflow: hidden;
-    padding-bottom: calc(var(--card-padding) * 1.4);
     /* modifiers */
     &.hide {
       border: unset;
@@ -923,6 +927,7 @@ h1 ~ p {
   }
 
   &.cards {
+    display: flex;
 
     .image-container {
       &.contain {
@@ -986,7 +991,11 @@ h1 ~ p {
 .rich-text [data-rich-text-placeholder]:after{ opacity: 1; }
 
 /* Misc components */
-.dropdown-modal-card{ border-radius: var(--card-border-radius); }
+.dropdown-modal-card{ 
+  border-radius: var(--card-border-radius);
+  //Fill out the parent with the dropdown
+  width: calc(100vw - var(--modal-sidepadding) * 2); 
+}
 .custom-container{ padding-top: 20px; }
 .image-wrapper, .grid-image{ height: auto; }
 
@@ -1235,6 +1244,9 @@ th + th, td + td{ text-align: center; }
   .m{ font-size: 28px; }
   .s{ font-size: 20px; }
 
+  .text-modal-section{
+      width: max(100%, var(--min-column-width));
+  }
 
   .hero-modal-section{ padding: 20px; }
 
@@ -1242,6 +1254,9 @@ th + th, td + td{ text-align: center; }
     padding: 0;
     flex-direction: column;
     gap: var(--card-gap);
+    &.dropdown{
+      width: calc(max(100%, var(--min-column-width)) - var(--modal-sidepadding) * 2);
+    }
 
     // &.columns{
     //   display: flex;
@@ -1355,7 +1370,6 @@ th + th, td + td{ text-align: center; }
       grid-template-columns: 1fr;
     }
     &.dropdown{
-      width: 100%;
       gap: 8px;
     }
   }

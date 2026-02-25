@@ -230,11 +230,6 @@ p{
     margin-block: unset;
 }
 
-section{
-    width: 100%;
-}
-
-
 .button-wrapper{
 	display: flex;
     gap: 12px;
@@ -244,7 +239,7 @@ section{
 }
 
 .button-wrapper.left{
-	justify-content: left;
+	justify-content: flex-start;
 }
 
 .button-wrapper.center, .button-wrapper.full{
@@ -252,7 +247,7 @@ section{
 }
 
 .button-wrapper.right{
-	justify-content: right;
+	justify-content: flex-end;
 }
 
 
