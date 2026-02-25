@@ -615,15 +615,6 @@ article{
 	z-index: 0;
 }
 
-.cards-grid.cards{
-    & .card-modal-card{
-	max-height: unset;
-	margin-top: unset;
-    order: unset;
-    box-sizing: border-box; 
-}
-}
-
 .rich-text [data-rich-text-placeholder]:after{
     opacity: 1;
 }
