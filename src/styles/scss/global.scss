@@ -904,7 +904,10 @@ h1 ~ p {
      Columns layout.smlCard{
      ------------------------- */
   &.columns {
-    height: 100%;
+    max-height: 100%;
+    & .card-modal-card {
+      height: 100%;
+    }
     .image-container {
       &.contain {
         & .text-modal-img {
@@ -1274,7 +1277,7 @@ th + th, td + td{ text-align: center; }
   }
 
   .card-modal-section{
-    &.lime-form{ padding: 0; }
+    &.lime-form{ padding: 0; width: 100%; }
     .text-modal-section{
       &:not(.contains-image){ margin-bottom: 12px; }
       &:not(.contains-button){padding-bottom: calc(var(--card-padding) * 0.4);
