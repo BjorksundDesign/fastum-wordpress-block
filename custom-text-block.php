@@ -3,7 +3,7 @@
  * Plugin Name:       Fastum Block
  * Plugin URI:        https://github.com/BjorksundDesign/fastum-wordpress-block
  * Description:       Block for Fastum public web.
- * Version:           1.3.18
+ * Version:           1.3.19
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            Thomas Björksund
