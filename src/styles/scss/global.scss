@@ -883,12 +883,13 @@ h1 ~ p {
     &.cover {
       padding: 0 0 0 0;
       --image-border-radius: 0;
-      &:not(:has(.contains-image)){
-        padding: 0 0 var(--card-padding) 0;
-      }
       .text-wrapper,.button-wrapper 
       {
         padding: 0 var(--card-padding);
+      }
+      .text-wrapper:last-child,
+      .button-wrapper:last-child {
+        padding-bottom: var(--card-padding);
       }
     }
     &.contain {
@@ -897,7 +898,6 @@ h1 ~ p {
         padding: 0;
       }
     }
-   
   }
 
   /* -------------------------
