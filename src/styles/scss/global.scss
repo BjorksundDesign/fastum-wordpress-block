@@ -861,19 +861,14 @@ h1 ~ p {
     // Edited from max to width 25 feb 26
   width: clamp(var(--min-content-width), 100%, var(--modal-max-width));
   grid-template-columns: repeat(auto-fit, minmax(var(--card-min), min(var(--card-max), 1fr)));
-  &.columns{
-    & .card-modal-card{
-      padding-bottom: calc(var(--card-padding) * 1.4);
-    }
-  }
   /* -------------------------
      Card base
      ------------------------- */
   & .card-modal-card {
     border: 1px solid var(--wp--preset--color--custom-line-color);
     width: 100%;
-    min-width: var(--card-min);
-    max-width: min(var(--card-max), 100vw);
+    min-width: var(--card-min, var(--modal-min-width));
+    max-width: min(var(--card-min, var(--modal-min-width)), 100vw);
     max-height: 100%;
     display: flex;
     padding: var(--card-padding);
@@ -891,8 +886,9 @@ h1 ~ p {
       &:not(:has(.contains-image)){
         padding: 0 0 var(--card-padding) 0;
       }
-      .text-wrapper,
-      .button-wrapper {
+      .text-wrapper
+      // ,.button-wrapper 
+      {
         padding: 0 var(--card-padding);
       }
     }
@@ -978,7 +974,7 @@ h1 ~ p {
 }
   &.columns{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min-column-width)), 1fr));
+    grid-template-columns: repeat(auto-fit, clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr);
     & .text-wrapper{
       justify-content: center;
     }
@@ -1278,6 +1274,8 @@ th + th, td + td{ text-align: center; }
     &.lime-form{ padding: 0; }
     .text-modal-section{
       &:not(.contains-image){ margin-bottom: 12px; }
+      &:not(.contains-button){padding-bottom: calc(var(--card-padding) * 0.4);
+}
     }
   }
 
