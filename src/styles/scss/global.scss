@@ -763,7 +763,7 @@ h1 ~ p {
   gap: 20px; /* enligt överenskommelse */
   box-sizing: border-box;
   // changed 25 feb 26 to max
-  width: max(100vh, var(--modal-min-width));
+  width: max(100vw, var(--modal-min-width));
     // This fixes to show the plus in dropdowns
   max-width: 100%;
   // display: flex;
@@ -904,11 +904,7 @@ h1 ~ p {
      Columns layout.smlCard{
      ------------------------- */
   &.columns {
-    max-height: 100%;
-    & .card-modal-card {
-      height: 100%;
-    }
-    .image-container {
+    & .image-container {
       &.contain {
         & .text-modal-img {
           border-radius: var(--image-border-radius);
@@ -980,6 +976,7 @@ h1 ~ p {
 }
   &.columns{
     display: grid;
+    align-items: stretch;
     grid-template-columns: repeat(auto-fit, minmax(clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr));
     & .text-wrapper{
       justify-content: center;
