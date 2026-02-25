@@ -867,8 +867,8 @@ h1 ~ p {
   & .card-modal-card {
     border: 1px solid var(--wp--preset--color--custom-line-color);
     width: 100%;
-    min-width: var(--card-min, var(--modal-min-width));
-    max-width: min(var(--card-min, var(--modal-min-width)), 100vw);
+    min-width: var(--card-min, var(--min-column-width));
+    max-width: min(var(--card-max, var(--goal-column-width)), 100vw);
     max-height: 100%;
     display: flex;
     padding: var(--card-padding);
@@ -966,6 +966,7 @@ h1 ~ p {
   &.columns,.cards{
   & .card-modal-card{
     max-height: unset;
+    height: 100%;
     margin-top: unset;
     width: 100% !important;
     order: unset;
@@ -974,7 +975,7 @@ h1 ~ p {
 }
   &.columns{
     display: grid;
-    grid-template-columns: repeat(auto-fit, clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr));
     & .text-wrapper{
       justify-content: center;
     }
