@@ -15,6 +15,7 @@
   --paragraph-font-size: 16px;
   --article-vertical-padding: 30px;
   --article-hero-padding-top: 90px;
+  --modal-min-width: 900px;
   --modal-max-width: 1440px;
   --modal-sidepadding: 80px;
   --min-content-width: 350px;
@@ -174,7 +175,8 @@ hr{
   border-top: 1px;
 }
 p{ margin-block: unset; }
-section{ width: 100%; }
+// Removed 25 feb 26
+//section{ width: 100%; }
 div{ background-position: center; }
 
 
@@ -759,7 +761,8 @@ h1 ~ p {
   --tms-grid-template-rows: auto;
   gap: 20px; /* enligt överenskommelse */
   box-sizing: border-box;
-  width: 100%;
+  // changed 25 feb 26 to max
+  width: max(100vh, var(--modal-min-width));
   // display: flex;
   display: grid;
   justify-content: center;
@@ -792,9 +795,9 @@ h1 ~ p {
 }
 
 .card-modal-section{
-  max-width: var(--modal-max-width);
+  // Removed 25 feb 26
+  // max-width: var(--modal-max-width);
   z-index: 1;
-
   &.hero{ max-width: 900px; }
   &.lime-form{
     max-width: 900px;
@@ -802,7 +805,6 @@ h1 ~ p {
     box-sizing: border-box;
   }
   &.dropdown{ max-width: 900px; }
-
   .text-modal-section{
     &:not(.contains-image){ margin-bottom: 20px; }
   }
@@ -853,7 +855,8 @@ h1 ~ p {
   padding: 20px;
   justify-content: center;
   align-items: center;
-  max-width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
+    // Edited from max to width 25 feb 26
+  width: clamp(var(--min-content-width), 100vw, var(--modal-max-width));
    grid-template-columns: repeat(
     auto-fit,
     minmax(min(100%, var(--card-min)), var(--card-max))
@@ -879,8 +882,11 @@ h1 ~ p {
     }
 
     &.cover {
-      padding: 0 0 var(--card-padding) 0;
+      padding: 0 0 0 0;
       --image-border-radius: 0;
+      &:not(:has(.contains-image)){
+        padding: 0 0 var(--card-padding) 0;
+      }
       .text-wrapper,
       .button-wrapper {
         padding: 0 var(--card-padding);
@@ -939,7 +945,7 @@ h1 ~ p {
      Dropdown layout
      ------------------------- */
   &.dropdown {
-    width: 100%;
+    width: clamp(var(--min-column-width), var(--modal-min-width), 100%);
     gap: 8px;
   }
 }
@@ -967,7 +973,7 @@ h1 ~ p {
 }
   &.columns{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(var(--min-column-width), var(--goal-column-width), 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min-column-width)), 1fr));
     & .text-wrapper{
       justify-content: center;
     }
