@@ -775,7 +775,6 @@ h1 ~ p {
   justify-content: center;
   grid-area: text;
   align-items: center;
-  &.contains-button {  padding-bottom: var(--card-padding); }
   &.inverted{ flex-direction: column-reverse; }
   &.contains-image:not(.contains-button):not(.contains-text),
   &.contains-button:not(.contains-image):not(.contains-text),
@@ -905,6 +904,7 @@ h1 ~ p {
      Columns layout.smlCard{
      ------------------------- */
   &.columns {
+    height: 100%;
     .image-container {
       &.contain {
         & .text-modal-img {
@@ -952,7 +952,9 @@ h1 ~ p {
   }
 }
 
-
+.card-modal-section:not(.contain) .contains-button{
+  padding-bottom: var(--card-padding);
+}
 
 .li-preview::before{
 	content: var(--faIcon);
