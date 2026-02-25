@@ -82,6 +82,7 @@
   grid-template-columns: 1fr auto;
   margin-block: unset;
 	align-items: center;
+
 	&::after{
   font-family: var(--font-Awesome);
   content: var(--faIconClosed); 
@@ -774,6 +775,7 @@ h1 ~ p {
   justify-content: center;
   grid-area: text;
   align-items: center;
+  padding-bottom: var(--card-padding);
 
   &.inverted{ flex-direction: column-reverse; }
   &.contains-image:not(.contains-button):not(.contains-text),
@@ -868,7 +870,7 @@ h1 ~ p {
     border: 1px solid var(--wp--preset--color--custom-line-color);
     width: 100%;
     min-width: var(--card-min, var(--min-column-width));
-    max-width: min(var(--card-max, var(--goal-column-width)), 100vw);
+    max-width: min(var(--card-max), 100vw);
     max-height: 100%;
     display: flex;
     padding: var(--card-padding);
@@ -886,8 +888,7 @@ h1 ~ p {
       &:not(:has(.contains-image)){
         padding: 0 0 var(--card-padding) 0;
       }
-      .text-wrapper
-      // ,.button-wrapper 
+      .text-wrapper,.button-wrapper 
       {
         padding: 0 var(--card-padding);
       }
