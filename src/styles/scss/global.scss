@@ -927,7 +927,7 @@ h1 ~ p {
   &.cards {
     display: flex;
     align-items: stretch;
-
+    align-content: center;
     .image-container {
       &.contain {
         .text-modal-img {
