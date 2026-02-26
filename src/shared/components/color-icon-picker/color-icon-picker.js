@@ -44,7 +44,7 @@ export function IconColorPickerRow({
 
   return (
     <>
-      <PanelRow className="grid icon-color-picker-wrapper">
+      <PanelRow className="grid grid-3-button icon-color-picker-wrapper">
             {hasPresets && (
               <div className="icon-picker-dropdown inspector-button">
               <ToolbarDropdownMenu

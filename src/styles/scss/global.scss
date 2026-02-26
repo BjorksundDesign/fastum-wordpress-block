@@ -515,6 +515,8 @@ section.hero{ max-width: 900px; }
 
 .grid{
   display: grid;
+  justify-content: stretch;
+  margin-right: 8px;
 
   &.auto{
     --grid-template-columns: auto;
@@ -567,6 +569,7 @@ h1 ~ p {
 .components-panel__row{
   &.minimal{ margin: 0; min-height: 0; }
   &.inspector-row:last-child:not(.minimal){ padding-bottom: 12px; }
+  margin-top: 4px!important;
 }
 
 .editor-sidebar, .interface-complementary-area__fill{ width: 300px !important; }
@@ -868,7 +871,7 @@ h1 ~ p {
     border: 1px solid var(--wp--preset--color--custom-line-color);
     width: 100%;
     min-width: var(--card-min, var(--min-column-width));
-    max-width: min(var(--card-max), 100vw);
+    max-width: var(--modal-min-width);
     max-height: 100%;
     display: flex;
     padding: var(--card-padding);

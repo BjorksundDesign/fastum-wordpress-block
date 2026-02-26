@@ -926,19 +926,20 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                   }}
                   opened={selectedItemId === item.id}
                   >
+                    <PanelRow className="grid grid-3-button inspector-row">
+                      Listtyp:
+                      {listTypeOptions.map(option => (
+                        <Button key={option.value} className="inspector-button" onClick={() => setListType(item.id, option.value)} disabled={item.listType === option.value} aria-label="List type option.value">{option.label}</Button>
+                      ))}
+                    </PanelRow> 
+                    {item.listType === "Icon" && (
                     <IconColorPickerRow
                         iconHex={item.iconRaw}
                         color={item.iconColor}
                         onIconChange={(hex) => setListIconRaw(item.id, hex)}
                         onColorChange={(c) => setListIconColor(item.id, c)}
                         label={__('Icon color')}
-                      />
-                      <PanelRow className="grid grid-2-button inspector-row">
-                        Listtyp:
-                        {listTypeOptions.map(option => (
-                          <Button key={option.value} className="inspector-button" onClick={() => setListType(item.id, option.value)} disabled={item.listType === option.value} aria-label="List type option.value">{option.label}</Button>
-                        ))}
-                      </PanelRow>  
+                      />)}
                     
                   {ensureList(item.list).map((li, liIndex) => (
                     <div style={{'--grid-template-columns':'auto 1fr auto auto'}}>
@@ -1063,7 +1064,6 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                     return (
                                         <>
                                           <PanelRow className="grid grid-1-button inspector-row">
-                                            Text:
                                             <TextControl
                                               className="panel-control-settings inspector-button input"
                                               value={item.text ?? 'Button'}
@@ -1071,7 +1071,6 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                             />
                                         </PanelRow>
                                         <PanelRow className={`grid grid-3-button inspector-row`}>
-                                        Button color:
                                             {buttonColorOptions.map(option => (
                                               <Button 
                                                   key={option.value} 
@@ -1084,7 +1083,6 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                                             ))}
                                         </PanelRow> 
                                         <PanelRow label="Button URL" className="grid grid-1-button inspector-row">
-                                            Button URL:
                                             <LinkControl
                                                 className="linkLinkControl panel-control-settings inspector-button input"
                                                 label="Button URL"
@@ -1461,6 +1459,24 @@ const handleRootMouseDownCapture = useCallback((e) => {
           />
             </div>
       )}
+        {items.some(item => item.type === 'image') ? (
+       <div className="image-wrapper" style={{order : '1'}}>
+           {items.map((item) => {
+             if (item.type !== 'image' || disable.image) return null;
+
+             return (
+                 <ImageModalRender 
+                   key={item.id} 
+                   attributes={attributes} 
+                   item={item} 
+                   onChange={(id, mediaId) => {
+                     const updatedItems = updateItem(items, id, { image: mediaId });
+                     commit(updatedItems);
+                   }} />
+           );
+       })}
+     </div>
+     ):null}
       {textItems.some(item => ['list', 'heading', 'paragraph'].includes(item.type)) && (
         <div role="text-wrapper" className={`${className}`} 
         style={{
@@ -1595,24 +1611,6 @@ const handleRootMouseDownCapture = useCallback((e) => {
                 }
             })}
         </div>
-      ):null}
-         {items.some(item => item.type === 'image') ? (
-        <div className="image-wrapper" style={{order : '1'}}>
-            {items.map((item) => {
-              if (item.type !== 'image' || disable.image) return null;
-
-              return (
-                  <ImageModalRender 
-                    key={item.id} 
-                    attributes={attributes} 
-                    item={item} 
-                    onChange={(id, mediaId) => {
-                      const updatedItems = updateItem(items, id, { image: mediaId });
-                      commit(updatedItems);
-                    }} />
-            );
-        })}
-      </div>
       ):null}
     </div>
   );

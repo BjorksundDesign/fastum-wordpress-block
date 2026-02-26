@@ -573,7 +573,11 @@ const computeTopFlagsFromList = (list = []) => {
   ].filter(Boolean).join(' ');
 };
 
-
+const addLabels = {
+  cards: 'Add card',
+  columns: 'Add column',
+  dropdown: 'Add dropdown',
+};
 
 useEffect(() => {
   const flags = computeTopFlagsFromList(attributes.items || []);
@@ -615,7 +619,7 @@ useEffect(() => {
                       <Button 
                         className="inspector-button" 
                         onClick={() => setAttributes({ numberOfCards: numberOfCards + 1 })}>
-                        Add card
+                        {addLabels[attributes.modalType] ?? 'Add card'}
                       </Button>
                       )}
                     </div>
@@ -696,7 +700,7 @@ useEffect(() => {
 
                   
                     {renderControl('Text color:', 'textColor', textColorOptions, attributes, setAttributes)}
-            <PanelRow className="grid grid-3-button inspector-row">
+            <PanelRow className="grid grid-2-button inspector-row">
                        Bg färg:
                       {bgImageStyle.map(option => {
                         switch (option.label) {
