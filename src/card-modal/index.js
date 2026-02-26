@@ -15,15 +15,11 @@ registerBlockType(metadata.name, {
     },
 
     
-        __experimentalLabel: ( props ) => {
-        const attributes = props
+        __experimentalLabel: ( attributes ) => {
         
         const modalType = attributes?.modalType || 'default';
-        const metaData = attributes?.metadata || '';
-        
-        if (metaData.name !== ''){
-            return metaData.name;
-        }
+        const metaData = attributes?.metadata || {};
+      
         if (attributes?.isFaq === true) {
             return 'FAQ';
         }
@@ -46,6 +42,10 @@ registerBlockType(metadata.name, {
 
         if (modalType === 'lime-form') {
             return 'lime-form';
+        }
+
+        if (metaData.name !== ''){
+            return metaData.name;
         }
 
         return 'Fastum block';

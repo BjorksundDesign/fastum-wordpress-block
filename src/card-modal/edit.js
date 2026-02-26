@@ -842,7 +842,6 @@ useEffect(() => {
 
       {/* Frontend/Editor preview */}
       <article className={`card-modal-article ${attributes.bgImageStyle} ${attributes.modalType} ${attributes.modalMargin} article`} style={{backgroundColor: backgroundColor, position: 'relative'}}>
-        {console.log('article', attributes)}
         {/* Background image using @10up/block-components Image component */}
         {attributes?.style?.background?.backgroundImage?.id && (
           <Image
