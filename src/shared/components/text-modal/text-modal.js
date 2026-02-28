@@ -932,14 +932,13 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                         <Button key={option.value} className="inspector-button" onClick={() => setListType(item.id, option.value)} disabled={item.listType === option.value} aria-label="List type option.value">{option.label}</Button>
                       ))}
                     </PanelRow> 
-                    {item.listType === "Icon" && (
                     <IconColorPickerRow
                         iconHex={item.iconRaw}
                         color={item.iconColor}
                         onIconChange={(hex) => setListIconRaw(item.id, hex)}
                         onColorChange={(c) => setListIconColor(item.id, c)}
                         label={__('Icon color')}
-                      />)}
+                      />
                     
                   {ensureList(item.list).map((li, liIndex) => (
                     <div style={{'--grid-template-columns':'auto 1fr auto auto'}}>
