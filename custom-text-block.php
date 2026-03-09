@@ -55,6 +55,15 @@ function custom_text_block_init() {
 }
 add_action( 'init', 'custom_text_block_init' );
 
+add_action('wp_head', function() {
+
+	$path = plugin_dir_path(__FILE__) . 'src/styles/css/global.css';
+
+	if (file_exists($path)) {
+		echo '<style>' . file_get_contents($path) . '</style>';
+	}
+
+}, 1);
 /**
  * Enqueue editor and frontend styles.
  */
@@ -70,12 +79,6 @@ function custom_blocks_enqueue_assets() {
 		);
 	}
 
-	wp_enqueue_style(
-		'custom-text-block-global-style',
-		plugins_url( 'src/styles/css/global.css', __FILE__ ),
-		[],
-		'1.0.0'
-	);
 }
 add_action( 'enqueue_block_editor_assets', 'custom_blocks_enqueue_assets' );
 add_action( 'wp_enqueue_scripts', 'custom_blocks_enqueue_assets' );
@@ -84,3 +87,46 @@ add_action( 'wp_enqueue_scripts', 'custom_blocks_enqueue_assets' );
  * Enable Markdown support for Yoast SEO (optional).
  */
 add_filter( 'wpseo_is_markdown_enabled', '__return_true' );
+
+add_filter('wpseo_pre_analysis_post_content', function($content) {
+
+    $blocks = parse_blocks($content);
+
+    foreach ($blocks as $block) {
+        if ($block['blockName'] === 'custom-text-block/card-modal') {
+            $content .= render_block($block);
+        }
+    }
+
+    return $content;
+});
+
+add_action('wp_head', function() {
+    echo '<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>';
+}, 0);
+
+add_action('wp_head', function() {
+    echo '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>';
+}, 0);
+
+add_action('wp_head', function() {
+    echo '<link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/memQYaGs126MiZpBA-UFUK0Udc1UAw.woff2" as="font" type="font/woff2" crossorigin>';
+}, 0);
+
+
+add_action('wp_head', function() {
+
+    $font_path = plugins_url('src/fonts/fa-solid-900.woff2', __FILE__);
+
+    echo '<link rel="preload" href="' . esc_url($font_path) . '" as="font" type="font/woff2" crossorigin>';
+
+});
+
+// add_action('wp_enqueue_scripts', function() {
+
+//     if (!is_admin()) {
+//         wp_deregister_script('jquery');
+//         wp_deregister_script('jquery-migrate');
+//     }
+
+// }, 100);

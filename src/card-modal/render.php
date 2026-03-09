@@ -368,25 +368,81 @@ if ($modalType === 'dropdown' && $isFaq && !empty($cards)) {
         </div><!-- /.text-modal-section -->
         <?php endif; ?>
 
-        <?php if ( $modalType === 'lime-form' ) : ?>
+
+        <?php if ($modalType === 'lime-form') : ?>
             <div class="custom-container">
                 <?php
                 $printed_inner = false;
-                if ( isset($block) && $block instanceof WP_Block && !empty($block->inner_blocks) ) {
-                    foreach ( $block->inner_blocks as $inner ) { echo $inner->render(); }
+
+                if (isset($block) && $block instanceof WP_Block && !empty($block->inner_blocks)) {
+                    foreach ($block->inner_blocks as $inner) {
+                        echo $inner->render();
+                    }
                     $printed_inner = true;
                 }
-                if ( ! $printed_inner && ! empty($content) ) {
-                    $parsed = parse_blocks( $content );
-                    if ( ! empty( $parsed ) ) {
-                        foreach ( $parsed as $inner_parsed ) { echo render_block( $inner_parsed ); }
+
+                if (!$printed_inner && !empty($content)) {
+                    $parsed = parse_blocks($content);
+                    if (!empty($parsed)) {
+                        foreach ($parsed as $inner_parsed) {
+                            echo render_block($inner_parsed);
+                        }
                         $printed_inner = true;
                     }
                 }
-                if ( ! $printed_inner && ! empty($content) ) { echo $content; }
+
+                if (!$printed_inner && !empty($content)) {
+                    echo $content;
+                }
                 ?>
             </div>
+
+            <div class="lime-form-wrapper">
+                <?php echo $form_html; ?>
+            </div>
         <?php endif; ?>
+
+        <?php
+            static $lime_lazy_loaded = false;
+
+            if (!$lime_lazy_loaded && $modalType === 'lime-form') {
+                $lime_lazy_loaded = true;
+            ?>
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+
+                const forms = document.querySelectorAll('.lime-form-wrapper');
+                if (!forms.length) return;
+
+                let limeLoaded = false;
+
+                const loadLime = () => {
+                    if (limeLoaded) return;
+                    limeLoaded = true;
+
+                    const script = document.createElement('script');
+                    script.src = "https://fastum.lime-forms.com/ce/latest.js";
+                    script.defer = true;
+                    document.body.appendChild(script);
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            loadLime();
+                            observer.disconnect();
+                        }
+                    });
+                }, { rootMargin: "200px" });
+
+                forms.forEach(form => observer.observe(form));
+            });
+            </script>
+            <?php
+            }
+            ?>
+
+
 
     </section>
     <?php endif; ?>

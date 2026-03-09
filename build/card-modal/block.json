@@ -6,6 +6,11 @@
   "title": "Fastum block",
   "category": "design",
   "attributes": {
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": ".text-wrapper"
+    },
     "numberOfCards": {
       "type": "number",
       "default": 1

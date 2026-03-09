@@ -28,7 +28,7 @@ export function createTextModalSetters({ items, commit }) {
       commit(recount(removeItem(items, id)));
       return;
     }
-    commit(updateItem(items, id, { image }));
+    commit(updateItem(items, id, { image, ...(extra || {}) }));
   };
 
   return {

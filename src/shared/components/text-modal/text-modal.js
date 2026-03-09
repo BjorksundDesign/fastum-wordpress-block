@@ -223,7 +223,24 @@ export function TextModalInspector({
 
 
 
-  const commit = (next) => writeItems?.(normalizeItems(next), context);
+  // const commit = (next) => writeItems?.(normalizeItems(next), context);
+  const commit = (nextItems) => {
+  const normalized = normalizeItems(nextItems);
+
+  const flatContent = normalized
+    .filter(i => ['heading','paragraph','list'].includes(i.type))
+    .map(i =>
+      i.type === 'list'
+        ? (i.list || []).join(' ')
+        : i.text
+    )
+    .join(' ');
+
+  setAttributes({
+    items: normalized,
+    content: flatContent,
+  });
+};
   const setters = createTextModalSetters({ items, commit });
 
   const {
@@ -1431,6 +1448,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
       onMouseDownCapture={handleRootMouseDownCapture}    
       className={`text-modal-section ${attributes.modalType !== 'dropdown' && (cardAttributes?.topSectionFlags ?? attributes.topSectionFlags)}`}
       >
+        
         {isSelected && activeId && hasFocus && showToolbar && (
           <div 
             ref={toolbarRef} 
@@ -1450,7 +1468,6 @@ const handleRootMouseDownCapture = useCallback((e) => {
             onRemove={remove}
             menus={menus}
     
-            // ✅ NYTT: bara "data"
             context={context}
             attributes={attributes}
             setAttributes={setAttributes}

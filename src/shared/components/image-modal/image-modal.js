@@ -49,8 +49,11 @@ const altText = hasAlt ? meta.alt : __('Saknas');
   const tooltipText = useMemo(() => formatTooltip(meta), [meta]);
 
   const handleImageChange = (media) => {
-        onChange(item.id, media?.id ?? null);        
-  };
+      onChange(item.id, media?.id ?? null, {
+        imageUrl: media?.url ?? media?.source_url ?? '',
+        imageAlt: media?.alt ?? media?.alt_text ?? '',
+      });
+    };
 
   return (
     <PanelRow className={`grid grid-${item.image? '1' : '2'}-button  inspector-row`}>
@@ -153,7 +156,7 @@ const altText = hasAlt ? meta.alt : __('Saknas');
   );
 
   return (
-    <PanelRow className="grid grid-image">
+    <div className="grid grid-image">
         <MediaUpload
           value={item.image || undefined} 
           onSelect={handleImageChange}
@@ -212,6 +215,6 @@ const altText = hasAlt ? meta.alt : __('Saknas');
         </>
         )}
         />
-    </PanelRow>
+    </div>
   );
 };

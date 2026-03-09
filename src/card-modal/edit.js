@@ -867,6 +867,7 @@ useEffect(() => {
             alt={attributes?.style?.background?.backgroundImageAlt || ''}
           />
         )}
+   
         {topSectionFlags !== '' || attributes.modalType === 'lime-form' ?
         <section className={`card-modal-section ${attributes.modalType}`} style={{position: 'relative', zIndex: 1}}>
           <TextModalRender

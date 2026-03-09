@@ -1,8 +1,3 @@
-@font-face {
-	font-family: fontAwesome;
-	src: url("./attributes/fa-solid-900.woff2") format('woff2');
-}
-
 :root{
 	--faIcon: "\f00c";
 	--iconColor: black;
@@ -196,17 +191,6 @@ ul > .list{
     flex-direction: column;
     gap: 8px;
 }
-
-.accordion-card{
-	padding: 0px 20px;
-	border-radius: 8px;
-	overflow: hidden;
-	border: 1px solid #ccc;
-	&.hide{
-		border: none;
-	}
-}
-
 
 :root{
     --font-Awesome: fontAwesome;

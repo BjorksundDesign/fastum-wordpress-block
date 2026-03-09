@@ -1,6 +1,7 @@
 @font-face {
   font-family: fontAwesome;
   src: url("../../shared/fonts/fa-solid-900.woff2") format('woff2');
+  font-display: swap;
 }
 
 :root{
@@ -477,8 +478,8 @@ section.hero{ max-width: 900px; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.components-panel__body-toggle,
-.components-panel__body-title {
+.block-editor-block-inspector .components-panel__body-toggle,
+.block-editor-block-inspector .components-panel__body-title {
   overflow: visible !important;
 }
 
@@ -490,7 +491,7 @@ section.hero{ max-width: 900px; }
   width: 100%;
 }
 
-.components-modal__content {
+.block-editor-block-inspector .components-modal__content {
     flex: 1;
     margin-top: unset;
     overflow: auto;
@@ -499,7 +500,7 @@ section.hero{ max-width: 900px; }
     grid-template-rows: auto auto;
 }
 
-.components-modal__header {
+.block-editor-block-inspector .components-modal__header {
     align-items: center;
     border-bottom: 1px solid #0000;
     box-sizing: border-box;
@@ -516,7 +517,7 @@ section.hero{ max-width: 900px; }
 .grid{
   display: grid;
   justify-content: stretch;
-  margin-right: 8px;
+
 
   &.auto{
     --grid-template-columns: auto;
@@ -565,11 +566,13 @@ h1 ~ p {
   /* Selects a Paragraph as long as it follows a Heading 1. */
 }
 
-
-.components-panel__row{
+.block-editor-block-inspector .components-panel .components-panel__row{
   &.minimal{ margin: 0; min-height: 0; }
   &.inspector-row:last-child:not(.minimal){ padding-bottom: 12px; }
   margin-top: 4px!important;
+  & .grid{
+    margin-right: 8px;
+  }
 }
 
 .editor-sidebar, .interface-complementary-area__fill{ width: 300px !important; }
@@ -579,30 +582,30 @@ h1 ~ p {
     font-size: 15px!important;
 }
 .panel-body > *:not(.components-panel__body-title){ pointer-events: all; }
-.components-panel__body-title:hover{ background: unset; }
+.block-editor-block-inspector .components-panel__body-title:hover{ background: unset; }
 
-.components-panel__body.panel-body:has(.is-opened),
-.components-panel__body:has(.is-opened){
+.block-editor-block-inspector .components-panel__body.panel-body:has(.is-opened),
+.block-editor-block-inspector .components-panel__body:has(.is-opened){
   padding: 0 12px 0 12px !important;
   // pointer-events: none;
   // &.card-item{ padding-right: 0 !important; }
 }
 
-.components-panel__body .components-panel__body{
+.block-editor-block-inspector .components-panel__body .components-panel__body{
     padding: 0 !important;
 }
 
-.components-panel__body{
+.block-editor-block-inspector .components-panel__body{
   padding: 0 12px 0 12px !important;
   position: relative;
 }
 
-.components-button{ 
+.block-editor-block-inspector .components-button{ 
   height: 32px; 
   font-size: 15px!important;
 }
 
-.components-panel{
+.block-editor-block-inspector .components-panel{
   z-index: 10;
   & hr{
     border-bottom: 1px solid #e0e0e0;
@@ -611,7 +614,7 @@ h1 ~ p {
   }
 }
 
-.components-panel__body-title{
+.block-editor-block-inspector .components-panel__body-title{
   margin: 0 !important;
 
   button{
@@ -1124,7 +1127,7 @@ ul .list::before{
 
 .yoast-breadcrumbs{
 	padding:12px 12px !important;
-  max-width: min(var(--modal-max-width), 100vw);
+  max-width: min(var(--modal-min-width), 100vw);
   margin-left: auto !important;
   margin-right: auto !important;
   margin-block-start: 0 !important;
@@ -1216,7 +1219,15 @@ ul .list::before{
 
 .accordion-card{
   padding: 12px 20px;
+  border-radius: 8px;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	&.hide{
+		border: none;
+	}
 }
+
+
 
 .dropdown{
   & .contains-button{

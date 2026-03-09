@@ -218,9 +218,9 @@ const showTop  = topFlags.length > 0 || modalType === 'lime-form';
     return (
       <div className="image-wrapper" style={{ order: '1' }}>
         {images.map((imgItem) => {
-          const src = getImgSrc(imgItem.image) || getImgSrc(imgItem.imageUrl);
+          const src = getImgSrc(imgItem.imageUrl) || getImgSrc(imgItem.image);
+          const alt = imgItem.imageAlt || imgItem.alt || '';
           if (!src) return null;
-          const alt = imgItem.alt || '';
           return (
             <div key={imgItem.id} className={`image-container ${sizingClass}`}>
               <img

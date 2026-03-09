@@ -52,7 +52,6 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	),
 	'card-modal' => array(
@@ -63,6 +62,11 @@ return array(
 		'title' => 'Fastum block',
 		'category' => 'design',
 		'attributes' => array(
+			'content' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.text-wrapper'
+			),
 			'numberOfCards' => array(
 				'type' => 'number',
 				'default' => 1
@@ -310,7 +314,6 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	),
 	'hero-modal' => array(
@@ -357,7 +360,6 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	),
 	'text-modal' => array(
@@ -457,7 +459,6 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
 	)
 );
