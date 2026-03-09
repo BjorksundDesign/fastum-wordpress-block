@@ -137,9 +137,12 @@ const hasAlt = !!(meta?.alt || '').trim();
 const titleText = hasTitle ? meta.title : __('Saknas');
 const altText = hasAlt ? meta.alt : __('Saknas');
 
-  const handleImageChange = (media) => {
-        onChange(item.id, media?.id ?? null);
-  };
+   const handleImageChange = (media) => {
+      onChange(item.id, media?.id ?? null, {
+        imageUrl: media?.url ?? media?.source_url ?? '',
+        imageAlt: media?.alt ?? media?.alt_text ?? '',
+      });
+    };
   
 
   const imgEl = (

@@ -602,6 +602,7 @@ h1 ~ p {
 
 .block-editor-block-inspector .components-button{ 
   min-height: 32px; 
+  height: unset!important;
   font-size: 15px!important;
 }
 

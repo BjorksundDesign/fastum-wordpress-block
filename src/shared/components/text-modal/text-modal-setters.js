@@ -23,8 +23,14 @@ export function createTextModalSetters({ items, commit }) {
   const setButtonText = (id, text) => commit(updateItem(items, id, { text }));
   const setButtonURL = (id, url) => commit(updateItem(items, id, { url }));
   const setButtonColor = (id, buttonColor) => commit(updateItem(items, id, { buttonColor }));
-  const setImage = (id, image, extra) => {
-    commit(updateItem(items, id, { image, ...(extra || {}) }));
+  const setImage = (id, image, extra = {}) => {
+    commit(
+      updateItem(items, id, {
+        image,
+        imageUrl: extra.imageUrl ?? '',
+        imageAlt: extra.imageAlt ?? '',
+      })
+    );
   };
 
   const removeImage = (id) => {
