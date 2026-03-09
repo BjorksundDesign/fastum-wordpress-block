@@ -55,15 +55,16 @@ function custom_text_block_init() {
 }
 add_action( 'init', 'custom_text_block_init' );
 
-add_action('wp_head', function() {
+add_action('wp_enqueue_scripts', function() {
 
-	$path = plugin_dir_path(__FILE__) . 'src/styles/css/global.css';
+	wp_enqueue_style(
+		'fastum-global',
+		plugin_dir_url(__FILE__) . 'src/styles/css/global.css',
+		[],
+		filemtime(plugin_dir_path(__FILE__) . 'src/styles/css/global.css')
+	);
 
-	if (file_exists($path)) {
-		echo '<style>' . file_get_contents($path) . '</style>';
-	}
-
-}, 1);
+});
 /**
  * Enqueue editor and frontend styles.
  */
