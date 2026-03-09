@@ -103,25 +103,16 @@ add_filter('wpseo_pre_analysis_post_content', function($content) {
 });
 
 add_action('wp_head', function() {
-    echo '<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>';
-}, 0);
-
-add_action('wp_head', function() {
-    echo '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>';
-}, 0);
-
-add_action('wp_head', function() {
-    echo '<link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/memQYaGs126MiZpBA-UFUK0Udc1UAw.woff2" as="font" type="font/woff2" crossorigin>';
-}, 0);
-
-
-add_action('wp_head', function() {
 
     $font_path = plugins_url('src/fonts/fa-solid-900.woff2', __FILE__);
 
     echo '<link rel="preload" href="' . esc_url($font_path) . '" as="font" type="font/woff2" crossorigin>';
 
 });
+
+add_action('wp_head', function () {
+    echo '<link rel="preload" href="' . includes_url('fonts/dashicons.woff2') . '" as="font" type="font/woff2" crossorigin>';
+}, 1);
 
 // add_action('wp_enqueue_scripts', function() {
 

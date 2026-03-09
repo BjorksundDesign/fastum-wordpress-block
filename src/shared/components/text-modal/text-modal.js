@@ -1610,7 +1610,7 @@ const handleRootMouseDownCapture = useCallback((e) => {
                           {attributes.showButtonHR ? <hr /> : null}
                             <button 
                                 key={item.id}
-                                className={`wp-block-button fastum-button ${attributes.align} ${attributes.modalType} ${context.scope}`}
+                                className={`wp-block-button fastum-button ${attributes.align} ${attributes.modalType}`}
                                 onClick={() => window.location.href = item.url} // Open URL in a new tab
                                 disabled
                                 >                                
