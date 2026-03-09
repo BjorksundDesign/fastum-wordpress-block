@@ -210,6 +210,7 @@ export function TextModalInspector({
   setSelectedId,
   setSelectedItemId,
   showButtonHR,
+  setAttributes,
 }) {
   const items = normalizeItems(readItems?.() || []);
   const [isHovered, setIsHovered] = useState(false);
@@ -221,11 +222,10 @@ export function TextModalInspector({
   const [openId, setOpenId] = useState(null);
   const [editModal, setEditModal] = useState(null);
 
-
-
-  // const commit = (next) => writeItems?.(normalizeItems(next), context);
   const commit = (nextItems) => {
   const normalized = normalizeItems(nextItems);
+
+  writeItems?.(normalized, context);
 
   const flatContent = normalized
     .filter(i => ['heading','paragraph','list'].includes(i.type))
@@ -236,10 +236,12 @@ export function TextModalInspector({
     )
     .join(' ');
 
+  if (typeof setAttributes === 'function') {
   setAttributes({
     items: normalized,
     content: flatContent,
   });
+}
 };
   const setters = createTextModalSetters({ items, commit });
 
@@ -250,6 +252,7 @@ export function TextModalInspector({
     setParagraphText,
     setListType,
     setImage,
+    removeImage,
     setButtonText,
     setButtonURL,
     setButtonColor,
@@ -687,7 +690,7 @@ const renderControl = (title, attributeTitle, modalType, attributes, setAttribut
                 switch (item.type) {
                   case 'image':
                     return (
-                      <ImageModalInspector key={item.id} item={item} onChange={setImage} />
+                      <ImageModalInspector key={item.id} item={item} onChange={setImage} onRemove={removeImage}/>
                     );
                   }
                 })}
@@ -1156,10 +1159,9 @@ export function TextModalRender({
   next.splice(index + 1, 0, item);
   return next;
 };
-  // const commit = (next) => writeItems?.(normalizeItems(next), context);
-    const duplicate = (id) => commit(duplicateItem(items, id));
+const duplicate = (id) => commit(duplicateItem(items, id));
 
-  const commit = (next) => writeItems?.(normalizeItems(next), context);
+const commit = (next) => writeItems?.(normalizeItems(next), context);
 const setters = createTextModalSetters({ items, commit });
 const suppressNextBlurRef = useRef(false);
 const blurRafRef = useRef(0);
@@ -1170,6 +1172,7 @@ const {
   setParagraphText,
   setListType,
   setImage,
+  removeImage,
   setButtonText,
   setButtonURL,
   setButtonColor
@@ -1485,10 +1488,10 @@ const handleRootMouseDownCapture = useCallback((e) => {
                    key={item.id} 
                    attributes={attributes} 
                    item={item} 
-                   onChange={(id, mediaId) => {
-                     const updatedItems = updateItem(items, id, { image: mediaId });
-                     commit(updatedItems);
-                   }} />
+                   onChange={setImage} 
+                   onRemove={removeImage}
+                   />
+                   
            );
        })}
      </div>

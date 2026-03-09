@@ -377,7 +377,7 @@ const duplicateCard = (cardIndex) => {
 };
 
 
-    const writeFirstItem = (cardIndex, firstIndex) => (newArr) => {
+const writeFirstItem = (cardIndex, firstIndex) => (newArr) => {
   const newFirst = Array.isArray(newArr) ? newArr[0] : newArr;
   const current = cards[cardIndex]?.items || [];
   const next = [...current];

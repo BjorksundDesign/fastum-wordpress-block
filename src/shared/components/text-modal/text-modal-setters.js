@@ -24,11 +24,11 @@ export function createTextModalSetters({ items, commit }) {
   const setButtonURL = (id, url) => commit(updateItem(items, id, { url }));
   const setButtonColor = (id, buttonColor) => commit(updateItem(items, id, { buttonColor }));
   const setImage = (id, image, extra) => {
-    if (extra === 'remove') {
-      commit(recount(removeItem(items, id)));
-      return;
-    }
     commit(updateItem(items, id, { image, ...(extra || {}) }));
+  };
+
+  const removeImage = (id) => {
+    commit(recount(removeItem(items, id)));
   };
 
   return {
@@ -38,6 +38,7 @@ export function createTextModalSetters({ items, commit }) {
     setParagraphText,
     setListType,
     setImage,
+    removeImage,
     setButtonText,
     setButtonURL,
     setButtonColor,

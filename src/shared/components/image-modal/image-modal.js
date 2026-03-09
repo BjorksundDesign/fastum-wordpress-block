@@ -35,7 +35,7 @@ const formatTooltip = ({ title, alt }) => {
 
 // TODO: Något krånglar med att overflow hidden är borttagen pga byta bild menyn, så nu klipps inte bilden korrekt i hörnen. elet ligger i text modal image och vman behöver kolla om bilden är i en tex column eller ej. Eller snarare om bilden är ensam
 
-export function ImageModalInspector({ item, onChange, imageTitle }){
+export function ImageModalInspector({ item, onChange, onRemove, imageTitle }){
   const [isHovered, setIsHovered] = useState(false); 
 
   // 1) Fetch title + alt
@@ -98,9 +98,9 @@ const altText = hasAlt ? meta.alt : __('Saknas');
                 {__('Change')}
               </Button>
               <Button
-                onClick={() => onChange(item.id, null)} // Clear the image
+                onClick={() => onRemove(item.id)}
                 className="inspector-button"
-                >
+              >
                 {__('Remove')}
               </Button>
             </div>
@@ -111,10 +111,10 @@ const altText = hasAlt ? meta.alt : __('Saknas');
               <Button onClick={open} className="inspector-button" primary>
                   {__('Select')}
                 </Button>
-                <Button 
-                  onClick={() => onChange(item.id, null, 'remove')} 
-                  className="inspector-button" 
-                  primary>
+                  <Button
+                  onClick={() => onRemove(item.id)}
+                  className="inspector-button"
+                >
                   {__('Remove')}
                 </Button>
               </>
