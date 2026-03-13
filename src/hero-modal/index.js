@@ -3,15 +3,11 @@ import './style.scss';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import Icon from './attributes/hero-modal-icon.svg';
 
 registerBlockType( metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
-	icon: {
-			src: <img src={Icon} alt="Block Icon" />
-		},
 	supports: {
 		align: true,
 		anchor: true,
